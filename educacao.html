@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educação Científica | CATALUCCA</title>
+    <meta name="description"
+        content="Infraestrutura Científica Portátil para Ensino. Microscopia digital móvel alinhada à BNCC e STEM.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header class="header" id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">CATALUCCA</a>
+            <nav class="nav-desktop" id="nav-desktop">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="setor-privado.html" class="nav-link">Setor Privado</a>
+                <a href="setor-publico.html" class="nav-link">Setor Público</a>
+                <a href="educacao.html" class="nav-link" style="color: var(--primary); font-weight: 600;">Educação</a>
+                <a href="#faq" class="nav-link">Dúvidas</a>
+                <a href="#contato" class="nav-link">Contato</a>
+            </nav>
+            <button class="btn btn-outline btn-cta-desktop">Solicitar Proposta</button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menu">
+                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" x2="20" y1="12" y2="12"></line>
+                    <line x1="4" x2="20" y1="6" y2="6"></line>
+                    <line x1="4" x2="20" y1="18" y2="18"></line>
+                </svg>
+
+                <svg id="close-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <line x1="18" x2="6" y1="6" y2="18"></line>
+                    <line x1="6" x2="18" y1="6" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="nav-mobile" id="nav-mobile">
+            <nav class="nav-mobile-content"
+                style="display: flex; flex-direction: column; padding: 1rem; background: white; border-bottom: 1px solid #eee;">
+                <a href="index.html" class="nav-link nav-mobile-link">Home</a>
+                <a href="setor-privado.html" class="nav-link nav-mobile-link">Setor Privado</a>
+                <a href="setor-publico.html" class="nav-link nav-mobile-link">Setor Público</a>
+                <a href="educacao.html" class="nav-link nav-mobile-link">Educação</a>
+                <a href="#contato" class="nav-link nav-mobile-link">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-internal">
+            <div class="container">
+                <span class="breadcrumb">Educação e Pesquisa</span>
+                <h1 class="hero-title">A ciência onde o aluno está.</h1>
+                <p class="hero-subtitle">Infraestrutura científica portátil para ensino, aprendizagem e formação
+                    técnica. Transforme salas de aula em laboratórios de exploração sem obras civis.</p>
+
+                <div style="margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="#contato" class="btn" style="background: white; color: var(--primary);">Solicitar Proposta
+                        Educacional</a>
+                    <a href="#aplicacoes" class="btn btn-outline">Ver Aplicações BNCC</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">O Desafio Estrutural</span>
+                    <h2 class="section-title">Barreiras do Ensino Prático</h2>
+                    <p class="section-subtitle">Por que a ciência prática ainda é restrita a poucos alunos?</p>
+                </div>
+
+                <div class="problems-grid">
+                    <div class="problem-card">
+                        <div class="problem-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="title-icon-svg">
+                                <rect x="2" y="6" width="20" height="8" rx="1"></rect>
+                                <path d="M17 14v7"></path>
+                                <path d="M7 14v7"></path>
+                                <path d="M17 3v3"></path>
+                                <path d="M7 3v3"></path>
+                                <path d="M10 14 2.3 6.3"></path>
+                                <path d="m14 6 7.7 7.7"></path>
+                                <path d="m8 6 8 8"></path>
+                            </svg>
+                            <h3>Alto Custo Fixo</h3>
+                        </div>
+                        <p style="color: var(--muted-foreground);">A implantação de laboratórios tradicionais exige
+                            obras civis caras, bancadas fixas e manutenção constante.</p>
+                    </div>
+
+                    <div class="problem-card">
+                        <div class="problem-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="title-icon-svg">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <h3>Acesso Restrito</h3>
+                        </div>
+                        <p style="color: var(--muted-foreground);">Equipamentos frágeis ficam trancados, limitando a
+                            experiência a momentos raros e desconectados da teoria.</p>
+                    </div>
+
+                    <div class="problem-card">
+                        <div class="problem-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="title-icon-svg">
+                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                <path d="M21 3v5h-5"></path>
+                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                <path d="M8 16H3v5"></path>
+                            </svg>
+                            <h3>Obsolescência</h3>
+                        </div>
+                        <p style="color: var(--muted-foreground);">Microscópios analógicos não permitem registro digital
+                            fácil e se tornam desinteressantes para o aluno digital.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section bg-secondary" id="aplicacoes">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Aplicações Pedagógicas</span>
+                    <h2 class="section-title">Da Sala de Aula ao Campo</h2>
+                    <p class="section-subtitle">Solução compatível com Smartphones e Tablets, permitindo o ensino
+                        híbrido e investigativo.</p>
+                </div>
+
+                <div class="applications-grid">
+                    <article class="app-card">
+                        <div class="app-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="app-icon-svg">
+                                <path d="M2 15c6.667-6 13.333 0 20-6"></path>
+                                <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"></path>
+                                <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"></path>
+                                <path d="M17 6l-2.5-2.5"></path>
+                                <path d="M14 8l-1-1"></path>
+                                <path d="M7 18l2.5 2.5"></path>
+                                <path d="M3.5 14.5l.5.5"></path>
+                                <path d="M20 9l.5.5"></path>
+                                <path d="M6.5 12.5l1 1"></path>
+                                <path d="M16.5 10.5l1 1"></path>
+                                <path d="M10 16l1.5 1.5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Ciências e Biologia</h3>
+                        <p style="font-size: 0.9rem; color: var(--muted-foreground); margin-bottom: 1rem;">Ensino
+                            Fundamental e Médio.</p>
+                        <ul class="app-list">
+                            <li>Citologia e Histologia vegetal</li>
+                            <li>Microbiologia básica</li>
+                            <li>Botânica e análise de solos</li>
+                        </ul>
+                    </article>
+
+                    <article class="app-card">
+                        <div class="app-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                fill="none" stroke="#008cba" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-lightbulb-icon lucide-lightbulb">
+                                <path
+                                    d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+                                <path d="M9 18h6" />
+                                <path d="M10 22h4" />
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Projetos STEM / STEAM</h3>
+                        <p style="font-size: 0.9rem; color: var(--muted-foreground); margin-bottom: 1rem;">Ensino por
+                            investigação.</p>
+                        <ul class="app-list">
+                            <li>Metodologia científica prática</li>
+                            <li>Física e estrutura de materiais</li>
+                            <li>Projetos interdisciplinares</li>
+                        </ul>
+                    </article>
+
+                    <article class="app-card">
+                        <div class="app-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="app-icon-svg">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Ensino Técnico</h3>
+                        <p style="font-size: 0.9rem; color: var(--muted-foreground); margin-bottom: 1rem;">
+                            Profissionalizante e Superior.</p>
+                        <ul class="app-list">
+                            <li>Controle de qualidade</li>
+                            <li>Análises agrícolas</li>
+                            <li>Formação profissional</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <div class="legal-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                        </path>
+                        <line x1="12" x2="12" y1="9" y2="13"></line>
+                        <line x1="12" x2="12.01" y1="17" y2="17"></line>
+                    </svg>
+                    <div>
+                        <strong>Nota Pedagógica:</strong> A solução complementa laboratórios tradicionais e não
+                        substitui práticas pedagógicas consolidadas que exijam equipamentos estacionários de alta
+                        complexidade.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="about-section">
+                    <div class="about-content">
+                        <span class="section-label">Políticas Públicas</span>
+                        <h2>Alinhamento à BNCC</h2>
+                        <p>Nossa tecnologia não é apenas um equipamento, é um instrumento pedagógico que favorece o
+                            desenvolvimento das competências gerais da Base Nacional Comum Curricular.</p>
+
+                        <ul style="margin-top: 2rem; display: grid; gap: 1rem;">
+                            <li style="display: flex; gap: 1rem; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="#008CBA" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Cultura Digital e Letramento Científico</span>
+                            </li>
+                            <li style="display: flex; gap: 1rem; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="#008CBA" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Pensamento Crítico e Criativo</span>
+                            </li>
+                            <li style="display: flex; gap: 1rem; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="#008CBA" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>Protagonismo do Aluno</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div
+                        style="background: var(--bg-surface); padding: 2rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-md); text-align: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                            style="color: var(--primary);">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" x2="16" y1="21" y2="21"></line>
+                            <line x1="12" x2="12" y1="17" y2="21"></line>
+                        </svg>
+                        <h3 style="margin-top: 1rem; margin-bottom: 1rem; color: var(--primary);">Visualização Coletiva
+                        </h3>
+                        <p style="font-size: 0.9rem; color: var(--muted-foreground); line-height: 1.6;">
+                            Diferente do microscópio tradicional individual, nossa tecnologia permite projetar a imagem
+                            em <strong>TVs ou Datashow</strong> em tempo real, permitindo que o professor oriente a
+                            turma inteira simultaneamente.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section bg-secondary" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Dúvidas Escolares</span>
+                    <h2 class="section-title">Perguntas Frequentes (Educação)</h2>
+                </div>
+
+                <div class="faq-container">
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Os alunos podem usar seus próprios celulares?
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="accordion-icon">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                Sim. O sistema é universal e compatível com a grande maioria dos smartphones e tablets
+                                (Android e iOS). Isso permite a implementação da estratégia BYOD (Bring Your Own
+                                Device).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            A CATALUCCA oferece treinamento para professores?
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="accordion-icon">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                Sim. Acreditamos que a tecnologia sem método é vazia. Nossos pacotes institucionais
+                                incluem capacitação técnica e sugestões de práticas pedagógicas para o corpo docente.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            O equipamento é resistente para uso infantil?
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="accordion-icon">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                Sim. As lentes são robustas e projetadas para manuseio. Além disso, por não possuírem
+                                partes móveis mecânicas complexas ou vidros expostos frágeis como microscópios antigos,
+                                a durabilidade é superior.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-technical" id="contato">
+            <div class="container">
+                <span
+                    style="color: rgba(255,255,255,0.8); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 1rem;">Democratização
+                    da Ciência</span>
+                <h2>Prepare estudantes para o século XXI</h2>
+                <p
+                    style="color: rgba(255,255,255,0.8); margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Apoio a escolas, redes de ensino e universidades que desejam estimular a curiosidade científica.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="mailto:educacao@catalucca.com" class="btn"
+                        style="background: white; color: var(--primary);">Solicitar Proposta Educacional</a>
+                    <a href="#" class="btn btn-outline">Falar com Pedagógico</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 3rem; text-align: left;">
+                <div class="footer-brand">
+                    <span class="logo" style="color: white; font-size: 1.25rem;">CATALUCCA</span>
+                    <p style="margin-top: 1rem; color: rgba(255,255,255,0.6);">Ciência portátil para o futuro da
+                        educação.</p>
+                </div>
+
+                <div>
+                    <h4 style="color: white; margin-bottom: 1rem;">Navegação</h4>
+                    <ul style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="setor-privado.html">Setor Privado</a></li>
+                        <li><a href="setor-publico.html">Setor Público</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 style="color: white; margin-bottom: 1rem;">Contato</h4>
+                    <ul style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <li><a href="mailto:educacao@catalucca.com">educacao@catalucca.com</a></li>
+                        <li><a href="#">Área do Professor</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+                <p class="footer-disclaimer">As soluções apresentadas apoiam a BNCC e o ensino prático de ciências.</p>
+                <div class="footer-credits">
+                    <p>Tecnologia: Smart Micro Optics (Itália)</p>
+                    <p>Integração: CATALUCCA (Brasil)</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <a href="https://wa.me/5562999455080?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20um%20especialista."
+        class="whatsapp-float" target="_blank" aria-label="Fale conosco no WhatsApp">
+        <span class="whatsapp-tooltip show-initially">Falar com Especialista</span>
+        <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path
+                d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-26.6l-6.7-4.2-69.8 18.3 18.6-68.1-4.4-6.9c-18.3-29.1-28-63.1-28-98.5 0-101.9 82.8-184.6 184.6-184.6 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.5 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-4-10.5-6.8z" />
+        </svg>
+    </a>
+    <script src="script.js"></script>
+</body>
+
+</html>
