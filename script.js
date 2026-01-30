@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+const yearSpan = document.getElementById('current-year');
+  if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
+  }
+
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileNav = document.getElementById('nav-mobile');
   const menuIcon = document.getElementById('menu-icon');
@@ -141,13 +147,10 @@ document.addEventListener('DOMContentLoaded', function() {
               }
             }, stepTime);
           });
-          
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
-
     statsObserver.observe(statsSection);
   }
 });
-

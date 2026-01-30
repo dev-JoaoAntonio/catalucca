@@ -4,17 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CATALUCCA | Infraestrutura Científica Portátil</title>
+    <title>CATALUCCA | Infraestrutura Científica de Borda</title>
     <meta name="description"
-        content="Microscopia Digital Móvel de alta resolução aplicada à operação, qualidade e risco.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        content="Infraestrutura Científica de Borda com resolução submicrométrica (0,7 µm). Tecnologia italiana SMO.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:wght@500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -22,158 +16,180 @@
 <body>
     <header class="header" id="header">
         <div class="container header-container">
-            <a href="index.html" class="logo">CATALUCCA</a>
-            <nav class="nav-desktop" id="nav-desktop">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo Catalucca" class="logo-icon">
+                <span>CATALUCCA</span>
+            </a>
+            <nav class="nav-desktop">
                 <a href="index.html" class="nav-link" style="color: var(--primary);">Home</a>
-                <a href="setor-privado.html" class="nav-link">Setor Privado</a>
-                <a href="setor-publico.html" class="nav-link">Setor Público</a>
                 <a href="educacao.html" class="nav-link">Educação</a>
-                <a href="#faq" class="nav-link">Dúvidas</a>
+                <a href="setor-privado.html" class="nav-link">Agro & Indústria</a>
+                <a href="setor-publico.html" class="nav-link">Governo</a>
                 <a href="#contato" class="nav-link">Contato</a>
             </nav>
-            <button class="btn btn-outline btn-cta-desktop">Solicitar Proposta</button>
-            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menu">
-                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <button class="mobile-menu-btn" id="mobile-menu-btn"><svg id="menu-icon" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
                     <line x1="4" x2="20" y1="12" y2="12"></line>
                     <line x1="4" x2="20" y1="6" y2="6"></line>
                     <line x1="4" x2="20" y1="18" y2="18"></line>
-                </svg>
-
-                <svg id="close-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <line x1="18" x2="6" y1="6" y2="18"></line>
-                    <line x1="6" x2="18" y1="6" y2="18"></line>
-                </svg>
-            </button>
+                </svg></button>
         </div>
         <div class="nav-mobile" id="nav-mobile">
             <nav class="nav-mobile-content"
                 style="display: flex; flex-direction: column; padding: 1rem; background: white; border-bottom: 1px solid #eee;">
                 <a href="index.html" class="nav-link nav-mobile-link">Home</a>
-                <a href="setor-privado.html" class="nav-link nav-mobile-link">Setor Privado</a>
-                <a href="setor-publico.html" class="nav-link nav-mobile-link">Setor Público</a>
                 <a href="educacao.html" class="nav-link nav-mobile-link">Educação</a>
-                <a href="#contato" class="nav-link nav-mobile-link">Contato</a>
+                <a href="setor-privado.html" class="nav-link nav-mobile-link">Agro & Indústria</a>
+                <a href="setor-publico.html" class="nav-link nav-mobile-link">Governo</a>
             </nav>
         </div>
     </header>
 
     <main>
         <section class="hero" id="home">
-            <div class="container">
+            <div class="video-background-container">
+                <video autoplay muted loop playsinline class="video-background">
+                    <source src="hero-video.mp4" type="video/mp4">
+                    Seu navegador não suporta vídeos HTML5.
+                </video>
+                <div class="video-overlay"></div>
+            </div>
+
+            <div class="container hero-content-wrapper">
                 <div class="hero-content">
-                    <span class="section-label" style="justify-content: center; display: flex;">Infraestrutura
-                        Científica</span>
-                    <h1 class="hero-title">A precisão do laboratório.<br>A agilidade do campo.</h1>
-                    <p class="hero-subtitle">Microscopia Digital Móvel de alta resolução (0.7 µm) integrada à operação,
-                        qualidade e risco.</p>
+                    <span class="section-label"
+                        style="justify-content: center; display: flex; color: #4FC3F7;">INFRAESTRUTURA CIENTÍFICA DE
+                        BORDA</span>
+                    <h1 class="hero-title text-white">A Precisão do Laboratório.<br>A Soberania da Decisão no
+                        Território.</h1>
+                    <p class="hero-subtitle text-white">Resolução submicrométrica (0,7 µm). Inteligência microvisual
+                        integrada à operação, à qualidade e à gestão estratégica de risco.</p>
 
-                    <div class="hero-actions">
-                        <a href="setor-privado.html" class="action-card">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="#008cba"
-                                    d="M17 15.5V17c0 .6-.4 1-1 1s-1-.4-1-1v-1.5H9V17c0 .6-.4 1-1 1s-1-.4-1-1v-1.5H5c-.7 0-1.4-.2-2-.5v4c0 1.7 1.3 3 3 3h12c1.7 0 3-1.3 3-3v-4c-.6.3-1.3.5-2 .5h-2zM21 6h-4V5c0-1.7-1.3-3-3-3h-4C8.3 2 7 3.3 7 5v1H3c-.6 0-1 .4-1 1v4c0 1.7 1.3 3 3 3h14c1.7 0 3-1.3 3-3V7c0-.6-.4-1-1-1zm-6 0H9V5c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v1z" />
-                            </svg>
-                            <div>
-                                <h3>Setor Privado</h3>
-                                <p>Indústria, Agro e Engenharia.</p>
-                            </div>
-                            <span class="card-link-arrow">Acessar →</span>
-                        </a>
-                        <a href="setor-publico.html" class="action-card">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1024 1024">
-                                <path fill="#008cba"
-                                    d="M992 1024H32q-13 0-22.5-9.5T0 992t9.5-22.5T32 960h32q27 0 45.5-19t18.5-45V64q0-26 19-45t45-19h640q27 0 45.5 19T896 64v832q0 27 19 45.5t45 18.5h32q13 0 22.5 9.5t9.5 22.5t-9.5 22.5t-22.5 9.5zM384 160q0-13-9.5-22.5T352 128h-64q-13 0-22.5 9.5T256 160v64q0 13 9.5 22.5T288 256h64q13 0 22.5-9.5T384 224v-64zm0 192q0-13-9.5-22.5T352 320h-64q-13 0-22.5 9.5T256 352v64q0 13 9.5 22.5T288 448h64q13 0 22.5-9.5T384 416v-64zm0 192q0-13-9.5-22.5T352 512h-64q-13 0-22.5 9.5T256 544v64q0 13 9.5 22.5T288 640h64q13 0 22.5-9.5T384 608v-64zm192-384q0-13-9.5-22.5T544 128h-64q-13 0-22.5 9.5T448 160v64q0 13 9.5 22.5T480 256h64q13 0 22.5-9.5T576 224v-64zm0 192q0-13-9.5-22.5T544 320h-64q-13 0-22.5 9.5T448 352v64q0 13 9.5 22.5T480 448h64q13 0 22.5-9.5T576 416v-64zm0 192q0-13-9.5-22.5T544 512h-64q-13 0-22.5 9.5T448 544v64q0 13 9.5 22.5T480 640h64q13 0 22.5-9.5T576 608v-64zm32 224H416q-13 0-22.5 9.5T384 800v128q0 13 9.5 22.5T416 960h192q13 0 22.5-9.5T640 928V800q0-13-9.5-22.5T608 768zm160-608q0-13-9.5-22.5T736 128h-64q-13 0-22.5 9.5T640 160v64q0 13 9.5 22.5T672 256h64q13 0 22.5-9.5T768 224v-64zm0 192q0-13-9.5-22.5T736 320h-64q-13 0-22.5 9.5T640 352v64q0 13 9.5 22.5T672 448h64q13 0 22.5-9.5T768 416v-64zm0 192q0-13-9.5-22.5T736 512h-64q-13 0-22.5 9.5T640 544v64q0 13 9.5 22.5T672 640h64q13 0 22.5-9.5T768 608v-64z" />
-                            </svg>
-                            <div>
-                                <h3>Setor Público</h3>
-                                <p>Governo e Fiscalização.</p>
-                            </div>
-                            <span class="card-link-arrow">Acessar →</span>
-                        </a>
-                        <a href="educacao.html" class="action-card">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="#008cba" d="M23.835 8.5L12 .807L.165 8.5L12 16.192l8-5.2V16h2V9.693z" />
-                                <path fill="#008cba"
-                                    d="M5 17.5v-3.665l7 4.55l7-4.55V17.5c0 1.47-1.014 2.615-2.253 3.338C15.483 21.576 13.802 22 12 22s-3.482-.424-4.747-1.162C6.014 20.115 5 18.97 5 17.5" />
-                            </svg>
-                            <div>
-                                <h3>Educação</h3>
-                                <p>Ensino e Pesquisa.</p>
-                            </div>
-                            <span class="card-link-arrow">Acessar →</span>
-                        </a>
+                    <div class="hero-actions" style="justify-content: center;">
+                        <a href="educacao.html" class="btn">Conhecer Solução Educacional</a>
+                        <a href="https://wa.me/5562999455080?text=Olá,%20gostaria%20de%20solicitar%20uma%20demonstração%20técnica."
+                            target="_blank" class="btn btn-outline-white">Solicitar Demonstração</a>
                     </div>
+
+
                 </div>
+
             </div>
         </section>
-
-        <section class="stats-section">
+        <div class="authority-marquee-section">
             <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number-wrapper">
-                            <span class="stat-number" data-target="0.7" data-decimals="1">0</span>
-                            <span class="stat-unit">µm</span>
-                        </div>
-                        <span class="stat-label">Resolução Óptica</span>
-                    </div>
+                <p class="marquee-label">Tecnologia Reconhecida Globalmente</p>
+            </div>
 
-                    <div class="stat-item">
-                        <div class="stat-number-wrapper">
-                            <span class="stat-number" data-target="100" data-decimals="0">0</span>
-                            <span class="stat-unit">%</span>
-                        </div>
-                        <span class="stat-label">Portabilidade</span>
-                    </div>
+            <div class="marquee-wrapper">
+                <div class="marquee-track">
+                    <a href="https://www.forbes.com/sites/christinero/2023/03/13/from-neuroscience-research-to-cell-phone-microscopy/"
+                        target="_blank" class="marquee-item">FORBES</a>
+                    <a href="https://www.wired.it/video/watch/the-big-interview-nello-cristianini-intelligenza-artificiale-o-sovrumana#intcid=_wired-it-video-watch-page-playlist_f9ec7022-f718-4ffe-af1b-6cab5ca7488d_roberta-similarity1"
+                        target="_blank" class="marquee-item">WIRED</a>
+                    <a href="https://www.theverge.com/circuitbreaker/2019/11/21/20975677/smartphone-microscope-kickstarter-diple-announcement-magnification-zoom"
+                        target="_blank" class="marquee-item">THE VERGE</a>
+                    <a href="https://smartmicrooptics.com/blips-science-illustrated/" target="_blank"
+                        class="marquee-item">SCIENCE ILLUSTRATED</a>
+                    <a href="https://roma.repubblica.it/dossier-adv/eccellenze-lazio/2022/02/03/news/smo_-_smart_micro_optics_mira_a_espandere_la_presenza_sul_mercato-336072652/"
+                        target="_blank" class="marquee-item">LA REPUBBLICA</a>
 
-                    <div class="stat-item">
-                        <div class="stat-number-wrapper">
-                            <span class="stat-number" data-target="400" data-decimals="0">0</span>
-                            <span class="stat-unit">x</span>
-                        </div>
-                        <span class="stat-label">Ampliação Max.</span>
-                    </div>
+                    <a href="https://www.forbes.com/sites/christinero/2023/03/13/from-neuroscience-research-to-cell-phone-microscopy/"
+                        target="_blank" class="marquee-item">FORBES</a>
+                    <a href="https://www.wired.it/video/watch/the-big-interview-nello-cristianini-intelligenza-artificiale-o-sovrumana#intcid=_wired-it-video-watch-page-playlist_f9ec7022-f718-4ffe-af1b-6cab5ca7488d_roberta-similarity1"
+                        target="_blank" class="marquee-item">WIRED</a>
+                    <a href="https://www.theverge.com/circuitbreaker/2019/11/21/20975677/smartphone-microscope-kickstarter-diple-announcement-magnification-zoom"
+                        target="_blank" class="marquee-item">THE VERGE</a>
+                    <a href="https://smartmicrooptics.com/blips-science-illustrated/" target="_blank"
+                        class="marquee-item">SCIENCE ILLUSTRATED</a>
+                    <a href="https://roma.repubblica.it/dossier-adv/eccellenze-lazio/2022/02/03/news/smo_-_smart_micro_optics_mira_a_espandere_la_presenza_sul_mercato-336072652/"
+                        target="_blank" class="marquee-item">LA REPUBBLICA</a>
 
-                    <div class="stat-item">
-                        <div class="stat-number-wrapper">
-                            <span class="stat-number-static">ISO</span>
-                        </div>
-                        <span class="stat-label">Padrão Técnico</span>
-                    </div>
+                    <a href="https://www.forbes.com/sites/christinero/2023/03/13/from-neuroscience-research-to-cell-phone-microscopy/"
+                        target="_blank" class="marquee-item">FORBES</a>
+                    <a href="https://www.wired.it/video/watch/the-big-interview-nello-cristianini-intelligenza-artificiale-o-sovrumana#intcid=_wired-it-video-watch-page-playlist_f9ec7022-f718-4ffe-af1b-6cab5ca7488d_roberta-similarity1"
+                        target="_blank" class="marquee-item">WIRED</a>
+                    <a href="https://www.theverge.com/circuitbreaker/2019/11/21/20975677/smartphone-microscope-kickstarter-diple-announcement-magnification-zoom"
+                        target="_blank" class="marquee-item">THE VERGE</a>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="section">
+        <section class="section" id="manifesto">
             <div class="container">
                 <div class="about-section">
                     <div class="about-content">
-                        <span class="section-label">Nossa Missão</span>
-                        <h2>Descentralizando a Ciência</h2>
-                        <p>A CATALUCCA atua na interseção entre qualidade, risco e eficiência operacional. Nossa missão
-                            é eliminar o "gap" de informação que existe entre a coleta de uma amostra e sua análise
-                            laboratorial.</p>
+                        <span class="section-label">Nossa Essência</span>
+                        <h2>A Borda é o nosso Território.</h2>
+                        <p>A CATALUCCA Tecnologias™ é uma integradora nacional de infraestrutura científica aplicada.
+                            Nascemos de um princípio fundamental: <strong>a ciência perde valor quando está distante do
+                                problema</strong>.</p>
+                        <p>Não atuamos como fornecedores de equipamentos isolados. Atuamos como estruturadores de
+                            sistemas científicos operacionais, eliminando o hiato histórico entre campo e gabinete.
+                            Utilidade gera legitimidade.</p>
+
                         <div class="about-highlight">
-                            <p>"Não substituímos o laboratório. Levamos a capacidade de triagem técnica para onde o
-                                problema acontece."</p>
-                        </div>
-                        <div style="margin-top: 2rem;">
-                            <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Parceiro Tecnológico Exclusivo:</p>
-                            <strong style="font-size: 1.2rem; color: var(--primary);">Smart Micro Optics (Itália)
-                                🇮🇹</strong>
+                            <p>"Não substituímos o laboratório central. Levamos a capacidade de triagem técnica para
+                                onde a decisão precisa ser tomada."</p>
                         </div>
                     </div>
-                    <div class="about-image"
-                        style="background: var(--bg-secondary); height: 400px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-color);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none"
-                            stroke="#E2E8F0" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
-                            <path d="M11 7a4 4 0 0 1 4 4"></path>
-                        </svg>
+
+                    <div
+                        style="background: var(--bg-surface); padding: 2.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+                        <h3 style="color: var(--primary); margin-bottom: 1.5rem;">Tecnologia Italiana (SMO & IIT)</h3>
+                        <p style="margin-bottom: 1.5rem;">Tecnologias DIPLE™ e BLIPST™ desenvolvidas pela Smart Micro
+                            Optics e Istituto Italiano di Tecnologia. Protegidas como Marca Notoriamente Conhecida (Lei
+                            9.279/96).</p>
+                        <ul class="app-list">
+                            <li><strong>Resolução:</strong> Até 0,7 µm (Limite da Lei de Abbe)</li>
+                            <li><strong>Legalidade:</strong> Proteção Intelectual (Lei 9.610/98)</li>
+                            <li><strong>Exclusividade:</strong> Distribuição na América do Sul</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 6rem; padding-top: 4rem; border-top: 1px solid var(--border-color);">
+                    <div class="section-header">
+                        <span class="section-label">Resultados Reais</span>
+                        <h2 class="section-title">Impacto Estrutural</h2>
+                        <p class="section-subtitle">Mais do que tecnologia, entregamos transformação operacional,
+                            econômica e social.</p>
+                    </div>
+
+                    <div class="applications-grid">
+                        <article class="app-card" style="text-align: left;">
+                            <h3 class="feature-title"
+                                style="border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; display: inline-block;">
+                                Impacto Técnico</h3>
+                            <ul class="app-list" style="margin-top: 1rem;">
+                                <li><strong>Decisão Imediata:</strong> Diagnósticos em minutos, não dias.</li>
+                                <li><strong>Redução de Incerteza:</strong> Evidência visual onde o risco emerge.</li>
+                                <li><strong>Antecipação:</strong> Triagem preventiva antes da falha crítica.</li>
+                            </ul>
+                        </article>
+
+                        <article class="app-card" style="text-align: left;">
+                            <h3 class="feature-title"
+                                style="border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; display: inline-block;">
+                                Impacto Econômico</h3>
+                            <ul class="app-list" style="margin-top: 1rem;">
+                                <li><strong>Logística:</strong> Redução drástica de envio de amostras.</li>
+                                <li><strong>Retrabalho:</strong> Menos erros por falta de informação de campo.</li>
+                                <li><strong>Eficiência Fiscal:</strong> Otimização de recursos públicos e privados.</li>
+                            </ul>
+                        </article>
+
+                        <article class="app-card" style="text-align: left;">
+                            <h3 class="feature-title"
+                                style="border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; display: inline-block;">
+                                Impacto Social</h3>
+                            <ul class="app-list" style="margin-top: 1rem;">
+                                <li><strong>Democratização:</strong> Acesso à ciência de ponta em qualquer lugar.</li>
+                                <li><strong>Território:</strong> Fortalecimento da capacidade técnica local.</li>
+                                <li><strong>Soberania:</strong> Independência analítica para quem opera.</li>
+                            </ul>
+                        </article>
                     </div>
                 </div>
             </div>
@@ -189,48 +205,171 @@
 
                 <div class="features-grid">
                     <div class="feature-card">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="title-icon-svg"
-                            style="margin: 0 auto 1rem auto; display: block; color: var(--accent);">
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                        <h3 class="feature-title">Alta Resolução</h3>
-                        <p>Até 0,7 µm com contraste aprimorado.</p>
+                        <h3 class="feature-title">Campo Claro</h3>
+                        <p>Visualização padrão para estruturas celulares e tecidos vegetais com alta transparência.</p>
                     </div>
                     <div class="feature-card">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="title-icon-svg"
-                            style="margin: 0 auto 1rem auto; display: block; color: var(--accent);">
-                            <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
-                            <path d="M12 18h.01"></path>
-                        </svg>
-                        <h3 class="feature-title">Mobile First</h3>
-                        <p>Transforma qualquer smartphone em microscópio.</p>
+                        <h3 class="feature-title">Campo Escuro</h3>
+                        <p>Contraste elevado para identificar organismos vivos translúcidos em meio líquido.</p>
                     </div>
                     <div class="feature-card">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="title-icon-svg"
-                            style="margin: 0 auto 1rem auto; display: block; color: var(--accent);">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
-                        <h3 class="feature-title">Cadeia de Custódia</h3>
-                        <p>Metadados e rastreabilidade digital da evidência.</p>
+                        <h3 class="feature-title">Luz Polarizada</h3>
+                        <p>Análise de minerais, cristais, amido e fibras sintéticas ou naturais.</p>
                     </div>
                     <div class="feature-card">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="title-icon-svg"
-                            style="margin: 0 auto 1rem auto; display: block; color: var(--accent);">
-                            <path
-                                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
-                            </path>
+                        <h3 class="feature-title">Luz Refletida</h3>
+                        <p>Inspeção de superfícies opacas, metais, microfissuras e fitossanidade foliar.</p>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 5rem; background: white; padding: 2.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow-x: auto;">
+                    <div style="margin-bottom: 2rem; border-left: 4px solid var(--accent); padding-left: 1rem;">
+                        <h3 style="margin-bottom: 0.5rem; color: var(--primary);">Tabela de Equivalência de Termos</h3>
+                        <p style="font-size: 0.9rem; color: var(--muted-foreground); margin-bottom: 0;">Revisão
+                            Analítica para Contexto Brasileiro.</p>
+                    </div>
+
+                    <table
+                        style="width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left; min-width: 600px;">
+                        <thead>
+                            <tr style="background-color: #F8FAFC; border-bottom: 2px solid var(--border-color);">
+                                <th style="padding: 1rem; color: var(--primary); width: 25%;">Termo Original (Inglês)
+                                </th>
+                                <th style="padding: 1rem; color: var(--primary); width: 30%;">Equivalente em Português
+                                    (Técnico)</th>
+                                <th style="padding: 1rem; color: var(--primary);">Contexto Catalucca</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 1rem; font-style: italic; color: var(--foreground);">Bright-field
+                                </td>
+                                <td style="padding: 1rem; font-weight: 600; color: var(--foreground);">Campo Claro</td>
+                                <td style="padding: 1rem; color: var(--muted-foreground);">Iluminação padrão de fundo.
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 1rem; font-style: italic; color: var(--foreground);">Dark-field</td>
+                                <td style="padding: 1rem; font-weight: 600; color: var(--foreground);">Campo Escuro</td>
+                                <td style="padding: 1rem; color: var(--muted-foreground);">Realce de contornos em
+                                    amostras transparentes.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 1rem; font-style: italic; color: var(--foreground);">Reflected light
+                                </td>
+                                <td style="padding: 1rem; font-weight: 600; color: var(--foreground);">Luz Refletida
+                                    (Episcopia)</td>
+                                <td style="padding: 1rem; color: var(--muted-foreground);">Análise de superfícies opacas
+                                    (metal/solo).</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 1rem; font-style: italic; color: var(--foreground);">Stage
+                                    (Fine/Standard)</td>
+                                <td style="padding: 1rem; font-weight: 600; color: var(--foreground);">Mesa de Apoio
+                                    (Micrométrica/Padrão)</td>
+                                <td style="padding: 1rem; color: var(--muted-foreground);">Base de posicionamento da
+                                    amostra.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 1rem; font-style: italic; color: var(--foreground);">Magnification
+                                </td>
+                                <td style="padding: 1rem; font-weight: 600; color: var(--foreground);">Ampliação /
+                                    Magnitude</td>
+                                <td style="padding: 1rem; color: var(--muted-foreground);">Poder de aumento óptico.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 1rem; font-style: italic; color: var(--foreground);">Science
+                                    Education</td>
+                                <td style="padding: 1rem; font-weight: 600; color: var(--foreground);">Educação
+                                    Científica</td>
+                                <td style="padding: 1rem; color: var(--muted-foreground);">Prática pedagógica
+                                    investigativa.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 1rem; font-style: italic; color: var(--foreground);">Citizen Science
+                                </td>
+                                <td style="padding: 1rem; font-weight: 600; color: var(--foreground);">Ciência Cidadã
+                                </td>
+                                <td style="padding: 1rem; color: var(--muted-foreground);">Coleta de dados pela
+                                    comunidade/alunos.</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 1rem; font-style: italic; color: var(--foreground);">Citizen
+                                    Scientist</td>
+                                <td style="padding: 1rem; font-weight: 600; color: var(--foreground);">Cientista Cidadão
+                                </td>
+                                <td style="padding: 1rem; color: var(--muted-foreground);">O aluno como sensor do
+                                    território.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">O Método Ø-1™</span>
+                    <h2 class="section-title">Dinâmica de Resposta Imediata</h2>
+                    <p class="section-subtitle">A transição do vazio de informação para a evidência científica.</p>
+                </div>
+
+                <div class="problems-grid">
+                    <div class="problem-card">
+                        <span
+                            style="font-size: 3rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 1rem;">Ø</span>
+                        <h3>Ponto Zero</h3>
+                        <p>O momento da incerteza. Onde o problema ocorre, mas falta informação técnica para decidir.
+                        </p>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                            stroke-width="2">
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
                         </svg>
-                        <h3 class="feature-title">Sem Manutenção</h3>
-                        <p>Operação simplificada sem calibração complexa.</p>
+                    </div>
+                    <div class="problem-card">
+                        <span
+                            style="font-size: 3rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 1rem;">1</span>
+                        <h3>Ponto Um</h3>
+                        <p>Evidência documentada. Cadeia de custódia com Timestamp e GPS no exato momento da observação.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number-wrapper">
+                            <span class="stat-number" data-target="0.7" data-decimals="1">0</span>
+                            <span class="stat-unit">µm</span>
+                        </div>
+                        <span class="stat-label">Resolução Óptica Real</span>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number-wrapper">
+                            <span class="stat-number" data-target="400" data-decimals="0">0</span>
+                            <span class="stat-unit">x</span>
+                        </div>
+                        <span class="stat-label">Ampliação Nativa</span>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number-wrapper">
+                            <span class="stat-number-static">OFF</span>
+                        </div>
+                        <span class="stat-label">Operação 100% Offline</span>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number-wrapper">
+                            <span class="stat-number-static">ISO</span>
+                        </div>
+                        <span class="stat-label">Conformidade Técnica</span>
                     </div>
                 </div>
             </div>
@@ -239,62 +378,44 @@
         <section class="section" id="faq">
             <div class="container">
                 <div class="section-header">
-                    <span class="section-label">Dúvidas Frequentes</span>
-                    <h2 class="section-title">Esclarecimentos Técnicos</h2>
+                    <span class="section-label">Estratégia</span>
+                    <h2 class="section-title">FAQ Estratégico</h2>
                 </div>
-
                 <div class="faq-container">
                     <div class="accordion-item">
-                        <button class="accordion-header">
-                            O sistema substitui um laboratório oficial?
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        <button class="accordion-header">Substitui o laboratório central?<svg class="accordion-icon"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="accordion-icon">
+                                stroke-linejoin="round">
                                 <path d="m6 9 6 6 6-6" />
-                            </svg>
-                        </button>
+                            </svg></button>
                         <div class="accordion-content">
-                            <div class="accordion-body">
-                                Não. A solução atua como ferramenta de triagem técnica e documentação presuntiva in
-                                loco. Ela complementa a análise laboratorial, permitindo decisões rápidas, mas não
-                                substitui laudos acreditados para fins definitivos.
-                            </div>
+                            <div class="accordion-body">Não. Filtra a demanda, enviando apenas o que é crítico e
+                                acelerando a resposta de campo em até 85%.</div>
                         </div>
                     </div>
-
                     <div class="accordion-item">
-                        <button class="accordion-header">
-                            Qual a resolução máxima alcançada?
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        <button class="accordion-header">Tem validade jurídica?<svg class="accordion-icon"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="accordion-icon">
+                                stroke-linejoin="round">
                                 <path d="m6 9 6 6 6-6" />
-                            </svg>
-                        </button>
+                            </svg></button>
                         <div class="accordion-content">
-                            <div class="accordion-body">
-                                O sistema ótico permite resolver detalhes de até 0,7 mícrons (µm), suficiente para
-                                identificar a maioria das células vegetais, esporos de fungos, estruturas de insetos e
-                                microfissuras em materiais.
-                            </div>
+                            <div class="accordion-body">Sim. O registro possui integridade de metadados (GPS e
+                                Timestamp) para fins administrativos, fiscais e periciais.</div>
                         </div>
                     </div>
-
                     <div class="accordion-item">
-                        <button class="accordion-header">
-                            É necessário internet para funcionar?
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        <button class="accordion-header">Depende de Wi-Fi?<svg class="accordion-icon"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="accordion-icon">
+                                stroke-linejoin="round">
                                 <path d="m6 9 6 6 6-6" />
-                            </svg>
-                        </button>
+                            </svg></button>
                         <div class="accordion-content">
-                            <div class="accordion-body">
-                                Não. A observação e a captura de imagens funcionam totalmente offline. A internet é
-                                necessária apenas se houver necessidade de envio imediato dos dados para a nuvem ou
-                                compartilhamento.
-                            </div>
+                            <div class="accordion-body">A captura e análise são 100% offline. A conexão serve apenas
+                                para a gestão da inteligência coletiva e sincronização posterior.</div>
                         </div>
                     </div>
                 </div>
@@ -304,45 +425,60 @@
 
     <footer class="footer" id="contato">
         <div class="container">
-            <div class="footer-grid"
-                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 3rem; text-align: left;">
-                <div class="footer-brand">
-                    <span class="logo" style="color: white; font-size: 1.25rem;">CATALUCCA</span>
-                    <p style="margin-top: 1rem; color: rgba(255,255,255,0.6);">Infraestrutura científica portátil
-                        aplicada à operação, qualidade e risco.</p>
+            <div class="footer-grid">
+                <div class="footer-brand-col">
+                    <a href="index.html" class="footer-logo-text">CATALUCCA</a>
+                    <p class="footer-slogan">Infraestrutura Científica de Borda.</p>
+                    <div class="footer-address">
+                        <p><strong>HUB Brasília/DF</strong><br>Setor de Autarquias Sul</p>
+                        <p><strong>Polo Logístico Itajaí/SC</strong><br>Rodovia Jorge Lacerda</p>
+                    </div>
                 </div>
 
                 <div>
-                    <h4 style="color: white; margin-bottom: 1rem;">Setores</h4>
-                    <ul style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <li><a href="setor-privado.html">Indústria & Agro</a></li>
-                        <li><a href="setor-publico.html">Governo</a></li>
-                        <li><a href="educacao.html">Educação</a></li>
+                    <h4 class="footer-heading">Navegação</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="educacao.html">Educação & BNCC</a></li>
+                        <li><a href="setor-privado.html">Agro & Indústria</a></li>
+                        <li><a href="setor-publico.html">Governo & Defesa</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 style="color: white; margin-bottom: 1rem;">Contato</h4>
-                    <ul style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <li><a href="mailto:contato@catalucca.com">Solicitar Proposta</a></li>
-                        <li><a href="#">Suporte Técnico</a></li>
+                    <h4 class="footer-heading">Conexão</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:suporte@catalucca.com.br" class="footer-contact-link">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                                </svg>
+                                suporte@catalucca.com.br
+                            </a></li>
+                        <li><a href="https://wa.me/5562999455080" target="_blank" class="footer-contact-link">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                    </path>
+                                </svg>
+                                Consultoria Técnica (WhatsApp)
+                            </a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
-                <p class="footer-disclaimer">Aviso Legal: As soluções apresentadas não substituem análises laboratoriais
-                    acreditadas. Atuam como registro presuntivo técnico.</p>
-                <div class="footer-credits">
-                    <p>Tecnologia: Smart Micro Optics (Itália) 🇮🇹</p>
-                    <p>Integração: CATALUCCA (Brasil) 🇧🇷</p>
-                </div>
+            <div class="footer-bottom">
+                <p>© <span id="current-year">2026</span> CATALUCCA Tecnologias. Todos os direitos reservados.</p>
+                <p class="legal-note">Proteção: Lei 9.610/98 (Direitos Autorais) e Convenção de Paris (CUP).</p>
             </div>
         </div>
     </footer>
-    <a href="https://wa.me/5562999455080?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20um%20especialista."
+
+    <a href="https://wa.me/5562999455080?text=Olá,%20gostaria%20de%20solicitar%20uma%20demonstração%20técnica%20do%20Sistema%20Ø—1™️%20para%20minha%20instituição."
         class="whatsapp-float" target="_blank" aria-label="Fale conosco no WhatsApp">
-        <span class="whatsapp-tooltip show-initially">Falar com Especialista</span>
+        <span class="whatsapp-tooltip show-initially">Falar com Consultor</span>
         <svg class="whatsapp-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
             <path
                 d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-26.6l-6.7-4.2-69.8 18.3 18.6-68.1-4.4-6.9c-18.3-29.1-28-63.1-28-98.5 0-101.9 82.8-184.6 184.6-184.6 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.5 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-4-10.5-6.8z" />
