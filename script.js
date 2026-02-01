@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
-const yearSpan = document.getElementById('current-year');
+  const yearSpan = document.getElementById('current-year');
   if (yearSpan) {
     yearSpan.textContent = new Date().getFullYear();
   }
@@ -10,61 +10,59 @@ const yearSpan = document.getElementById('current-year');
   const menuIcon = document.getElementById('menu-icon');
   const closeIcon = document.getElementById('close-icon');
   const mobileLinks = document.querySelectorAll('.nav-mobile-link');
-  
+
   let isMenuOpen = false;
-  
+
   function toggleMenu() {
     isMenuOpen = !isMenuOpen;
-    
+
     if (isMenuOpen) {
-      mobileNav.classList.add('active'); 
-      
+      mobileNav.classList.add('active');
       menuIcon.classList.add('hidden');
       closeIcon.classList.remove('hidden');
       mobileMenuBtn.setAttribute('aria-label', 'Fechar menu');
     } else {
       mobileNav.classList.remove('active');
-      
       menuIcon.classList.remove('hidden');
       closeIcon.classList.add('hidden');
       mobileMenuBtn.setAttribute('aria-label', 'Abrir menu');
     }
   }
-  
+
   mobileMenuBtn.addEventListener('click', toggleMenu);
-  
-  mobileLinks.forEach(function(link) {
-    link.addEventListener('click', function() {
+
+  mobileLinks.forEach(function (link) {
+    link.addEventListener('click', function () {
       if (isMenuOpen) {
         toggleMenu();
       }
     });
   });
-  
-  document.addEventListener('click', function(event) {
+
+  document.addEventListener('click', function (event) {
     const header = document.getElementById('header');
     if (isMenuOpen && !header.contains(event.target)) {
       toggleMenu();
     }
   });
-  
-  document.addEventListener('keydown', function(event) {
+
+  document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape' && isMenuOpen) {
       toggleMenu();
     }
   });
-  
-  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-    anchor.addEventListener('click', function(e) {
+
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
       if (href === '#') return;
-      
+
       const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
         const headerHeight = document.getElementById('header').offsetHeight;
         const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-        
+
         window.scrollTo({
           top: targetPosition,
           behavior: 'smooth'
@@ -74,18 +72,18 @@ const yearSpan = document.getElementById('current-year');
   });
 
   const accordions = document.querySelectorAll('.accordion-header');
-  
+
   accordions.forEach(acc => {
-    acc.addEventListener('click', function() {
+    acc.addEventListener('click', function () {
       this.classList.toggle('active');
-      
+
       const panel = this.nextElementSibling;
       if (panel.style.maxHeight) {
         panel.style.maxHeight = null;
       } else {
         panel.style.maxHeight = panel.scrollHeight + "px";
       }
-      
+
       accordions.forEach(otherAcc => {
         if (otherAcc !== this && otherAcc.classList.contains('active')) {
           otherAcc.classList.remove('active');
@@ -114,7 +112,7 @@ const yearSpan = document.getElementById('current-year');
   elementsToReveal.forEach((el) => observer.observe(el));
 
   const statsSection = document.querySelector('.stats-section');
-  
+
   if (statsSection) {
     const observerOptions = {
       root: null,
@@ -125,20 +123,20 @@ const yearSpan = document.getElementById('current-year');
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const counters = entry.target.querySelectorAll('.stat-number');
-          
+
           counters.forEach(counter => {
             const target = parseFloat(counter.getAttribute('data-target'));
             const decimals = parseInt(counter.getAttribute('data-decimals'));
             const duration = 2000;
             const steps = 60;
             const stepTime = duration / steps;
-            
+
             let current = 0;
             const increment = target / (duration / stepTime);
-            
+
             const timer = setInterval(() => {
               current += increment;
-              
+
               if (current >= target) {
                 counter.textContent = target.toFixed(decimals).replace('.', ',');
                 clearInterval(timer);
