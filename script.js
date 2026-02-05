@@ -1,5 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  let lenis;
+  if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+      duration: 2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      infinite: false,
+      smoothWheel: true,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  } else {
+    console.warn('Lenis não foi carregado. Verifique se o script foi incluído no HTML.');
+  }
+
+
   const yearSpan = document.getElementById('current-year');
   if (yearSpan) {
     yearSpan.textContent = new Date().getFullYear();
@@ -8,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileNav = document.getElementById('nav-mobile');
   const menuIcon = document.getElementById('menu-icon');
-  const closeIcon = document.getElementById('close-icon');
+  const closeIcon = document.getElementById('close-icon') || document.createElement('div');
   const mobileLinks = document.querySelectorAll('.nav-mobile-link');
 
   let isMenuOpen = false;
@@ -18,18 +37,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (isMenuOpen) {
       mobileNav.classList.add('active');
-      menuIcon.classList.add('hidden');
-      closeIcon.classList.remove('hidden');
-      mobileMenuBtn.setAttribute('aria-label', 'Fechar menu');
+      if (menuIcon) menuIcon.classList.add('hidden');
+      if (closeIcon) closeIcon.classList.remove('hidden');
+      if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-label', 'Fechar menu');
+
+      if (lenis) lenis.stop();
     } else {
       mobileNav.classList.remove('active');
-      menuIcon.classList.remove('hidden');
-      closeIcon.classList.add('hidden');
-      mobileMenuBtn.setAttribute('aria-label', 'Abrir menu');
+      if (menuIcon) menuIcon.classList.remove('hidden');
+      if (closeIcon) closeIcon.classList.add('hidden');
+      if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-label', 'Abrir menu');
+
+      if (lenis) lenis.start();
     }
   }
 
-  mobileMenuBtn.addEventListener('click', toggleMenu);
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', toggleMenu);
+  }
 
   mobileLinks.forEach(function (link) {
     link.addEventListener('click', function () {
@@ -41,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.addEventListener('click', function (event) {
     const header = document.getElementById('header');
-    if (isMenuOpen && !header.contains(event.target)) {
+    if (isMenuOpen && header && !header.contains(event.target)) {
       toggleMenu();
     }
   });
@@ -60,13 +85,23 @@ document.addEventListener('DOMContentLoaded', function () {
       const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
-        const headerHeight = document.getElementById('header').offsetHeight;
-        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
 
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
+        const header = document.getElementById('header');
+        const headerHeight = header ? header.offsetHeight : 0;
+
+        if (lenis) {
+          lenis.scrollTo(target, {
+            offset: -headerHeight,
+            duration: 1.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+        } else {
+          const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
       }
     });
   });
@@ -90,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
           otherAcc.nextElementSibling.style.maxHeight = null;
         }
       });
+
     });
   });
 

@@ -1,9 +1,3 @@
 {
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/educacao", "destination": "/educacao.html" },
-    { "source": "/setor-privado", "destination": "/setor-privado.html" },
-    { "source": "/setor-publico", "destination": "/setor-publico" }
-  ]
+  "cleanUrls": true
 }
