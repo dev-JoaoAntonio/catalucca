@@ -1,20 +1,29 @@
-import { createApp } from 'vue';
-import { Quasar } from 'quasar';
+import { ViteSSG } from 'vite-ssg';
 
 import App from './App.vue';
-import router from './router';
+import { routes } from './router/routes';
+import { scrollBehavior } from './router/scroll';
 import { reveal } from '@/directives/reveal';
 
 import '@quasar/extras/material-icons/material-icons.css';
 import 'quasar/dist/quasar.css';
 import './css/app.css';
 
-const app = createApp(App);
+export const createApp = ViteSSG(
+  App,
+  { routes, scrollBehavior },
+  async ({ app, router, isClient }) => {
+    app.directive('reveal', reveal);
 
-app.use(Quasar, {
-  plugins: {},
-});
-app.use(router);
-app.directive('reveal', reveal);
+    if (isClient) {
+      const { Quasar } = await import('quasar');
+      app.use(Quasar, { plugins: {} });
 
-app.mount('#app');
+      router.afterEach((to) => {
+        if (to.meta?.title) {
+          document.title = to.meta.title;
+        }
+      });
+    }
+  }
+);

@@ -1,5 +1,24 @@
 <script setup>
+import { useHead } from '@unhead/vue';
 import PricingMatrix from '@/components/PricingMatrix.vue';
+
+const PAGE_DESC =
+  'Sistema Ø—1™ para escolas e universidades. Conformidade com Lei 15.100/2025 e BNCC. Smartphone como Estação Científica de Alta Performance.';
+
+useHead({
+  title: 'Educação | Protagonismo Digital Investigativo — CATALUCCA',
+  meta: [
+    { name: 'description', content: PAGE_DESC },
+    { property: 'og:title', content: 'Educação | CATALUCCA' },
+    { property: 'og:description', content: PAGE_DESC },
+    { property: 'og:url', content: 'https://www.catalucca.com.br/educacao' },
+    { property: 'og:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+    { name: 'twitter:title', content: 'Educação | CATALUCCA' },
+    { name: 'twitter:description', content: PAGE_DESC },
+    { name: 'twitter:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+  ],
+  link: [{ rel: 'canonical', href: 'https://www.catalucca.com.br/educacao' }],
+});
 </script>
 
 <template>

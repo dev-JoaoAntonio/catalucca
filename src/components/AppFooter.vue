@@ -85,7 +85,7 @@ defineProps({
 
       <div class="footer-bottom">
         <p>© {{ new Date().getFullYear() }} CATALUCCA Tecnologias. Todos os direitos reservados.</p>
-        <p class="legal-note">Proteção: Lei 9.610/98 (Direitos Autorais) e Convenção de Paris (CUP).</p>
+        <p class="legal-note">CNPJ 61.810.236/0001-88 · Proteção: Lei 9.610/98 (Direitos Autorais) e Convenção de Paris (CUP).</p>
       </div>
     </div>
   </footer>

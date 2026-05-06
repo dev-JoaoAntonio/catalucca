@@ -1,6 +1,60 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useHead } from '@unhead/vue';
 import PricingMatrix from '@/components/PricingMatrix.vue';
+
+const HOME_DESCRIPTION =
+  'Infraestrutura Científica de Borda e Microscopia Digital (SMO/IIT) para Governo, Agro e Indústria. Tecnologia italiana com resolução de 0,7 µm.';
+
+useHead({
+  title: 'CATALUCCA | Infraestrutura Científica de Borda',
+  meta: [
+    { name: 'description', content: HOME_DESCRIPTION },
+    { property: 'og:title', content: 'CATALUCCA | Infraestrutura Científica de Borda' },
+    { property: 'og:description', content: HOME_DESCRIPTION },
+    { property: 'og:url', content: 'https://www.catalucca.com.br/' },
+    { property: 'og:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+    { name: 'twitter:title', content: 'CATALUCCA | Infraestrutura Científica de Borda' },
+    { name: 'twitter:description', content: HOME_DESCRIPTION },
+    { name: 'twitter:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+  ],
+  link: [{ rel: 'canonical', href: 'https://www.catalucca.com.br/' }],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Substitui o laboratório central?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Não. Filtra a demanda, enviando apenas o que é crítico e acelerando a resposta de campo em até 85%.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Tem validade jurídica?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Sim. O registro possui integridade de metadados (GPS e Timestamp) para fins administrativos, fiscais e periciais.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Depende de Wi-Fi?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'A captura e análise são 100% offline. A conexão serve apenas para a gestão da inteligência coletiva e sincronização posterior.',
+            },
+          },
+        ],
+      }),
+    },
+  ],
+});
 
 const statsSection = ref(null);
 const accordions = ref([false, false, false]);

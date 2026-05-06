@@ -1,6 +1,25 @@
 <script setup>
+import { useHead } from '@unhead/vue';
 import PricingMatrix from '@/components/PricingMatrix.vue';
 import TechCustodyBlock from '@/components/TechCustodyBlock.vue';
+
+const PAGE_DESC =
+  'Inspeção móvel, perícia técnica e cadeia de custódia matemática para empresas. Resolução de 0,7 µm com stacking não-destrutivo.';
+
+useHead({
+  title: 'Operacional Privado | Inteligência Operacional — CATALUCCA',
+  meta: [
+    { name: 'description', content: PAGE_DESC },
+    { property: 'og:title', content: 'Operacional Privado | CATALUCCA' },
+    { property: 'og:description', content: PAGE_DESC },
+    { property: 'og:url', content: 'https://www.catalucca.com.br/operacional-privado' },
+    { property: 'og:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+    { name: 'twitter:title', content: 'Operacional Privado | CATALUCCA' },
+    { name: 'twitter:description', content: PAGE_DESC },
+    { name: 'twitter:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+  ],
+  link: [{ rel: 'canonical', href: 'https://www.catalucca.com.br/operacional-privado' }],
+});
 </script>
 
 <template>

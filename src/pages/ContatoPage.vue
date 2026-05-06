@@ -1,5 +1,24 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useHead } from '@unhead/vue';
+
+const PAGE_DESC =
+  'Demonstrações técnicas, propostas HaaS e suporte para projetos de educação, operação privada e governo. Resposta em até 1 dia útil.';
+
+useHead({
+  title: 'Contato | CATALUCCA',
+  meta: [
+    { name: 'description', content: PAGE_DESC },
+    { property: 'og:title', content: 'Contato | CATALUCCA' },
+    { property: 'og:description', content: PAGE_DESC },
+    { property: 'og:url', content: 'https://www.catalucca.com.br/contato' },
+    { property: 'og:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+    { name: 'twitter:title', content: 'Contato | CATALUCCA' },
+    { name: 'twitter:description', content: PAGE_DESC },
+    { name: 'twitter:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+  ],
+  link: [{ rel: 'canonical', href: 'https://www.catalucca.com.br/contato' }],
+});
 
 const form = ref({
   name: '',

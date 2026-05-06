@@ -1,6 +1,25 @@
 <script setup>
+import { useHead } from '@unhead/vue';
 import PricingMatrix from '@/components/PricingMatrix.vue';
 import TechCustodyBlock from '@/components/TechCustodyBlock.vue';
+
+const PAGE_DESC =
+  '10 programas federais em 1 sistema. Triagem técnica de borda com até 85% de redução de custos logísticos. Operação offline-first com Hub ATLAS.';
+
+useHead({
+  title: 'Governo | Inteligência Territorial — CATALUCCA',
+  meta: [
+    { name: 'description', content: PAGE_DESC },
+    { property: 'og:title', content: 'Governo | CATALUCCA' },
+    { property: 'og:description', content: PAGE_DESC },
+    { property: 'og:url', content: 'https://www.catalucca.com.br/governo' },
+    { property: 'og:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+    { name: 'twitter:title', content: 'Governo | CATALUCCA' },
+    { name: 'twitter:description', content: PAGE_DESC },
+    { name: 'twitter:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
+  ],
+  link: [{ rel: 'canonical', href: 'https://www.catalucca.com.br/governo' }],
+});
 </script>
 
 <template>
