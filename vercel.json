@@ -1,3 +1,9 @@
 {
-  "cleanUrls": true
+  "redirects": [
+    { "source": "/setor-privado", "destination": "/operacional-privado", "permanent": true },
+    { "source": "/setor-publico", "destination": "/governo", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/((?!.*\\.).*)", "destination": "/" }
+  ]
 }

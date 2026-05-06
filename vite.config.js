@@ -1,16 +1,21 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import { fileURLToPath, URL } from 'node:url';
+import vue from '@vitejs/plugin-vue';
+import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
 
 export default defineConfig({
+  plugins: [
+    vue({
+      template: { transformAssetUrls },
+    }),
+    quasar({}),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   build: {
     outDir: 'dist',
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        educacao: resolve(__dirname, 'educacao.html'),
-        privado: resolve(__dirname, 'setor-privado.html'),
-        publico: resolve(__dirname, 'setor-publico.html'),
-      },
-    },
   },
 });
