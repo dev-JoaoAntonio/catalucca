@@ -44,7 +44,7 @@ import TechCustodyBlock from '@/components/TechCustodyBlock.vue';
         </p>
       </div>
 
-      <div class="applications-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="applications-grid applications-grid--two">
         <div class="feature-card" style="text-align: left;" v-reveal="{ delay: 0 }">
           <h3 class="feature-title">01-03. Educação</h3>
           <ul class="app-list">

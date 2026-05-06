@@ -88,7 +88,7 @@ import TechCustodyBlock from '@/components/TechCustodyBlock.vue';
         <h2 class="section-title">Eixos de Atuação</h2>
       </div>
 
-      <div class="applications-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="applications-grid applications-grid--two">
         <article class="app-card" v-reveal="{ delay: 0 }">
           <h3 class="feature-title">1. Controle de Qualidade &amp; Supply Chain</h3>
           <ul class="app-list">
