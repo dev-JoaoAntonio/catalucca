@@ -6,6 +6,8 @@ import { getLenis } from '@/composables/useLenis';
 const route = useRoute();
 const isMenuOpen = ref(false);
 const isScrolled = ref(false);
+const dockRef = ref(null);
+const isDockOnDark = ref(false);
 
 const items = [
   {
@@ -57,6 +59,36 @@ function onContactClick() {
 
 function handleScroll() {
   isScrolled.value = window.scrollY > 8;
+  updateDockBg();
+}
+
+function isColorDark(rgbStr) {
+  const m = rgbStr.match(/(\d+(?:\.\d+)?)/g);
+  if (!m || m.length < 3) return false;
+  const [r, g, b] = m.slice(0, 3).map(Number);
+  // Y do espaço YIQ — bom proxy de luminância percebida.
+  return (r * 299 + g * 587 + b * 114) / 1000 < 128;
+}
+
+function updateDockBg() {
+  const dock = dockRef.value;
+  if (!dock || dock.offsetParent === null) return;
+  const rect = dock.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  const els = document.elementsFromPoint(x, y);
+  const probed = els.find((el) => !dock.contains(el));
+  let el = probed || document.body;
+  while (el && el !== document.documentElement) {
+    const bg = window.getComputedStyle(el).backgroundColor;
+    if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+      isDockOnDark.value = isColorDark(bg);
+      return;
+    }
+    el = el.parentElement;
+  }
+  const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+  isDockOnDark.value = isColorDark(bodyBg);
 }
 
 function handleClickOutside(event) {
@@ -75,13 +107,17 @@ function handleEscape(event) {
 
 onMounted(() => {
   handleScroll();
+  // Recalcula após o paint inicial (alguns elementos só ganham bg depois da hidratação).
+  requestAnimationFrame(() => updateDockBg());
   window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', updateDockBg);
   document.addEventListener('click', handleClickOutside);
   document.addEventListener('keydown', handleEscape);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', updateDockBg);
   document.removeEventListener('click', handleClickOutside);
   document.removeEventListener('keydown', handleEscape);
 });
@@ -129,7 +165,7 @@ onBeforeUnmount(() => {
     </div>
   </header>
 
-  <nav class="nav-dock" aria-label="Navegação principal">
+  <nav ref="dockRef" class="nav-dock" :class="{ 'on-dark': isDockOnDark }" aria-label="Navegação principal">
     <router-link
       v-for="item in items"
       :key="item.to"

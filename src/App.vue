@@ -63,6 +63,14 @@ useHead({
 });
 
 onMounted(() => {
+  // Safety: o navegador pode tentar restaurar uma posição de scroll antiga
+  // antes do scrollRestoration = 'manual' (em main.js) ter efeito. Quando a
+  // landing tem seções altas (300vh do Diple3DSection), essa posição salva
+  // pode cair no meio da seção 3D dando aparência de "auto-scroll". Forçamos
+  // topo apenas em navegação fresca sem hash, sem prejudicar links âncora.
+  if (typeof window !== 'undefined' && !window.location.hash && window.scrollY > 0) {
+    window.scrollTo(0, 0);
+  }
   initLenis();
 });
 

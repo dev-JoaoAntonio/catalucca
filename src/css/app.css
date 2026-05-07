@@ -1658,16 +1658,31 @@ section {
   z-index: 1000;
   display: none;
   flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.78);
-  backdrop-filter: saturate(180%) blur(16px);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
-  border: 1px solid rgba(226, 232, 240, 0.6);
-  border-radius: 999px;
-  box-shadow:
-    0 10px 30px -10px rgba(15, 62, 109, 0.18),
-    0 4px 12px -4px rgba(15, 62, 109, 0.06);
+  gap: 0.4rem;
+  padding: 0.5rem 0 0.5rem 0.75rem;
+  /* --dock-color é trocado via JS em AppNavbar (classe .on-dark) conforme o
+     fundo atrás do dock: navy sobre claro, branco sobre escuro. */
+  --dock-color: var(--primary);
+}
+
+.nav-dock.on-dark {
+  --dock-color: #fff;
+}
+
+/* Régua acima do primeiro ícone — fina e fading na ponta superior. */
+.nav-dock::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: calc(0.75rem + 21px);
+  transform: translateX(-50%);
+  width: 2px;
+  height: 48px;
+  background-color: var(--dock-color);
+  mask-image: linear-gradient(to top, black, transparent);
+  -webkit-mask-image: linear-gradient(to top, black, transparent);
+  border-radius: 1px;
+  transition: background-color 0.3s ease;
 }
 
 .nav-dock-item {
@@ -1678,48 +1693,32 @@ section {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  color: var(--muted-foreground);
+  color: var(--dock-color);
   text-decoration: none;
   transition:
-    color 0.25s ease,
-    background-color 0.25s ease,
+    color 0.3s ease,
     transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.nav-dock-item:hover {
-  color: var(--primary);
-  background-color: rgba(15, 62, 109, 0.08);
-  transform: translateX(2px);
-}
-
+.nav-dock-item:hover,
 .nav-dock-item.active {
-  color: var(--primary);
-  background-color: rgba(15, 62, 109, 0.12);
+  transform: translateX(2px);
 }
 
 .nav-dock-item .nav-icon {
   width: 20px;
   height: 20px;
+  transition: transform 0.25s ease;
 }
 
 .nav-dock-item:hover .nav-icon {
   transform: scale(1.1);
 }
 
-.nav-dock-item-cta {
-  background-color: var(--primary);
-  color: #fff;
-}
-
-.nav-dock-item-cta:hover {
-  background-color: var(--primary-hover);
-  color: #fff;
-  box-shadow: 0 6px 14px -6px rgba(15, 62, 109, 0.45);
-}
-
+.nav-dock-item-cta,
+.nav-dock-item-cta:hover,
 .nav-dock-item-cta.active {
-  background-color: var(--primary-hover);
-  color: #fff;
+  color: var(--dock-color);
 }
 
 /* Tooltip flutuante à direita do ícone */
@@ -3262,7 +3261,12 @@ section {
 
 .diple3d-section {
   position: relative;
-  height: 140vh;
+  /* três fases: reveal → manifesto → phone+Tec card. Mais altura = scroll
+     suficiente pra cada transição respirar + dwell extra na fase 1. */
+  height: 320vh;
+  /* Contém os filhos transformados (canvas-wraps com translate negativos) pra
+     não estenderem a área scrollável horizontal do documento. */
+  overflow-x: clip;
   background:
     radial-gradient(120% 60% at 50% 0%, rgba(0, 140, 186, 0.06) 0%, transparent 60%),
     var(--bg-body);
@@ -3274,22 +3278,156 @@ section {
   position: sticky;
   top: 0;
   height: 100vh;
-  display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(380px, 2fr) minmax(220px, 1fr);
-  align-items: center;
-  gap: 2rem;
   width: 90%;
   max-width: var(--container-width);
   margin: 0 auto;
 }
 
+/* Todos os filhos do pin são absolutos — animados via transform inline. */
+.diple3d-info-left,
+.diple3d-info-right,
+.diple3d-canvas-wrap,
+.diple3d-manifesto,
+.diple3d-tec {
+  position: absolute;
+  top: 50%;
+  will-change: transform, opacity, filter;
+}
+
+/* Painéis Hardware/Cadeia — visual editorial igual ao Tec card, com régua
+   de acento "moldurando" o modelo central (acento na borda externa de cada). */
+.diple3d-info-left {
+  left: 0;
+  width: 24%;
+  max-width: 340px;
+  border-left: 2px solid var(--accent);
+  padding: 0.4rem 0 0.4rem 1.2rem;
+}
+
+.diple3d-info-right {
+  right: 0;
+  width: 24%;
+  max-width: 340px;
+  border-right: 2px solid var(--accent);
+  padding: 0.4rem 1.2rem 0.4rem 0;
+  text-align: right;
+}
+
+.diple3d-info-right .diple3d-info-spec {
+  flex-direction: row-reverse;
+}
+
 .diple3d-canvas-wrap {
-  position: relative;
-  width: 100%;
+  left: 50%;
+  width: 56%;
   height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.diple3d-manifesto {
+  left: 0;
+  width: 48%;
+  max-width: 540px;
+}
+
+/* Bloco "Tecnologia Italiana" — visual editorial sem chrome de card.
+   Régua de acento à esquerda + hierarquia tipográfica forte. */
+.diple3d-tec {
+  right: 0;
+  width: 30%;
+  max-width: 400px;
+  border-left: 2px solid var(--accent);
+  padding: 0.4rem 0 0.4rem 1.6rem;
+}
+
+.diple3d-tec-eyebrow {
+  display: block;
+  font-family: var(--font-hero-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+}
+
+.diple3d-tec-title {
+  font-family: var(--font-hero-serif);
+  font-size: clamp(2.2rem, 3.4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--primary);
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: baseline;
+}
+
+.diple3d-tec-title-mark {
+  display: inline-block;
+  margin: 0 0.2em;
+  font-weight: 300;
+  font-size: 0.85em;
+  color: var(--accent);
+  transform: translateY(-0.08em);
+}
+
+.diple3d-tec-subtitle {
+  font-family: var(--font-hero-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin: 0 0 1.4rem;
+  line-height: 1.45;
+}
+
+.diple3d-tec-body {
+  font-family: var(--font-hero-sans);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--foreground);
+  margin: 0 0 1.5rem;
+}
+
+.diple3d-tec-specs {
+  margin: 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--border-color);
+  display: grid;
+  gap: 0.7rem;
+}
+
+.diple3d-tec-spec {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  font-family: var(--font-hero-sans);
+}
+
+.diple3d-tec-spec dt {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.diple3d-tec-spec dd {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.diple3d-tec-spec dd small {
+  font-size: 0.72em;
+  font-weight: 500;
+  color: var(--muted-foreground);
 }
 
 .diple3d-canvas {
@@ -3300,16 +3438,125 @@ section {
   filter: drop-shadow(0 30px 40px rgba(15, 62, 109, 0.28));
 }
 
-.diple3d-info {
-  max-width: 320px;
+.diple3d-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+  height: 100%;
+  padding: 2rem 1rem;
 }
 
-.diple3d-info-right {
-  justify-self: end;
-  text-align: left;
+.diple3d-fallback-svg {
+  width: min(100%, 460px);
+  height: auto;
+  filter: drop-shadow(0 24px 36px rgba(15, 62, 109, 0.28));
+  animation: diple3d-fallback-float 6s ease-in-out infinite;
 }
 
-.diple3d-info-label {
+.diple3d-fallback-caption {
+  font-family: var(--font-hero-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  opacity: 0.75;
+}
+
+@keyframes diple3d-fallback-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diple3d-fallback-svg { animation: none; }
+}
+
+.diple3d-info-eyebrow {
+  display: block;
+  font-family: var(--font-hero-sans);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.55rem;
+}
+
+.diple3d-info-title {
+  font-family: var(--font-hero-serif);
+  font-size: clamp(1.55rem, 1.9vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--primary);
+  margin: 0 0 0.25rem;
+}
+
+.diple3d-info-subtitle {
+  font-family: var(--font-hero-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin: 0 0 1.05rem;
+  line-height: 1.4;
+}
+
+.diple3d-info-body {
+  font-family: var(--font-hero-sans);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--foreground);
+  margin: 0 0 1.2rem;
+}
+
+.diple3d-info-body strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.diple3d-info-specs {
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border-color);
+  display: grid;
+  gap: 0.5rem;
+}
+
+.diple3d-info-spec {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.7rem;
+  font-family: var(--font-hero-sans);
+}
+
+.diple3d-info-spec dt {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.diple3d-info-spec dd {
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.diple3d-info-spec dd small {
+  font-size: 0.72em;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+/* Manifesto integrado — aparece pela esquerda na fase 2 */
+.diple3d-manifesto .section-label {
   display: inline-block;
   font-family: var(--font-hero-sans);
   text-transform: uppercase;
@@ -3324,91 +3571,102 @@ section {
   background: rgba(0, 140, 186, 0.06);
 }
 
-.diple3d-info h3 {
+.diple3d-manifesto h2 {
   font-family: var(--font-hero-serif);
-  margin: 0.3rem 0 0.85rem;
-  font-size: 1.5rem;
+  font-size: clamp(1.6rem, 2.4vw, 2.25rem);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.2;
+  line-height: 1.18;
   color: var(--primary);
+  margin: 0.5rem 0 1rem;
 }
 
-.diple3d-info p {
+.diple3d-manifesto p {
   font-family: var(--font-hero-sans);
-  margin: 0 0 1.1rem;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.62;
   color: var(--muted-foreground);
+  margin: 0 0 1rem;
 }
 
-.diple3d-info p strong {
+.diple3d-manifesto p strong {
   color: var(--primary);
   font-weight: 600;
 }
 
-.diple3d-info-list {
-  list-style: none;
-  padding: 0;
+.diple3d-manifesto .about-highlight {
+  border-left: 4px solid var(--accent);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+  color: var(--foreground);
+}
+
+.diple3d-manifesto .about-highlight p {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  font-family: var(--font-hero-sans);
-  font-size: 0.88rem;
-  color: var(--muted-foreground);
-}
-
-.diple3d-info-list li {
-  position: relative;
-  padding-left: 1rem;
-}
-
-.diple3d-info-list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.diple3d-info-list strong {
-  color: var(--primary);
-  font-weight: 600;
+  font-size: 0.96rem;
+  color: var(--foreground);
 }
 
 @media (max-width: 1023px) {
+  /* Em mobile o esquema pin-scroll desativa: tudo vira stack vertical estático. */
   .diple3d-section {
-    height: 180vh;
+    height: auto;
+    padding: 3.5rem 0 3rem;
   }
 
   .diple3d-pin {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
-    gap: 1rem;
-    padding: 4.5rem 0 3rem;
-    align-content: center;
+    position: static;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .diple3d-info-left,
+  .diple3d-info-right,
+  .diple3d-canvas-wrap,
+  .diple3d-manifesto,
+  .diple3d-tec {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    max-width: 100%;
+    /* anula transforms/blur/opacity inline aplicados pelo scroll-driven do desktop */
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
   }
 
   .diple3d-canvas-wrap {
     height: 50vh;
-    grid-row: 2;
   }
 
-  .diple3d-info {
-    max-width: 100%;
-    text-align: left;
+  /* Stack vertical em mobile: diple → manifesto → phone → Tec → painéis. */
+  .diple3d-canvas-wrap-diple { order: 1; }
+  .diple3d-manifesto { order: 2; }
+  .diple3d-canvas-wrap-phone { order: 3; }
+  .diple3d-tec { order: 4; }
+  .diple3d-info-left { order: 5; }
+  .diple3d-info-right { order: 6; }
+
+  .diple3d-info-title {
+    font-size: 1.4rem;
   }
 
+  /* No mobile, painéis sem accent rule pra não dar borda atravessada */
+  .diple3d-info-left,
   .diple3d-info-right {
-    justify-self: stretch;
+    border-left: none !important;
+    border-right: none !important;
+    padding: 0 !important;
+    text-align: left !important;
   }
 
-  .diple3d-info h3 {
-    font-size: 1.25rem;
+  .diple3d-info-right .diple3d-info-spec {
+    flex-direction: row !important;
   }
 }
 

@@ -315,50 +315,10 @@ onBeforeUnmount(() => {
   <Diple3DSection />
 
   <!-- MANIFESTO -->
+  <!-- "Nossa Essência" e "Tecnologia Italiana" foram integrados ao Diple3DSection (scroll-driven). -->
   <section class="section" id="manifesto">
     <div class="container">
-      <div class="about-section">
-        <div class="about-content" v-reveal:left>
-          <span class="section-label">Nossa Essência</span>
-          <h2>A Borda é o nosso Território.</h2>
-          <p>
-            A CATALUCCA Tecnologias™ é uma integradora nacional de infraestrutura científica aplicada.
-            Nascemos de um princípio fundamental:
-            <strong>a ciência perde valor quando está distante do problema</strong>.
-          </p>
-          <p>
-            Não atuamos como fornecedores de equipamentos isolados. Atuamos como estruturadores de
-            sistemas científicos operacionais, eliminando o hiato histórico entre campo e gabinete.
-            Utilidade gera legitimidade.
-          </p>
-
-          <div class="about-highlight">
-            <p>
-              "Não substituímos o laboratório central. Levamos a capacidade de triagem técnica para
-              onde a decisão precisa ser tomada."
-            </p>
-          </div>
-        </div>
-
-        <div
-          v-reveal:right
-          style="background: var(--bg-surface); padding: 2.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-md);"
-        >
-          <h3 style="color: var(--primary); margin-bottom: 1.5rem;">Tecnologia Italiana (SMO &amp; IIT)</h3>
-          <p style="margin-bottom: 1.5rem;">
-            Tecnologias DIPLE™ e BLIPS™ desenvolvidas pela Smart Micro Optics e Istituto Italiano di
-            Tecnologia. Protegidas como Marca Notoriamente Conhecida (Lei 9.279/96).
-          </p>
-          <ul class="app-list">
-            <li><strong>Resolução:</strong> Até 0,7 µm (Resolução óptica)</li>
-            <li><strong>Legalidade:</strong> Proteção Intelectual (Lei 9.610/98)</li>
-            <li><strong>Exclusividade:</strong> Distribuição na América do Sul</li>
-          </ul>
-        </div>
-      </div>
-
-      <div style="margin-top: 6rem; padding-top: 4rem; border-top: 1px solid var(--border-color);">
-        <div class="section-header" v-reveal>
+      <div class="section-header" v-reveal style="margin-bottom: 3rem;">
           <span class="section-label">Resultados Reais</span>
           <h2 class="section-title">Impacto Estrutural</h2>
           <p class="section-subtitle">
@@ -400,7 +360,6 @@ onBeforeUnmount(() => {
             </ul>
           </article>
         </div>
-      </div>
     </div>
   </section>
 
