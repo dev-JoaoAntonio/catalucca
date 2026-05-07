@@ -2,6 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useHead } from '@unhead/vue';
 import PricingMatrix from '@/components/PricingMatrix.vue';
+import Diple3DSection from '@/components/Diple3DSection.vue';
 
 const HOME_DESCRIPTION =
   'Infraestrutura Científica de Borda e Microscopia Digital (SMO/IIT) para Governo, Agro e Indústria. Tecnologia italiana com resolução de 0,7 µm.';
@@ -207,56 +208,72 @@ onBeforeUnmount(() => {
         </p>
       </div>
 
-      <div class="pipeline-grid">
-        <article class="pipeline-step" v-reveal="{ delay: 0 }">
-          <span class="pipeline-step-num">01</span>
-          <span class="pipeline-step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-              <circle cx="12" cy="13" r="3" />
-            </svg>
-          </span>
-          <h3>Capturar</h3>
-          <p>CameraX com foco, exposição e balanço de branco travados por código. Estabilidade primeiro.</p>
-        </article>
+      <ol class="pipeline-timeline" v-reveal>
+        <li class="pipeline-node" v-reveal="{ delay: 0 }">
+          <div class="pipeline-node-marker">
+            <span class="pipeline-node-num">01</span>
+            <span class="pipeline-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+                <circle cx="12" cy="13" r="3" />
+              </svg>
+            </span>
+          </div>
+          <div class="pipeline-node-body">
+            <h3>Capturar</h3>
+            <p>CameraX com foco, exposição e balanço de branco travados por código. Estabilidade primeiro.</p>
+          </div>
+        </li>
 
-        <article class="pipeline-step" v-reveal="{ delay: 120 }">
-          <span class="pipeline-step-num">02</span>
-          <span class="pipeline-step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-          </span>
-          <h3>Validar</h3>
-          <p>Métrica computacional de nitidez (variância, contraste, borda) decide quando capturar.</p>
-        </article>
+        <li class="pipeline-node" v-reveal="{ delay: 120 }">
+          <div class="pipeline-node-marker">
+            <span class="pipeline-node-num">02</span>
+            <span class="pipeline-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </span>
+          </div>
+          <div class="pipeline-node-body">
+            <h3>Validar</h3>
+            <p>Métrica computacional de nitidez (variância, contraste, borda) decide quando capturar.</p>
+          </div>
+        </li>
 
-        <article class="pipeline-step" v-reveal="{ delay: 240 }">
-          <span class="pipeline-step-num">03</span>
-          <span class="pipeline-step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <path d="M3 8h18" />
-              <path d="M3 13h18" />
-            </svg>
-          </span>
-          <h3>Empilhar</h3>
-          <p>Burst de frames + stacking não-destrutivo. Hash da derivada vinculado aos originais.</p>
-        </article>
+        <li class="pipeline-node" v-reveal="{ delay: 240 }">
+          <div class="pipeline-node-marker">
+            <span class="pipeline-node-num">03</span>
+            <span class="pipeline-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M3 8h18" />
+                <path d="M3 13h18" />
+              </svg>
+            </span>
+          </div>
+          <div class="pipeline-node-body">
+            <h3>Empilhar</h3>
+            <p>Burst de frames + stacking não-destrutivo. Hash da derivada vinculado aos originais.</p>
+          </div>
+        </li>
 
-        <article class="pipeline-step" v-reveal="{ delay: 360 }">
-          <span class="pipeline-step-num">04</span>
-          <span class="pipeline-step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-              <polyline points="21 4 21 10 15 10" />
-            </svg>
-          </span>
-          <h3>Sincronizar</h3>
-          <p>Hub ATLAS recebe os registros quando há rede. Cadeia de custódia preservada offline-first.</p>
-        </article>
-      </div>
+        <li class="pipeline-node" v-reveal="{ delay: 360 }">
+          <div class="pipeline-node-marker">
+            <span class="pipeline-node-num">04</span>
+            <span class="pipeline-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                <polyline points="21 4 21 10 15 10" />
+              </svg>
+            </span>
+          </div>
+          <div class="pipeline-node-body">
+            <h3>Sincronizar</h3>
+            <p>Hub ATLAS recebe os registros quando há rede. Cadeia de custódia preservada offline-first.</p>
+          </div>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -293,6 +310,9 @@ onBeforeUnmount(() => {
       </div>
     </div>
   </section>
+
+  <!-- DIPLE 3D — pin-scroll cinematográfico -->
+  <Diple3DSection />
 
   <!-- MANIFESTO -->
   <section class="section" id="manifesto">

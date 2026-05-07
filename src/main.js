@@ -16,6 +16,12 @@ export const createApp = ViteSSG(
     app.directive('reveal', reveal);
 
     if (isClient) {
+      // Browser não restaura a posição de scroll — quem decide é o
+      // scrollBehavior do router (sempre top em refresh / nav fresca).
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+
       const { Quasar } = await import('quasar');
       app.use(Quasar, { plugins: {} });
 

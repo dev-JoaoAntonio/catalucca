@@ -95,23 +95,6 @@ onBeforeUnmount(() => {
         <span class="navbar-brand-text">CATALUCCA</span>
       </router-link>
 
-      <nav class="navbar-nav" aria-label="Navegação principal">
-        <router-link
-          v-for="item in items"
-          :key="item.to"
-          :to="item.to"
-          class="nav-item"
-          :class="{ active: isActive(item.to) }"
-        >
-          <NavIcon :name="item.icon" />
-          <span>{{ item.label }}</span>
-        </router-link>
-        <router-link to="/contato" class="nav-item nav-item-cta" @click="onContactClick">
-          <NavIcon name="message" />
-          <span>Contato</span>
-        </router-link>
-      </nav>
-
       <button
         class="navbar-toggle"
         id="navbar-toggle"
@@ -145,6 +128,23 @@ onBeforeUnmount(() => {
       </nav>
     </div>
   </header>
+
+  <nav class="nav-dock" aria-label="Navegação principal">
+    <router-link
+      v-for="item in items"
+      :key="item.to"
+      :to="item.to"
+      class="nav-dock-item"
+      :class="{ active: isActive(item.to) }"
+    >
+      <NavIcon :name="item.icon" />
+      <span class="nav-dock-label">{{ item.label }}</span>
+    </router-link>
+    <router-link to="/contato" class="nav-dock-item nav-dock-item-cta" :class="{ active: isActive('/contato') }">
+      <NavIcon name="message" />
+      <span class="nav-dock-label">Contato</span>
+    </router-link>
+  </nav>
 </template>
 
 <script>
