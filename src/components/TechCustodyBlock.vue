@@ -1,5 +1,7 @@
 <script setup>
-defineProps({
+import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue';
+
+const props = defineProps({
   variant: {
     type: String,
     default: 'custody',
@@ -27,6 +29,141 @@ const fields = [
   'Versão do app',
   'Identificação do operador',
 ];
+
+const ITEMS_PER_ROW = 3;
+
+const stepRows = computed(() => {
+  if (props.variant !== 'sovereign') return [];
+  const rows = [];
+  for (let i = 0; i < steps.length; i += ITEMS_PER_ROW) {
+    rows.push({
+      items: steps.slice(i, i + ITEMS_PER_ROW),
+      reverse: rows.length % 2 === 1,
+    });
+  }
+  return rows;
+});
+
+const pinRef = ref(null);
+const timelineRef = ref(null);
+const pathRef = ref(null);
+const svgWidth = ref(0);
+const svgHeight = ref(0);
+const badgePoints = ref([]);
+const pathLength = ref(0);
+
+const scrollProgress = ref(0);
+
+function measureLayout() {
+  const root = timelineRef.value;
+  if (!root) return;
+  const cRect = root.getBoundingClientRect();
+  svgWidth.value = cRect.width;
+  svgHeight.value = cRect.height;
+  const badges = root.querySelectorAll('.tech-step-number');
+  const points = [];
+  badges.forEach((b) => {
+    const r = b.getBoundingClientRect();
+    points.push({
+      x: r.left - cRect.left + r.width / 2,
+      y: r.top - cRect.top + r.height / 2,
+    });
+  });
+  badgePoints.value = points;
+}
+
+function updatePathLength() {
+  if (pathRef.value) {
+    pathLength.value = pathRef.value.getTotalLength() || 0;
+  }
+}
+
+function updateScrollProgress() {
+  const pin = pinRef.value;
+  if (!pin) return;
+  const rect = pin.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const startOffset = vh * 1;
+  const span = rect.height - vh + startOffset;
+  const scrolled = startOffset - rect.top;
+  scrollProgress.value = Math.max(0, Math.min(1, span > 0 ? scrolled / span : 0));
+}
+
+const snakePath = computed(() => {
+  const pts = badgePoints.value;
+  if (pts.length < 2) return '';
+  const w = svgWidth.value || 1;
+  let d = `M ${pts[0].x.toFixed(2)} ${pts[0].y.toFixed(2)}`;
+  for (let i = 1; i < pts.length; i++) {
+    const prev = pts[i - 1];
+    const curr = pts[i];
+    if (Math.abs(prev.y - curr.y) < 5) {
+      d += ` L ${curr.x.toFixed(2)} ${curr.y.toFixed(2)}`;
+    } else {
+      const onRight = prev.x > w / 2;
+      const bulge = (onRight ? 1 : -1) * 80;
+      const cx = prev.x + bulge;
+      d += ` C ${cx.toFixed(2)} ${prev.y.toFixed(2)}, ${cx.toFixed(2)} ${curr.y.toFixed(2)}, ${curr.x.toFixed(2)} ${curr.y.toFixed(2)}`;
+    }
+  }
+  return d;
+});
+
+const dashOffset = computed(() => pathLength.value * (1 - scrollProgress.value));
+
+const stepVisible = computed(() => {
+  const total = steps.length;
+  return steps.map((_, idx) => {
+    const threshold = (idx + 0.5) / total;
+    return scrollProgress.value >= threshold;
+  });
+});
+
+let resizeObserver = null;
+let scrollHandler = null;
+
+function setupObservers() {
+  if (!timelineRef.value) return;
+  resizeObserver = new ResizeObserver(() => {
+    measureLayout();
+    nextTick(updatePathLength);
+  });
+  resizeObserver.observe(timelineRef.value);
+  timelineRef.value.querySelectorAll('.tech-step-number').forEach((b) => {
+    resizeObserver.observe(b);
+  });
+}
+
+onMounted(() => {
+  if (props.variant !== 'sovereign') return;
+  nextTick(() => {
+    measureLayout();
+    nextTick(() => {
+      updatePathLength();
+      updateScrollProgress();
+    });
+    setupObservers();
+  });
+  scrollHandler = updateScrollProgress;
+  window.addEventListener('scroll', scrollHandler, { passive: true });
+});
+
+watch(stepRows, () => {
+  if (props.variant !== 'sovereign') return;
+  nextTick(() => {
+    measureLayout();
+    nextTick(updatePathLength);
+  });
+});
+
+watch(badgePoints, () => {
+  nextTick(updatePathLength);
+}, { deep: true });
+
+onBeforeUnmount(() => {
+  resizeObserver?.disconnect();
+  if (scrollHandler) window.removeEventListener('scroll', scrollHandler);
+});
 </script>
 
 <template>
@@ -46,7 +183,62 @@ const fields = [
         </p>
       </div>
 
-      <ol class="tech-steps">
+      <div
+        v-if="variant === 'sovereign'"
+        ref="pinRef"
+        class="tech-timeline-pin"
+      >
+        <div class="tech-timeline-sticky">
+          <div
+            ref="timelineRef"
+            class="tech-steps tech-steps--timeline"
+            role="list"
+          >
+            <svg
+              class="tech-timeline-svg"
+              aria-hidden="true"
+              :viewBox="`0 0 ${svgWidth} ${svgHeight}`"
+              :width="svgWidth"
+              :height="svgHeight"
+            >
+              <path
+                ref="pathRef"
+                :d="snakePath"
+                stroke="var(--accent)"
+                stroke-width="4"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                :stroke-dasharray="pathLength"
+                :stroke-dashoffset="dashOffset"
+              />
+            </svg>
+
+            <div
+              v-for="(row, ri) in stepRows"
+              :key="ri"
+              class="tech-timeline-row"
+              :class="{ 'is-reverse': row.reverse }"
+            >
+              <div
+                v-for="(step, si) in row.items"
+                :key="step.n"
+                class="tech-step"
+                :class="{ 'is-visible': stepVisible[ri * 3 + si] }"
+                role="listitem"
+              >
+                <span class="tech-step-number">{{ step.n }}</span>
+                <div class="tech-step-body">
+                  <h3>{{ step.t }}</h3>
+                  <p>{{ step.d }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ol v-else class="tech-steps">
         <li v-for="(step, idx) in steps" :key="step.n" class="tech-step" v-reveal="{ delay: idx * 90 }">
           <span class="tech-step-number">{{ step.n }}</span>
           <div class="tech-step-body">

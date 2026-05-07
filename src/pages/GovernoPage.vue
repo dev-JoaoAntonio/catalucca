@@ -23,20 +23,25 @@ useHead({
 </script>
 
 <template>
-  <section class="hero hero-grid">
+  <section class="hero hero-grid hero-fixed">
     <div class="container">
-      <div class="hero-content">
-        <span class="section-label" style="justify-content: center; display: flex; color: #4FC3F7;" v-reveal>
-          Linguagem de Estado
-        </span>
-        <h1 class="hero-title" style="color: white;" v-reveal="{ delay: 120 }">Inteligência Territorial e Vigilância Sentinela.</h1>
-        <p class="hero-subtitle" style="color: rgba(255,255,255,0.9);" v-reveal="{ delay: 240 }">
-          Eficiência fiscal através da Triagem Técnica de Borda. Redução de custos logísticos de análise
-          centralizada em até 85%. Um único investimento atende a 10 programas federais.
+      <div class="hero-cover">
+        <h1 class="hero-title-rich" v-reveal="{ delay: 120 }">
+          Inteligência Territorial<br>
+          <span class="accent-gradient">e Vigilância Sentinela</span>.
+        </h1>
+
+        <p class="hero-subtitle text-white" v-reveal="{ delay: 240 }">
+          Eficiência fiscal através da <strong>Triagem Técnica de Borda</strong>. Redução de
+          custos logísticos de análise centralizada em até 85%. Um único investimento atende a
+          10 programas federais.
         </p>
       </div>
     </div>
-    <div class="ocean-waves-container">
+  </section>
+
+  <div class="hero-overlay-stack">
+    <div class="overlay-waves" aria-hidden="true">
       <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
         viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
         <defs>
@@ -51,7 +56,6 @@ useHead({
         </g>
       </svg>
     </div>
-  </section>
 
   <section class="section">
     <div class="container">
@@ -126,4 +130,5 @@ useHead({
   <TechCustodyBlock variant="sovereign" />
 
   <PricingMatrix highlight="governo" />
+  </div>
 </template>

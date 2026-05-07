@@ -15,12 +15,15 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --container-width: 1200px;
   --header-height: 80px;
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Montserrat', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Montserrat', 'Inter', system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   /* Hero — stack tipográfica corporativa (família IBM Plex) */
-  --font-hero-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
-  --font-hero-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Apesar do nome, --font-hero-serif agora aponta pra Montserrat também
+     (legado — usado por .diple3d-info-title, .diple3d-tec-title etc.). */
+  --font-hero-serif: 'Montserrat', 'Public Sans', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-hero-italic: 'Times New Roman', Times, Georgia, 'IBM Plex Serif', serif;
+  --font-hero-sans: 'Montserrat', 'Public Sans', 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-hero-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   /* Aliases (legado — mapeiam para Inter) */
   --font-serif: var(--font-sans);
@@ -157,8 +160,8 @@ svg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.75rem;
-  border-radius: var(--radius-sm);
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
@@ -1393,17 +1396,19 @@ section {
 
 .navbar {
   position: fixed;
-  top: 1rem;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 2rem);
-  max-width: 880px;
+  width: auto;
   height: 64px;
   background-color: rgba(255, 255, 255, 0.78);
   backdrop-filter: saturate(180%) blur(16px);
   -webkit-backdrop-filter: saturate(180%) blur(16px);
+  /* Bordas só nos lados que não tocam o viewport (bottom + laterais). */
   border: 1px solid rgba(226, 232, 240, 0.6);
-  border-radius: 999px;
+  border-top: none;
+  /* Apenas os cantos inferiores arredondados. */
+  border-radius: 0 0 24px 24px;
   box-shadow:
     0 10px 30px -10px rgba(15, 62, 109, 0.18),
     0 4px 12px -4px rgba(15, 62, 109, 0.06);
@@ -1581,8 +1586,9 @@ section {
 .navbar-mobile {
   position: absolute;
   top: calc(100% + 0.5rem);
-  left: 0;
-  width: 100%;
+  left: 50%;
+  width: max-content;
+  min-width: 220px;
   background-color: rgba(255, 255, 255, 0.96);
   backdrop-filter: saturate(180%) blur(16px);
   -webkit-backdrop-filter: saturate(180%) blur(16px);
@@ -1594,7 +1600,8 @@ section {
   overflow: hidden;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px) scale(0.98);
+  /* Combina o centramento horizontal (-50%) com a animação de slide-down. */
+  transform: translate(-50%, -8px) scale(0.98);
   transform-origin: top center;
   transition:
     opacity 0.3s ease,
@@ -1605,7 +1612,7 @@ section {
 .navbar-mobile.active {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
+  transform: translate(-50%, 0) scale(1);
 }
 
 .navbar-mobile-nav {
@@ -1660,13 +1667,32 @@ section {
   flex-direction: column;
   gap: 0.4rem;
   padding: 0.5rem 0 0.5rem 0.75rem;
-  /* --dock-color é trocado via JS em AppNavbar (classe .on-dark) conforme o
-     fundo atrás do dock: navy sobre claro, branco sobre escuro. */
-  --dock-color: var(--primary);
+  /* No topo da página: ícones brancos, sem fundo, régua visível. */
+  --dock-color: #fff;
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-radius: 999px;
+  box-shadow: none;
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    padding 0.35s ease;
 }
 
-.nav-dock.on-dark {
-  --dock-color: #fff;
+/* Após scroll: ícones ficam navy, régua some, dock ganha card flutuante. */
+.nav-dock.scrolled {
+  --dock-color: var(--primary);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.65);
+  box-shadow:
+    0 12px 30px -12px rgba(15, 62, 109, 0.22),
+    0 4px 14px -6px rgba(15, 62, 109, 0.08);
+  padding: 0.5rem;
 }
 
 /* Régua acima do primeiro ícone — fina e fading na ponta superior. */
@@ -1682,7 +1708,15 @@ section {
   mask-image: linear-gradient(to top, black, transparent);
   -webkit-mask-image: linear-gradient(to top, black, transparent);
   border-radius: 1px;
-  transition: background-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.nav-dock.scrolled::before {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-8px);
 }
 
 .nav-dock-item {
@@ -1774,8 +1808,7 @@ section {
 
 @media (max-width: 767px) {
   .navbar {
-    top: 0.75rem;
-    width: calc(100% - 1.5rem);
+    top: 0;
     height: 60px;
   }
 
@@ -2277,6 +2310,197 @@ section {
   color: var(--muted-foreground);
 }
 
+/* ============================================================
+   Variant TIMELINE SERPENTINA — usado em variant="sovereign" (Governo)
+   Linhas alternam direção (LTR / RTL) conectadas por curvas suaves
+   desenhadas via SVG sobrepondo a grid.
+   ============================================================ */
+
+/* Pin scroll: o pin é taller que o viewport. Enquanto ele está
+   atravessando, o conteúdo sticky interno fica grudado no topo e a
+   animação scroll-driven progride de 0→1. Só depois disso o usuário
+   consegue rolar pra fora da seção. */
+.tech-timeline-pin {
+  position: relative;
+  height: 240vh;
+  margin: 0 0 4rem;
+}
+
+.tech-timeline-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tech-timeline-sticky > .tech-steps--timeline {
+  width: 100%;
+  margin: 0;
+}
+
+.tech-steps--timeline {
+  list-style: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin: 0 0 4rem;
+  padding: 0;
+  /* Altura fixa por row pra manter os badges em y previsíveis e o SVG
+     se alinhar com eles. */
+  --timeline-row-h: 200px;
+  /* Override do grid base */
+  grid-template-columns: none !important;
+}
+
+@media (min-width: 768px), (min-width: 1100px) {
+  .tech-steps--timeline {
+    grid-template-columns: none !important;
+  }
+}
+
+/* SVG cobre TODO o container do timeline (top:0, full size). O viewBox e
+   path são gerados em pixels reais via getBoundingClientRect dos badges,
+   então o desenho atravessa exatamente pelo centro de cada número. */
+.tech-timeline-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.tech-timeline-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  min-height: var(--timeline-row-h);
+}
+
+/* Linhas pares (reverse): direction RTL faz items fluírem da direita
+   pra esquerda no grid. Conteúdo dentro do step volta a LTR. */
+.tech-timeline-row.is-reverse {
+  direction: rtl;
+}
+
+.tech-timeline-row.is-reverse .tech-step {
+  direction: ltr;
+}
+
+.tech-steps--timeline .tech-step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  text-align: center;
+  /* Inicialmente invisível: o step só aparece quando a linha do tempo
+     animada via scroll passa pelo seu centro (classe is-visible). */
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tech-steps--timeline .tech-step.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tech-steps--timeline .tech-step:hover {
+  transform: translateY(-4px);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Badge sobre a linha — bg sólido pra "comer" o pedaço da linha embaixo */
+.tech-steps--timeline .tech-step-number {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background: var(--bg-body);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  z-index: 2;
+  margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tech-steps--timeline .tech-step:hover .tech-step-number {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Card de conteúdo abaixo do badge */
+.tech-steps--timeline .tech-step-body {
+  width: 100%;
+  background: var(--bg-body);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 0.95rem 1.1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech-steps--timeline .tech-step:hover .tech-step-body {
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px -16px rgba(0, 140, 186, 0.45);
+}
+
+.tech-steps--timeline .tech-step-body h3 {
+  font-size: 0.92rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+
+.tech-steps--timeline .tech-step-body p {
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .tech-steps--timeline {
+    gap: 3rem;
+    --timeline-row-h: 220px;
+  }
+
+  .tech-timeline-row {
+    gap: 0.6rem;
+  }
+
+  .tech-steps--timeline .tech-step-number {
+    width: 32px;
+    height: 32px;
+    font-size: 0.78rem;
+  }
+
+  .tech-steps--timeline .tech-step-body {
+    padding: 0.7rem 0.55rem 0.8rem;
+  }
+
+  .tech-steps--timeline .tech-step-body h3 {
+    font-size: 0.78rem;
+  }
+
+  .tech-steps--timeline .tech-step-body p {
+    font-size: 0.7rem;
+  }
+}
+
 .tech-custody-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -2750,9 +2974,11 @@ section {
 }
 
 .hero-title-rich {
-  font-family: var(--font-hero-serif);
-  font-size: clamp(2.5rem, 5.5vw, 4rem);
-  font-weight: 700;
+  /* Montserrat: geométrica forte com presença de poster — contrasta com o
+     italic editorial de Times Roman aplicado em .accent-gradient. */
+  font-family: 'Montserrat', 'DM Sans', 'Public Sans', system-ui, sans-serif;
+  font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+  font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.025em;
   color: #fff;
@@ -2760,24 +2986,316 @@ section {
 }
 
 .hero-title-rich .accent-gradient {
-  font-family: var(--font-hero-sans);
+  /* Mix com Times New Roman italic — quebra o ritmo do display serif e cria
+     o contraste editorial típico de comunicações governamentais. */
+  font-family: var(--font-hero-italic);
   font-style: italic;
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  font-weight: 500;
+  letter-spacing: 0;
   color: #fff;
   position: relative;
   display: inline-block;
+  /* isolation cria stacking context próprio pra o ::after com z-index: -1
+     ficar atrás do texto sem escapar pra trás de outros elementos da hero. */
+  isolation: isolate;
+  padding: 0 0.12em;
 }
 
 .hero-title-rich .accent-gradient::after {
   content: '';
   position: absolute;
+  inset: 0.08em -0.08em 0.04em -0.08em;
+  z-index: -1;
+  /* Marcador hand-drawn: retângulo com bordas levemente irregulares pra
+     simular um traço de highlighter atrás do texto. */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'><path d='M2 10 C 30 6 60 12 90 7 C 120 3 150 11 180 6 C 192 5 198 9 198 13 L 198 50 C 178 54 150 47 120 53 C 90 56 60 48 30 54 C 12 56 4 50 2 47 Z' fill='%234FC3F7' fill-opacity='0.42'/></svg>");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* ============================================================
+   HERO redesign — capa editorial + painel técnico ao vivo
+   ============================================================ */
+
+/* Topbar: dateline editorial + indicador de status pulsante.
+   Posicionado na MESMA altura do header (top: 0, height 64px do navbar)
+   com dateline à esquerda e status à direita — flanqueando o navbar
+   centralizado. */
+.hero-topbar {
+  position: absolute;
+  top: 0;
   left: 0;
   right: 0;
-  bottom: 0.06em;
-  height: 0.12em;
-  background: linear-gradient(90deg, rgba(79, 195, 247, 0.9), rgba(79, 195, 247, 0));
-  border-radius: 4px;
+  height: 64px;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0 1.5rem;
+  font-family: var(--font-hero-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  pointer-events: none;
+}
+
+.hero-dateline {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.hero-dateline-mark {
+  font-family: var(--font-hero-italic);
+  font-style: italic;
+  font-size: 1.15em;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(79, 195, 247, 0.95);
+}
+
+.hero-dateline-sep {
+  display: inline-block;
+  opacity: 0.5;
+  margin: 0 0.15rem;
+}
+
+.hero-status {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.hero-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #4ade80;
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55);
+  animation: hero-status-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes hero-status-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55); }
+  50% { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-status-dot { animation: none; }
+}
+
+/* Wrapper minimalista: coluna única centralizada com o conteúdo essencial
+   (título + subtítulo + CTAs). */
+.hero-cover {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero.hero-fixed .hero-content-wrapper {
+  width: 100%;
+  padding: 0;
+}
+
+/* Eyebrow editorial: regra horizontal + texto tracked */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--font-hero-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 0.25rem;
+}
+
+.hero-eyebrow-rule {
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(79, 195, 247, 0), rgba(79, 195, 247, 0.95));
+}
+
+.hero.hero-fixed .hero-subtitle {
+  max-width: 56ch;
+  margin: 0 auto 2.25rem;
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
+  line-height: 1.55;
+}
+
+.hero.hero-fixed .hero-subtitle strong {
+  color: #fff;
+  font-weight: 600;
+  font-style: normal;
+  border-bottom: 1px dotted rgba(79, 195, 247, 0.7);
+  padding-bottom: 0.04em;
+}
+
+/* Actions: centralizado (layout minimalista) */
+.hero.hero-fixed .hero-actions {
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Painel técnico (readout) — sem background pra não competir com o vídeo
+   na home; só borda + tipografia tabular fazem o trabalho de "card". */
+.hero-panel {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  padding: 1.6rem 1.5rem;
+  font-family: var(--font-hero-sans);
+}
+
+.hero-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  margin-bottom: 1.15rem;
+}
+
+.hero-panel-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(79, 195, 247, 0.95);
+}
+
+.hero-panel-id {
+  font-family: var(--font-hero-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.hero-panel-specs {
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.hero-panel-spec {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.hero-panel-spec dt {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.hero-panel-spec dd {
+  margin: 0;
+  font-family: var(--font-hero-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+}
+
+.hero-panel-spec dd small {
+  font-family: var(--font-hero-sans);
+  font-size: 0.62em;
+  font-weight: 600;
+  margin-left: 0.05em;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: lowercase;
+}
+
+.hero-panel-footer {
+  margin-top: 1.25rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.hero-panel-tag {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(79, 195, 247, 0.12);
+  border: 1px solid rgba(79, 195, 247, 0.32);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* Responsivo: stack em telas estreitas */
+@media (max-width: 960px) {
+  .hero-topbar {
+    top: 0;
+    height: 60px;
+    padding: 0 1rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+  }
+
+  /* Em mobile o navbar ocupa o topo central — escondemos o dateline e
+     mantemos só o status à direita pra não disputar espaço. */
+  .hero-dateline {
+    display: none;
+  }
+
+  .hero-cover-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: stretch;
+  }
+
+  .hero.hero-fixed .hero-subtitle {
+    max-width: 100%;
+  }
+
+  .hero-panel {
+    padding: 1.25rem 1.15rem;
+  }
+
+  .hero-panel-spec dd {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-topbar {
+    height: 56px;
+    padding: 0 0.75rem;
+  }
+
+  .hero-status {
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+  }
+
+  .hero-panel-header {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .hero.hero-fixed .hero-actions {
+    grid-template-columns: 1fr;
+  }
 }
 
 .hero-kpi-strip {
@@ -3262,8 +3780,8 @@ section {
 .diple3d-section {
   position: relative;
   /* três fases: reveal → manifesto → phone+Tec card. Mais altura = scroll
-     suficiente pra cada transição respirar + dwell extra na fase 1. */
-  height: 320vh;
+     suficiente pra cada transição respirar + dwell extra na animação do phone. */
+  height: 460vh;
   /* Contém os filhos transformados (canvas-wraps com translate negativos) pra
      não estenderem a área scrollável horizontal do documento. */
   overflow-x: clip;

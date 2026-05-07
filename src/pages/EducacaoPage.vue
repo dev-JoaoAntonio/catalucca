@@ -24,16 +24,17 @@ useHead({
 <template>
   <section class="hero hero-grid hero-fixed">
     <div class="container">
-      <div class="hero-content">
-        <span class="section-label" style="justify-content: center; display: flex; color: #4FC3F7;" v-reveal>
-          Ouro Pedagógico
-        </span>
-        <h1 class="hero-title" style="color: white;" v-reveal="{ delay: 120 }">
-          Protagonismo Digital Investigativo.<br>A Ciência onde o aluno está.
+      <div class="hero-cover">
+        <h1 class="hero-title-rich" v-reveal="{ delay: 120 }">
+          Protagonismo Digital<br>
+          <span class="accent-gradient">Investigativo</span>.<br>
+          A Ciência onde o aluno está.
         </h1>
-        <p class="hero-subtitle" style="color: rgba(255,255,255,0.9);" v-reveal="{ delay: 240 }">
-          Transformamos o smartphone de uma distração passiva numa Estação Científica de Alta Performance.
-          Solução em conformidade com a Lei 15.100/2025.
+
+        <p class="hero-subtitle text-white" v-reveal="{ delay: 240 }">
+          Transformamos o smartphone de uma distração passiva numa
+          <strong>Estação Científica de Alta Performance</strong>. Solução em conformidade com
+          a Lei 15.100/2025.
         </p>
       </div>
     </div>
@@ -282,5 +283,4 @@ useHead({
 
   <PricingMatrix highlight="educacao" />
   </div>
-  <!-- /.hero-overlay-stack -->
 </template>

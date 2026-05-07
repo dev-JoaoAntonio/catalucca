@@ -111,7 +111,6 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <!-- HERO -->
   <section class="hero hero-fixed" id="home">
     <div class="video-background-container">
       <video autoplay muted loop playsinline class="video-background">
@@ -122,17 +121,20 @@ onBeforeUnmount(() => {
     </div>
 
     <div class="container hero-content-wrapper">
-      <div class="hero-content">
+      <div class="hero-cover">
         <h1 class="hero-title-rich" v-reveal="{ delay: 100 }">
           A Precisão do Laboratório.<br>
-          <span class="accent-gradient">A Soberania da Decisão</span> no Território.
+          <span class="accent-gradient">A Soberania da Decisão</span><br>
+          no Território.
         </h1>
+
         <p class="hero-subtitle text-white" v-reveal="{ delay: 220 }">
-          Resolução submicrométrica (0,7&nbsp;µm). Inteligência microvisual integrada à operação,
-          à qualidade e à gestão estratégica de risco.
+          Resolução submicrométrica de <strong>0,7&nbsp;µm</strong> direto no smartphone.
+          Inteligência microvisual integrada à operação, à qualidade e à gestão
+          estratégica de risco.
         </p>
 
-        <div class="hero-actions" style="justify-content: center;" v-reveal="{ delay: 340 }">
+        <div class="hero-actions" v-reveal="{ delay: 340 }">
           <router-link to="/educacao" class="btn">Conhecer Solução Educacional</router-link>
           <a
             href="https://wa.me/5547999455080?text=Olá,%20gostaria%20de%20solicitar%20uma%20demonstração%20técnica."
@@ -141,28 +143,13 @@ onBeforeUnmount(() => {
             class="btn btn-outline-white"
           >Solicitar Demonstração</a>
         </div>
-
-        <div class="hero-kpi-strip" v-reveal="{ delay: 460 }">
-          <span class="hero-kpi">
-            <span class="hero-kpi-value">0,7<span class="unit">µm</span></span>
-            Resolução óptica
-          </span>
-          <span class="hero-kpi">
-            <span class="hero-kpi-value">1500<span class="unit">×</span></span>
-            Ampliação nativa
-          </span>
-          <span class="hero-kpi">
-            <span class="hero-kpi-value">100%</span>
-            Operação offline
-          </span>
-        </div>
       </div>
     </div>
 
     <a href="#manifesto" class="hero-scroll-cue" aria-label="Rolar para o conteúdo" v-reveal:fade="{ delay: 700 }">
       <span>Explorar</span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="m6 9 6 6 6-6" />
       </svg>
     </a>

@@ -23,17 +23,21 @@ useHead({
 </script>
 
 <template>
-  <section class="hero hero-grid">
+  <section class="hero hero-grid hero-fixed">
     <div class="container">
-      <div class="hero-content">
-        <span class="section-label" style="justify-content: center; display: flex; color: #4FC3F7;" v-reveal>
-          Inteligência Operacional &amp; Compliance
-        </span>
-        <h1 class="hero-title" style="color: white;" v-reveal="{ delay: 120 }">Engenharia de Precisão e Blindagem de Processos</h1>
-        <p class="hero-subtitle" style="color: rgba(255,255,255,0.9);" v-reveal="{ delay: 240 }">
-          A última milha da inspeção técnica — da visão de campo à evidência jurídica e financeira.
+      <div class="hero-cover">
+        <h1 class="hero-title-rich" v-reveal="{ delay: 120 }">
+          Engenharia de Precisão<br>
+          <span class="accent-gradient">e Blindagem</span><br>
+          de Processos.
+        </h1>
+
+        <p class="hero-subtitle text-white" v-reveal="{ delay: 240 }">
+          A última milha da inspeção técnica — da visão de campo à
+          <strong>evidência jurídica e financeira</strong>.
         </p>
-        <div class="hero-actions" style="justify-content: center;" v-reveal="{ delay: 360 }">
+
+        <div class="hero-actions" v-reveal="{ delay: 360 }">
           <a
             href="https://wa.me/5547999455080?text=Olá,%20gostaria%20de%20agendar%20uma%20demonstração%20técnica%20para%20minha%20empresa."
             target="_blank"
@@ -43,7 +47,10 @@ useHead({
         </div>
       </div>
     </div>
-    <div class="ocean-waves-container">
+  </section>
+
+  <div class="hero-overlay-stack">
+    <div class="overlay-waves" aria-hidden="true">
       <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
         viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
         <defs>
@@ -58,7 +65,6 @@ useHead({
         </g>
       </svg>
     </div>
-  </section>
 
   <section class="section">
     <div class="container">
@@ -184,4 +190,5 @@ useHead({
   <TechCustodyBlock variant="custody" />
 
   <PricingMatrix highlight="operacional-privado" />
+  </div>
 </template>

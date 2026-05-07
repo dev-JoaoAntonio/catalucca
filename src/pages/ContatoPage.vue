@@ -58,14 +58,15 @@ function onSubmit(event) {
 <template>
   <section class="hero hero-grid">
     <div class="container">
-      <div class="hero-content">
-        <span class="section-label" style="justify-content: center; display: flex; color: #4FC3F7;" v-reveal>
-          Conexão Direta
-        </span>
-        <h1 class="hero-title" style="color: white;" v-reveal="{ delay: 120 }">Fale com a equipe Catalucca.</h1>
-        <p class="hero-subtitle" style="color: rgba(255,255,255,0.9);" v-reveal="{ delay: 240 }">
-          Demonstrações técnicas, propostas HaaS e suporte para projetos de educação, operação privada e
-          governo. Resposta em até 1 dia útil.
+      <div class="hero-cover">
+        <h1 class="hero-title-rich" v-reveal="{ delay: 120 }">
+          Fale com a<br>
+          <span class="accent-gradient">equipe Catalucca</span>.
+        </h1>
+
+        <p class="hero-subtitle text-white" v-reveal="{ delay: 240 }">
+          Demonstrações técnicas, propostas HaaS e suporte para projetos de educação, operação
+          privada e governo. <strong>Resposta em até 1 dia útil</strong>.
         </p>
       </div>
     </div>
