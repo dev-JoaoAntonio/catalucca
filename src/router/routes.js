@@ -24,12 +24,23 @@ export const routes = [
     meta: { title: 'Governo | Inteligência Territorial — CATALUCCA' },
   },
   {
+    path: '/quem-somos',
+    name: 'quem-somos',
+    component: () => import('@/pages/QuemSomosPage.vue'),
+    meta: { title: 'Quem Somos | CATALUCCA Tecnologias' },
+  },
+  {
     path: '/contato',
     name: 'contato',
     component: () => import('@/pages/ContatoPage.vue'),
     meta: { title: 'Contato | CATALUCCA' },
   },
-  // Redirects de URLs antigas
+  {
+    path: '/sucesso',
+    name: 'sucesso',
+    component: () => import('@/pages/SucessoPage.vue'),
+    meta: { title: 'Pagamento confirmado | CATALUCCA' },
+  },
   { path: '/setor-privado', redirect: '/operacional-privado' },
   { path: '/setor-publico', redirect: '/governo' },
   {

@@ -60,8 +60,8 @@ const canvasStyle = computed(() => {
 });
 
 const manifestoStyle = computed(() => {
-  const enter = smoothstep(0.46, 0.64, progress.value);
-  const exit = smoothstep(0.70, 0.88, progress.value);
+  const enter = smoothstep(0.46, 0.62, progress.value);
+  const exit = smoothstep(0.62, 0.78, progress.value);
   const visible = enter * (1 - exit);
   const enterX = (1 - enter) * -80;
   const exitX = exit * -120;
@@ -73,7 +73,7 @@ const manifestoStyle = computed(() => {
 });
 
 const phoneCanvasStyle = computed(() => {
-  const enter = smoothstep(0.70, 0.92, progress.value);
+  const enter = smoothstep(0.58, 0.80, progress.value);
   const shiftPct = -80 - (1 - enter) * 80;
   return {
     opacity: enter,
@@ -83,7 +83,7 @@ const phoneCanvasStyle = computed(() => {
 });
 
 const tecCardStyle = computed(() => {
-  const p = smoothstep(0.76, 0.98, progress.value);
+  const p = smoothstep(0.72, 0.96, progress.value);
   return {
     opacity: p,
     transform: `translate(${(1 - p) * 80}px, -50%)`,
@@ -330,7 +330,7 @@ onMounted(() => {
     if (phoneViewer?.model) {
       const m = phoneViewer.model;
       m.position.set(0, 0.05, 0);
-      const localP = clamp((p - 0.68) / 0.32, 0, 1);
+      const localP = clamp((p - 0.56) / 0.42, 0, 1);
       m.rotation.y = lerp(-0.4, 0.4, localP);
       m.scale.setScalar(m.userData.baseScale * 1.4);
     }

@@ -114,7 +114,7 @@ useHead({
       </div>
 
       <div class="applications-grid applications-grid--two">
-        <article class="app-card" v-reveal="{ delay: 0 }">
+        <article class="app-card" v-reveal:left="{ delay: 0 }">
           <h3 class="feature-title">1. Controle de Qualidade &amp; Supply Chain</h3>
           <ul class="app-list">
             <li>Inspeção de microrrugosidade, fadiga e microfissuras.</li>
@@ -122,7 +122,7 @@ useHead({
             <li>Auditoria técnica de fornecedores incontestável.</li>
           </ul>
         </article>
-        <article class="app-card" v-reveal="{ delay: 120 }">
+        <article class="app-card" v-reveal:down="{ delay: 120 }">
           <h3 class="feature-title">2. Seguros, Perícias e Laudos</h3>
           <ul class="app-list">
             <li>Documentação de danos em escala microscópica.</li>
@@ -138,7 +138,7 @@ useHead({
             <li>Certificação de origem por amostragem de campo.</li>
           </ul>
         </article>
-        <article class="app-card" v-reveal="{ delay: 360 }">
+        <article class="app-card" v-reveal:right="{ delay: 360 }">
           <h3 class="feature-title">4. Engenharia, Energia &amp; Infra</h3>
           <ul class="app-list">
             <li>Inspeção de painéis fotovoltaicos e corrosão.</li>
@@ -165,11 +165,11 @@ useHead({
             O ROI da Catalucca™ (Diferencial de Negócio)
           </h3>
           <div class="stats-grid" style="margin-top: 4rem;">
-            <div class="stat-item" v-reveal="{ delay: 100 }">
+            <div class="stat-item" v-reveal:left="{ delay: 100 }">
               <span class="stat-number-static" style="font-size: 1.5rem; color: var(--accent);">OPEX</span>
               <p style="font-size: 0.9rem;">Menos logística e dependência de laboratórios externos.</p>
             </div>
-            <div class="stat-item" v-reveal="{ delay: 200 }">
+            <div class="stat-item" v-reveal:down="{ delay: 200 }">
               <span class="stat-number-static" style="font-size: 1.5rem; color: var(--accent);">Velocidade</span>
               <p style="font-size: 0.9rem;">Diagnósticos em segundos, não em dias.</p>
             </div>
@@ -177,7 +177,7 @@ useHead({
               <span class="stat-number-static" style="font-size: 1.5rem; color: var(--accent);">Risco</span>
               <p style="font-size: 0.9rem;">Blindagem do CPF do Responsável Técnico (RT).</p>
             </div>
-            <div class="stat-item" v-reveal="{ delay: 400 }">
+            <div class="stat-item" v-reveal:right="{ delay: 400 }">
               <span class="stat-number-static" style="font-size: 1.5rem; color: var(--accent);">Padrão</span>
               <p style="font-size: 0.9rem;">Excelência analítica independente da senioridade.</p>
             </div>

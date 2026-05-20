@@ -14,6 +14,11 @@ const items = [
     icon: 'home',
   },
   {
+    to: '/quem-somos',
+    label: 'Quem Somos',
+    icon: 'compass',
+  },
+  {
     to: '/educacao',
     label: 'Educação',
     icon: 'graduation',
@@ -190,6 +195,13 @@ const ICONS = {
     'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true',
   }, [
     h('path', { d: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z' }),
+  ]),
+  compass: () => h('svg', {
+    class: 'nav-icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
+    'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true',
+  }, [
+    h('circle', { cx: 12, cy: 12, r: 10 }),
+    h('polygon', { points: '16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76' }),
   ]),
 };
 

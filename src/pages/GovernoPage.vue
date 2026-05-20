@@ -1,4 +1,5 @@
 <script setup>
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useHead } from '@unhead/vue';
 import PricingMatrix from '@/components/PricingMatrix.vue';
 import TechCustodyBlock from '@/components/TechCustodyBlock.vue';
@@ -19,6 +20,67 @@ useHead({
     { name: 'twitter:image', content: 'https://www.catalucca.com.br/images/logo-tab.jpg' },
   ],
   link: [{ rel: 'canonical', href: 'https://www.catalucca.com.br/governo' }],
+});
+
+const programas = [
+  { code: '01', name: 'BNCC / PDDE', cat: 'Educação', detail: 'Modernização do ensino de ciências com infraestrutura óptica de borda.', law: '' },
+  { code: '02', name: 'Escolas Conectadas', cat: 'Educação', detail: 'Laboratório digital distribuído em sala de aula.', law: 'Dec. 11.713/23' },
+  { code: '03', name: 'Brasil Alfabetizado', cat: 'Educação', detail: 'Alfabetização científica por evidência visual.', law: '' },
+  { code: '04', name: 'PRONASCI II', cat: 'Segurança', detail: 'Perícia e monitoramento em áreas de risco social.', law: 'Dec. 11.436/23' },
+  { code: '05', name: 'SISLAB', cat: 'Saúde', detail: 'Modernização de laboratórios locais para triagem epidemiológica.', law: '' },
+  { code: '06', name: 'PSE', cat: 'Saúde', detail: 'Vigilância sentinela epidemiológica na rede escolar.', law: '' },
+  { code: '07', name: 'VIGIAGUA', cat: 'Ambiente', detail: 'Vigilância da potabilidade da água em escala municipal.', law: '' },
+  { code: '08', name: 'PRONAF', cat: 'Agro', detail: 'Triagem fitossanitária para a agricultura familiar.', law: '' },
+  { code: '09', name: 'Bioinsumos', cat: 'Agro', detail: 'Controle de qualidade biológica e certificação técnica de campo.', law: '' },
+  { code: '10', name: 'Cidades Resilientes', cat: 'Infraestrutura', detail: 'Gestão antecipada de riscos biológicos e ambientais urbanos.', law: '' },
+];
+
+const programasPinRef = ref(null);
+const programasProgress = ref(0);
+
+const programasActiveIdx = computed(() => {
+  const total = programas.length;
+  const idx = Math.floor(programasProgress.value * total);
+  return Math.min(total - 1, Math.max(0, idx));
+});
+
+const programasCounter = computed(() => {
+  const total = programas.length;
+  const c = Math.round(programasProgress.value * total);
+  return Math.max(0, Math.min(total, c));
+});
+
+function isProgramaVisible(idx) {
+  const total = programas.length;
+  const threshold = (idx + 0.35) / total;
+  return programasProgress.value >= threshold;
+}
+
+function updateProgramasProgress() {
+  const pin = programasPinRef.value;
+  if (!pin) return;
+  const rect = pin.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const startOffset = vh * 0.6;
+  const span = rect.height - vh + startOffset;
+  const scrolled = startOffset - rect.top;
+  programasProgress.value = Math.max(0, Math.min(1, span > 0 ? scrolled / span : 0));
+}
+
+let programasScrollHandler = null;
+
+onMounted(() => {
+  updateProgramasProgress();
+  programasScrollHandler = updateProgramasProgress;
+  window.addEventListener('scroll', programasScrollHandler, { passive: true });
+  window.addEventListener('resize', programasScrollHandler);
+});
+
+onBeforeUnmount(() => {
+  if (programasScrollHandler) {
+    window.removeEventListener('scroll', programasScrollHandler);
+    window.removeEventListener('resize', programasScrollHandler);
+  }
 });
 </script>
 
@@ -57,43 +119,66 @@ useHead({
       </svg>
     </div>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-header" v-reveal>
-        <span class="section-label">Decálogo da Soberania</span>
-        <h2 class="section-title">10 Programas em 1 Sistema</h2>
-        <p class="section-subtitle">
-          O investimento é otimizado pela padronização tecnológica, atendendo aos seguintes eixos de soberania:
-        </p>
-      </div>
+  <section class="programas-section" ref="programasPinRef" aria-label="10 Programas em 1 Sistema">
+    <div class="programas-sticky">
+      <div class="container">
+        <div class="programas-stage">
+          <aside class="programas-side">
+            <span class="section-label programas-eyebrow">Decálogo da Soberania</span>
+            <h2 class="programas-title">
+              <span class="programas-title-num">10</span>
+              <span class="programas-title-it">programas</span>
+              <span class="programas-title-line">em <em>1</em> sistema</span>
+            </h2>
 
-      <div class="applications-grid applications-grid--two">
-        <div class="feature-card" style="text-align: left;" v-reveal="{ delay: 0 }">
-          <h3 class="feature-title">01-03. Educação</h3>
-          <ul class="app-list">
-            <li><strong>BNCC/PDDE:</strong> Modernização do ensino de ciências.</li>
-            <li><strong>Escolas Conectadas:</strong> Infraestrutura de laboratório digital (Dec. 11.713/23).</li>
-            <li><strong>Brasil Alfabetizado:</strong> Alfabetização científica por evidência.</li>
-          </ul>
-        </div>
-        <div class="feature-card" style="text-align: left;" v-reveal="{ delay: 120 }">
-          <h3 class="feature-title">04. Segurança (PRONASCI II)</h3>
-          <p>Perícia e monitoramento em áreas de risco (Dec. 11.436/23).</p>
-        </div>
-        <div class="feature-card" style="text-align: left;" v-reveal="{ delay: 240 }">
-          <h3 class="feature-title">05-06. Saúde (SISLAB &amp; PSE)</h3>
-          <ul class="app-list">
-            <li><strong>SISLAB:</strong> Modernização de laboratórios locais para triagem.</li>
-            <li><strong>PSE:</strong> Vigilância sentinela epidemiológica escolar.</li>
-          </ul>
-        </div>
-        <div class="feature-card" style="text-align: left;" v-reveal="{ delay: 360 }">
-          <h3 class="feature-title">07-10. Agro e Infraestrutura</h3>
-          <ul class="app-list">
-            <li><strong>VIGIAGUA:</strong> Vigilância da potabilidade da água.</li>
-            <li><strong>PRONAF/Bioinsumos:</strong> Controle de qualidade biológica no campo.</li>
-            <li><strong>Cidades Resilientes:</strong> Gestão de riscos biológicos urbanos.</li>
-          </ul>
+            <div class="programas-counter">
+              <div class="programas-counter-display" aria-hidden="true">
+                <span class="programas-counter-num">{{ String(programasCounter).padStart(2, '0') }}</span>
+                <span class="programas-counter-divider">/</span>
+                <span class="programas-counter-total">10</span>
+              </div>
+              <span class="programas-counter-label">Programas ativados</span>
+              <div class="programas-counter-bar">
+                <div
+                  class="programas-counter-fill"
+                  :style="{ width: `${programasProgress * 100}%` }"
+                ></div>
+              </div>
+            </div>
+
+            <p class="programas-side-copy">
+              Um único contrato. Uma única infraestrutura de borda. Dez programas federais
+              convergidos no <strong>Hub ATLAS</strong> — auditáveis, georreferenciados, soberanos.
+            </p>
+          </aside>
+
+          <ol class="programas-list" role="list">
+            <li
+              v-for="(p, idx) in programas"
+              :key="p.code"
+              class="programa-row"
+              :class="{
+                'is-visible': isProgramaVisible(idx),
+                'is-active': programasActiveIdx === idx,
+              }"
+            >
+              <span class="programa-rail" aria-hidden="true">
+                <span class="programa-rail-dot"></span>
+                <span class="programa-rail-line"></span>
+              </span>
+              <span class="programa-code">{{ p.code }}</span>
+              <div class="programa-main">
+                <div class="programa-head">
+                  <h3 class="programa-name">{{ p.name }}</h3>
+                  <span class="programa-cat" :data-cat="p.cat">{{ p.cat }}</span>
+                </div>
+                <p class="programa-detail">
+                  {{ p.detail }}
+                  <span v-if="p.law" class="programa-law">({{ p.law }})</span>
+                </p>
+              </div>
+            </li>
+          </ol>
         </div>
       </div>
     </div>

@@ -145,21 +145,21 @@ useHead({
         <h2 class="section-title">O que dizem os Professores</h2>
       </div>
       <div class="testimonial-grid">
-        <div class="testimonial-card" v-reveal="{ delay: 0 }">
+        <div class="testimonial-card" v-reveal:left="{ delay: 0 }">
           <p>
             "O DIPLE é uma ferramenta incrível. Mesmo sem experiência prévia, vi um envolvimento total
             dos alunos. Até os estudantes mais 'difíceis' tornaram-se investigadores focados."
           </p>
           <span class="testimonial-author">— Professor de Ensino Médio</span>
         </div>
-        <div class="testimonial-card" v-reveal="{ delay: 120 }">
+        <div class="testimonial-card" v-reveal:down="{ delay: 120 }">
           <p>
             "Usamos a câmera do tablet como uma estação de vídeo externa. As ferramentas são fáceis de
             usar e os participantes viram tudo com clareza, mesmo à distância."
           </p>
           <span class="testimonial-author">— Professor de Ensino Fundamental</span>
         </div>
-        <div class="testimonial-card" v-reveal="{ delay: 240 }">
+        <div class="testimonial-card" v-reveal:right="{ delay: 240 }">
           <p>
             "Um sucesso! Estudantes viram impressões de células vegetais pela primeira vez. Os
             professores estão entusiasmados para levar esses microscópios para suas salas."
@@ -211,7 +211,7 @@ useHead({
       </div>
 
       <div class="research-grid">
-        <article class="research-card" v-reveal="{ delay: 0 }">
+        <article class="research-card" v-reveal:left="{ delay: 0 }">
           <span class="research-card-num">01</span>
           <span class="research-card-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -229,7 +229,7 @@ useHead({
           </ul>
         </article>
 
-        <article class="research-card" v-reveal="{ delay: 120 }">
+        <article class="research-card" v-reveal:down="{ delay: 120 }">
           <span class="research-card-num">02</span>
           <span class="research-card-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -246,7 +246,7 @@ useHead({
           </ul>
         </article>
 
-        <article class="research-card" v-reveal="{ delay: 240 }">
+        <article class="research-card" v-reveal:right="{ delay: 240 }">
           <span class="research-card-num">03</span>
           <span class="research-card-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -4,6 +4,6 @@
     { "source": "/setor-publico", "destination": "/governo", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/((?!.*\\.).*)", "destination": "/" }
+    { "source": "/((?!api/|.*\\.).*)", "destination": "/" }
   ]
 }

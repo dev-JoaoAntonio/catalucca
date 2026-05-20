@@ -60,6 +60,11 @@ useHead({
 const statsSection = ref(null);
 const accordions = ref([false, false, false]);
 
+const REVEAL_DIRS = ['left', 'down', '', 'right'];
+function revealDir(idx) {
+  return REVEAL_DIRS[idx % REVEAL_DIRS.length] || undefined;
+}
+
 let statsObserver = null;
 
 function animateCounter(el) {
@@ -113,7 +118,15 @@ onBeforeUnmount(() => {
 <template>
   <section class="hero hero-fixed" id="home">
     <div class="video-background-container">
-      <video autoplay muted loop playsinline class="video-background">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="/videos/hero-poster.jpg"
+        class="video-background"
+      >
         <source src="/videos/hero.mp4" type="video/mp4">
         Seu navegador não suporta vídeos HTML5.
       </video>
@@ -196,7 +209,7 @@ onBeforeUnmount(() => {
       </div>
 
       <ol class="pipeline-timeline" v-reveal>
-        <li class="pipeline-node" v-reveal="{ delay: 0 }">
+        <li class="pipeline-node" v-reveal:left="{ delay: 0 }">
           <div class="pipeline-node-marker">
             <span class="pipeline-node-num">01</span>
             <span class="pipeline-node-icon">
@@ -212,7 +225,7 @@ onBeforeUnmount(() => {
           </div>
         </li>
 
-        <li class="pipeline-node" v-reveal="{ delay: 120 }">
+        <li class="pipeline-node" v-reveal:right="{ delay: 120 }">
           <div class="pipeline-node-marker">
             <span class="pipeline-node-num">02</span>
             <span class="pipeline-node-icon">
@@ -228,7 +241,7 @@ onBeforeUnmount(() => {
           </div>
         </li>
 
-        <li class="pipeline-node" v-reveal="{ delay: 240 }">
+        <li class="pipeline-node" v-reveal:left="{ delay: 240 }">
           <div class="pipeline-node-marker">
             <span class="pipeline-node-num">03</span>
             <span class="pipeline-node-icon">
@@ -245,7 +258,7 @@ onBeforeUnmount(() => {
           </div>
         </li>
 
-        <li class="pipeline-node" v-reveal="{ delay: 360 }">
+        <li class="pipeline-node" v-reveal:right="{ delay: 360 }">
           <div class="pipeline-node-marker">
             <span class="pipeline-node-num">04</span>
             <span class="pipeline-node-icon">
@@ -268,14 +281,14 @@ onBeforeUnmount(() => {
   <section class="stats-section" ref="statsSection">
     <div class="container">
       <div class="stats-grid">
-        <div class="stat-item" v-reveal="{ delay: 0 }">
+        <div class="stat-item" v-reveal:left="{ delay: 0 }">
           <div class="stat-number-wrapper">
             <span class="stat-number" data-target="0.7" data-decimals="1">0</span>
             <span class="stat-unit">µm</span>
           </div>
           <span class="stat-label">Resolução Óptica Real</span>
         </div>
-        <div class="stat-item" v-reveal="{ delay: 100 }">
+        <div class="stat-item" v-reveal:down="{ delay: 100 }">
           <div class="stat-number-wrapper">
             <span class="stat-number" data-target="1500" data-decimals="0">0</span>
             <span class="stat-unit">x</span>
@@ -288,7 +301,7 @@ onBeforeUnmount(() => {
           </div>
           <span class="stat-label">Operação 100% Offline</span>
         </div>
-        <div class="stat-item" v-reveal="{ delay: 300 }">
+        <div class="stat-item" v-reveal:right="{ delay: 300 }">
           <div class="stat-number-wrapper">
             <span class="stat-number-static">ISO</span>
           </div>
@@ -314,7 +327,7 @@ onBeforeUnmount(() => {
         </div>
 
         <div class="applications-grid">
-          <article class="app-card" style="text-align: left;" v-reveal="{ delay: 0 }">
+          <article class="app-card" style="text-align: left;" v-reveal:left="{ delay: 0 }">
             <h3 class="feature-title" style="border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; display: inline-block;">
               Impacto Técnico
             </h3>
@@ -336,7 +349,7 @@ onBeforeUnmount(() => {
             </ul>
           </article>
 
-          <article class="app-card" style="text-align: left;" v-reveal="{ delay: 240 }">
+          <article class="app-card" style="text-align: left;" v-reveal:right="{ delay: 240 }">
             <h3 class="feature-title" style="border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; display: inline-block;">
               Impacto Social
             </h3>
@@ -362,11 +375,11 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="features-grid">
-        <div class="feature-card" v-reveal="{ delay: 0 }">
+        <div class="feature-card" v-reveal:left="{ delay: 0 }">
           <h3 class="feature-title">Campo Claro</h3>
           <p>Visualização padrão para estruturas celulares e tecidos vegetais com alta transparência.</p>
         </div>
-        <div class="feature-card" v-reveal="{ delay: 100 }">
+        <div class="feature-card" v-reveal:down="{ delay: 100 }">
           <h3 class="feature-title">Campo Escuro</h3>
           <p>Contraste elevado para identificar organismos vivos translúcidos em meio líquido.</p>
         </div>
@@ -374,14 +387,14 @@ onBeforeUnmount(() => {
           <h3 class="feature-title">Luz Polarizada</h3>
           <p>Análise de minerais, cristais, amido e fibras sintéticas ou naturais.</p>
         </div>
-        <div class="feature-card" v-reveal="{ delay: 300 }">
+        <div class="feature-card" v-reveal:right="{ delay: 300 }">
           <h3 class="feature-title">Luz Refletida</h3>
           <p>Inspeção de superfícies opacas, metais, microfissuras e fitossanidade foliar.</p>
         </div>
       </div>
 
       <div
-        v-reveal="{ delay: 200 }"
+        v-reveal:scale="{ delay: 200 }"
         style="margin-top: 5rem; background: white; padding: 2.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow-x: auto;"
       >
         <div style="margin-bottom: 2rem; border-left: 4px solid var(--accent); padding-left: 1rem;">
@@ -456,18 +469,18 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="problems-grid">
-        <div class="problem-card" v-reveal="{ delay: 0 }">
+        <div class="problem-card" v-reveal:left="{ delay: 0 }">
           <span style="font-size: 3rem; font-weight: 800; color: var(--accent); display: block; margin-bottom: 1rem;">Ø</span>
           <h3>Ponto Zero</h3>
           <p>O momento da incerteza. Onde o problema ocorre, mas falta informação técnica para decidir.</p>
         </div>
-        <div style="display: flex; align-items: center; justify-content: center;" v-reveal="{ delay: 150 }">
+        <div style="display: flex; align-items: center; justify-content: center;" v-reveal:fade="{ delay: 150 }">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
           </svg>
         </div>
-        <div class="problem-card" v-reveal="{ delay: 300 }">
+        <div class="problem-card" v-reveal:right="{ delay: 300 }">
           <span style="font-size: 3rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 1rem;">1</span>
           <h3>Ponto Um</h3>
           <p>Evidência documentada. Cadeia de custódia com Timestamp e GPS no exato momento da observação.</p>
@@ -488,7 +501,7 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="segments-grid">
-        <router-link to="/educacao" class="segment-card" v-reveal="{ delay: 0 }">
+        <router-link to="/educacao" class="segment-card" v-reveal:left="{ delay: 0 }">
           <span class="segment-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
@@ -536,7 +549,7 @@ onBeforeUnmount(() => {
           </span>
         </router-link>
 
-        <router-link to="/governo" class="segment-card" v-reveal="{ delay: 240 }">
+        <router-link to="/governo" class="segment-card" v-reveal:right="{ delay: 240 }">
           <span class="segment-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="3" x2="21" y1="22" y2="22" />
@@ -608,7 +621,7 @@ onBeforeUnmount(() => {
             { q: 'Depende de Wi-Fi?', a: 'A captura e análise são 100% offline. A conexão serve apenas para a gestão da inteligência coletiva e sincronização posterior.' },
           ]"
           :key="idx"
-          v-reveal="{ delay: idx * 100 }"
+          v-reveal:[revealDir(idx)]="{ delay: idx * 100 }"
         >
           <button
             class="accordion-header"
