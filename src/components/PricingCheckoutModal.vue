@@ -99,7 +99,7 @@ function formatBRL(v) {
 
             <p v-if="error" class="checkout-error" role="alert">{{ error }}</p>
 
-            <button type="submit" class="btn checkout-submit" :disabled="loading">
+            <button type="submit" class="btn btn--primary checkout-submit" :disabled="loading">
               {{ loading ? 'Gerando cobrança…' : 'Avançar para pagamento' }}
             </button>
 
@@ -114,3 +114,166 @@ function formatBRL(v) {
     </Transition>
   </Teleport>
 </template>
+
+<style scoped>
+/* Componente ainda não usado pela landing (checkout direto via /api/checkout). */
+.checkout-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgb(6 27 48 / 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.checkout-modal {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  padding: 2rem 1.75rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.checkout-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.checkout-close:hover {
+  color: var(--primary);
+}
+
+.checkout-close:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.checkout-header {
+  margin-bottom: 1.5rem;
+}
+
+.checkout-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.checkout-header h3 {
+  margin-bottom: 0.35rem;
+  font-size: 1.5rem;
+  color: var(--ink);
+}
+
+.checkout-plan-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.checkout-plan-line strong {
+  font-size: 1rem;
+  color: var(--primary);
+}
+
+.checkout-plan-line small {
+  font-size: 0.72em;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.checkout-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.checkout-field span {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.checkout-field input {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.checkout-field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.checkout-error {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgb(220 38 38 / 0.3);
+  border-radius: var(--radius-sm);
+  background: rgb(220 38 38 / 0.08);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #b91c1c;
+}
+
+.checkout-submit {
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
+.checkout-fineprint {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.checkout-fade-enter-active,
+.checkout-fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.checkout-fade-enter-from,
+.checkout-fade-leave-to {
+  opacity: 0;
+}
+
+.checkout-fade-enter-active .checkout-modal,
+.checkout-fade-leave-active .checkout-modal {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.checkout-fade-enter-from .checkout-modal,
+.checkout-fade-leave-to .checkout-modal {
+  transform: translateY(20px) scale(0.97);
+}
+</style>

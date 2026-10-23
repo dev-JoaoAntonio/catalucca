@@ -1,22 +1,9 @@
 import { defineConfig } from 'vite';
 import { fileURLToPath, URL } from 'node:url';
 import vue from '@vitejs/plugin-vue';
-import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
 
-export default defineConfig(({ isSsrBuild }) => ({
-  plugins: [
-    vue({
-      template: { transformAssetUrls },
-    }),
-    quasar({}),
-  ],
-  define: {
-    __QUASAR_VERSION__: JSON.stringify('2.17.4'),
-    __QUASAR_SSR__: isSsrBuild,
-    __QUASAR_SSR_SERVER__: isSsrBuild,
-    __QUASAR_SSR_CLIENT__: !isSsrBuild,
-    __QUASAR_SSR_PSEUDO_HYDRATION__: false,
-  },
+export default defineConfig({
+  plugins: [vue()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -41,4 +28,4 @@ export default defineConfig(({ isSsrBuild }) => ({
       );
     },
   },
-}));
+});

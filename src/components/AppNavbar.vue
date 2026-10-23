@@ -1,217 +1,429 @@
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute } from 'vue-router';
 import { getLenis } from '@/composables/useLenis';
-
-const route = useRoute();
-const isMenuOpen = ref(false);
-const isScrolled = ref(false);
+import { useSectionLink } from '@/composables/useSectionLink';
+import { EMAIL, PHONE_DISPLAY, whatsappLink } from '@/data/contact';
+import AppIcon from '@/components/ui/AppIcon.vue';
 
 const items = [
-  {
-    to: '/',
-    label: 'Home',
-    icon: 'home',
-  },
-  {
-    to: '/quem-somos',
-    label: 'Quem Somos',
-    icon: 'compass',
-  },
-  {
-    to: '/educacao',
-    label: 'Educação',
-    icon: 'graduation',
-  },
-  {
-    to: '/operacional-privado',
-    label: 'Operacional Privado',
-    icon: 'sprout',
-  },
-  {
-    to: '/governo',
-    label: 'Governo',
-    icon: 'landmark',
-  },
+  { key: 'sobre', label: 'Sobre' },
+  { key: 'tecnologia', label: 'Tecnologia' },
+  { key: 'metodo', label: 'Método' },
+  { key: 'solucoes', label: 'Soluções' },
+  { key: 'haas', label: 'HaaS' },
+  { key: 'faq', label: 'FAQ' },
 ];
+const panelItems = [...items, { key: 'contato', label: 'Contato' }];
 
-const isActive = (path) => route.path === path;
+const route = useRoute();
+const go = useSectionLink();
 
-const ariaExpanded = computed(() => (isMenuOpen.value ? 'true' : 'false'));
-const ariaLabel = computed(() => (isMenuOpen.value ? 'Fechar menu' : 'Abrir menu'));
+const open = ref(false);
+const pastHero = ref(false);
+const hidden = ref(false);
+const active = ref('');
+const indicator = ref({ x: 0, w: 0, visible: false });
+const linkEls = [];
 
-function toggleMenu() {
-  setMenu(!isMenuOpen.value);
-}
+// Sobre o vídeo do hero a barra é transparente; nas demais páginas, sólida.
+const solid = computed(() => !route.meta.landing || pastHero.value);
 
-function setMenu(open) {
-  isMenuOpen.value = open;
+const pad = (n) => String(n).padStart(2, '0');
+
+function setMenu(value) {
+  open.value = value;
   const lenis = getLenis();
-  if (lenis) {
-    open ? lenis.stop() : lenis.start();
+  if (lenis) value ? lenis.stop() : lenis.start();
+  document.documentElement.classList.toggle('menu-open', value);
+}
+
+function navigate(key) {
+  if (open.value) setMenu(false);
+  go(`#${key}`);
+}
+
+let lastY = 0;
+function onScroll() {
+  const y = window.scrollY;
+  pastHero.value = y > window.innerHeight - 120;
+  // Esconde ao descer e reaparece ao subir.
+  if (!open.value && Math.abs(y - lastY) > 6) {
+    hidden.value = y > lastY && y > 240;
+    lastY = y;
   }
 }
 
-function onItemClick() {
-  if (isMenuOpen.value) setMenu(false);
+function updateIndicator() {
+  const el = linkEls[items.findIndex((item) => item.key === active.value)];
+  indicator.value = el
+    ? { x: el.offsetLeft, w: el.offsetWidth, visible: true }
+    : { ...indicator.value, visible: false };
 }
 
-function onContactClick() {
-  if (isMenuOpen.value) setMenu(false);
+// Destaca o link da seção que ocupa o meio da tela.
+let spy = null;
+function observeSections() {
+  spy?.disconnect();
+  active.value = '';
+  spy = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) active.value = entry.target.dataset.spy;
+      });
+    },
+    { rootMargin: '-45% 0px -50% 0px' }
+  );
+  document.querySelectorAll('[data-spy]').forEach((el) => spy.observe(el));
 }
 
-function handleScroll() {
-  isScrolled.value = window.scrollY > 8;
+function onKeydown(event) {
+  if (event.key === 'Escape' && open.value) setMenu(false);
 }
 
-function handleClickOutside(event) {
-  if (!isMenuOpen.value) return;
-  const navbar = document.getElementById('header');
-  if (navbar && !navbar.contains(event.target)) {
-    setMenu(false);
-  }
+function onResize() {
+  if (open.value && window.innerWidth >= 1080) setMenu(false);
+  updateIndicator();
 }
 
-function handleEscape(event) {
-  if (event.key === 'Escape' && isMenuOpen.value) {
-    setMenu(false);
-  }
-}
+watch(active, updateIndicator);
+watch(() => route.path, () => nextTick(observeSections));
 
 onMounted(() => {
-  handleScroll();
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  document.addEventListener('click', handleClickOutside);
-  document.addEventListener('keydown', handleEscape);
+  onScroll();
+  observeSections();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize);
+  document.addEventListener('keydown', onKeydown);
+  // As fontes mudam a largura dos links depois do primeiro cálculo.
+  document.fonts?.ready.then(updateIndicator);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll);
-  document.removeEventListener('click', handleClickOutside);
-  document.removeEventListener('keydown', handleEscape);
+  spy?.disconnect();
+  window.removeEventListener('scroll', onScroll);
+  window.removeEventListener('resize', onResize);
+  document.removeEventListener('keydown', onKeydown);
+  document.documentElement.classList.remove('menu-open');
 });
 </script>
 
 <template>
-  <header class="navbar" :class="{ scrolled: isScrolled }" id="header">
-    <div class="navbar-container">
-      <router-link to="/" class="navbar-brand">
-        <img src="/favicon/logo.png" alt="Logo Catalucca" class="navbar-logo">
-        <span class="navbar-brand-text">CATALUCCA</span>
-      </router-link>
+  <header
+    id="header"
+    class="nav"
+    :class="{ 'is-solid': solid, 'is-hidden': hidden && !open, 'is-open': open }"
+  >
+    <div class="container nav__bar">
+      <a href="/#inicio" class="nav__brand" @click.prevent="navigate('inicio')">
+        <img src="/favicon/logo.png" alt="" width="34" height="34">
+        <span>CATALUCCA</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Seções da página">
+        <a
+          v-for="(item, i) in items"
+          :key="item.key"
+          :ref="(el) => (linkEls[i] = el)"
+          :href="`/#${item.key}`"
+          class="nav__link"
+          :class="{ 'is-active': active === item.key }"
+          :aria-current="active === item.key ? 'true' : undefined"
+          @click.prevent="navigate(item.key)"
+        >{{ item.label }}</a>
+        <span
+          class="nav__indicator"
+          :class="{ 'is-visible': indicator.visible }"
+          :style="{ transform: `translateX(${indicator.x}px)`, width: `${indicator.w}px` }"
+          aria-hidden="true"
+        ></span>
+      </nav>
+
+      <a href="/#contato" class="btn nav__cta" @click.prevent="navigate('contato')">
+        Fale conosco
+      </a>
 
       <button
-        class="navbar-toggle"
-        id="navbar-toggle"
-        :aria-expanded="ariaExpanded"
-        :aria-label="ariaLabel"
-        @click="toggleMenu"
+        type="button"
+        class="nav__toggle"
+        :aria-expanded="open ? 'true' : 'false'"
+        aria-controls="nav-panel"
+        :aria-label="open ? 'Fechar menu' : 'Abrir menu'"
+        @click="setMenu(!open)"
       >
-        <span class="navbar-toggle-bar"></span>
-        <span class="navbar-toggle-bar"></span>
-        <span class="navbar-toggle-bar"></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
 
-    <div class="navbar-mobile" :class="{ active: isMenuOpen }" id="navbar-mobile">
-      <nav class="navbar-mobile-nav" aria-label="Navegação móvel">
-        <router-link
-          v-for="item in items"
-          :key="item.to"
-          :to="item.to"
-          class="nav-item"
-          :class="{ active: isActive(item.to) }"
-          @click="onItemClick"
+    <div id="nav-panel" class="nav__panel" :class="{ 'is-open': open }" :inert="!open">
+      <nav class="container nav__panel-links" aria-label="Menu">
+        <a
+          v-for="(item, i) in panelItems"
+          :key="item.key"
+          :href="`/#${item.key}`"
+          :style="{ '--i': i }"
+          @click.prevent="navigate(item.key)"
         >
-          <NavIcon :name="item.icon" />
-          <span>{{ item.label }}</span>
-        </router-link>
-        <router-link to="/contato" class="nav-item nav-item-cta" @click="onContactClick">
-          <NavIcon name="message" />
-          <span>Contato</span>
-        </router-link>
+          <span class="mono">{{ pad(i + 1) }}</span>
+          {{ item.label }}
+        </a>
       </nav>
+      <div class="container nav__panel-foot">
+        <a :href="`mailto:${EMAIL}`"><AppIcon name="mail" />{{ EMAIL }}</a>
+        <a :href="whatsappLink()" target="_blank" rel="noopener"><AppIcon name="whatsapp" />{{ PHONE_DISPLAY }}</a>
+      </div>
     </div>
   </header>
-
-  <nav class="nav-dock" :class="{ scrolled: isScrolled }" aria-label="Navegação principal">
-    <router-link
-      v-for="item in items"
-      :key="item.to"
-      :to="item.to"
-      class="nav-dock-item"
-      :class="{ active: isActive(item.to) }"
-    >
-      <NavIcon :name="item.icon" />
-      <span class="nav-dock-label">{{ item.label }}</span>
-    </router-link>
-    <router-link to="/contato" class="nav-dock-item nav-dock-item-cta" :class="{ active: isActive('/contato') }">
-      <NavIcon name="message" />
-      <span class="nav-dock-label">Contato</span>
-    </router-link>
-  </nav>
 </template>
 
-<script>
-import { h } from 'vue';
+<style scoped>
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  color: #fff;
+  transition: transform 0.5s var(--ease);
+}
 
-const ICONS = {
-  home: () => h('svg', {
-    class: 'nav-icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
-    'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true',
-  }, [
-    h('path', { d: 'm3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' }),
-    h('polyline', { points: '9 22 9 12 15 12 15 22' }),
-  ]),
-  graduation: () => h('svg', {
-    class: 'nav-icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
-    'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true',
-  }, [
-    h('path', { d: 'M22 10v6M2 10l10-5 10 5-10 5z' }),
-    h('path', { d: 'M6 12v5c3 3 9 3 12 0v-5' }),
-  ]),
-  sprout: () => h('svg', {
-    class: 'nav-icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
-    'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true',
-  }, [
-    h('path', { d: 'M7 20h10' }),
-    h('path', { d: 'M10 20c5.5-2.5.42-6.2 5-8' }),
-    h('path', { d: 'M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z' }),
-    h('path', { d: 'M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z' }),
-  ]),
-  landmark: () => h('svg', {
-    class: 'nav-icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
-    'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true',
-  }, [
-    h('line', { x1: 3, x2: 21, y1: 22, y2: 22 }),
-    h('line', { x1: 6, x2: 6, y1: 18, y2: 11 }),
-    h('line', { x1: 10, x2: 10, y1: 18, y2: 11 }),
-    h('line', { x1: 14, x2: 14, y1: 18, y2: 11 }),
-    h('line', { x1: 18, x2: 18, y1: 18, y2: 11 }),
-    h('polygon', { points: '12 2 20 7 4 7' }),
-  ]),
-  message: () => h('svg', {
-    class: 'nav-icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
-    'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true',
-  }, [
-    h('path', { d: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z' }),
-  ]),
-  compass: () => h('svg', {
-    class: 'nav-icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
-    'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true',
-  }, [
-    h('circle', { cx: 12, cy: 12, r: 10 }),
-    h('polygon', { points: '16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76' }),
-  ]),
-};
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(255 255 255 / 0.86);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: saturate(1.6) blur(14px);
+  -webkit-backdrop-filter: saturate(1.6) blur(14px);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
 
-const NavIcon = {
-  name: 'NavIcon',
-  props: { name: { type: String, required: true } },
-  setup(props) {
-    return () => (ICONS[props.name] ? ICONS[props.name]() : null);
-  },
-};
+.nav.is-solid {
+  color: var(--ink);
+}
 
-export default { components: { NavIcon } };
-</script>
+.nav.is-solid::before {
+  opacity: 1;
+}
+
+.nav.is-hidden {
+  transform: translate3d(0, -100%, 0);
+}
+
+.nav.is-open {
+  color: #fff;
+}
+
+.nav.is-open::before {
+  opacity: 0;
+}
+
+.nav__bar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: var(--header-h);
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-right: auto;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.nav__brand img {
+  width: 34px;
+  height: auto;
+}
+
+.nav__links {
+  position: relative;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav__link {
+  padding: 0.5rem 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.78;
+  transition: opacity 0.3s var(--ease);
+}
+
+.nav__link:hover,
+.nav__link.is-active {
+  opacity: 1;
+}
+
+.nav__indicator {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0;
+  transition:
+    transform 0.5s var(--ease),
+    width 0.5s var(--ease),
+    opacity 0.3s;
+}
+
+.nav__indicator.is-visible {
+  opacity: 1;
+}
+
+.nav__cta {
+  min-height: 42px;
+  padding-inline: 1.2rem;
+  background: #fff;
+  color: var(--primary);
+}
+
+.nav.is-solid .nav__cta {
+  background: var(--primary);
+  color: #fff;
+}
+
+.nav__cta:hover,
+.nav.is-solid .nav__cta:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.nav.is-open .nav__cta {
+  display: none;
+}
+
+.nav__toggle {
+  display: none;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin-right: -0.5rem;
+}
+
+.nav__toggle span {
+  position: absolute;
+  left: 11px;
+  width: 22px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.45s var(--ease);
+}
+
+.nav__toggle span:first-child {
+  transform: translateY(-4px);
+}
+
+.nav__toggle span:last-child {
+  transform: translateY(4px);
+}
+
+.nav.is-open .nav__toggle span:first-child {
+  transform: rotate(45deg);
+}
+
+.nav.is-open .nav__toggle span:last-child {
+  transform: rotate(-45deg);
+}
+
+/* Painel móvel */
+.nav__panel {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-h) + 2rem) 0 2rem;
+  background: var(--navy-deep);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.7s var(--ease);
+}
+
+.nav__panel.is-open {
+  clip-path: inset(0 0 0 0);
+}
+
+.nav__panel-links {
+  display: grid;
+}
+
+.nav__panel-links a {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  font-size: clamp(1.5rem, 6vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.6s var(--ease);
+}
+
+.nav__panel.is-open .nav__panel-links a {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(150ms + var(--i) * 45ms);
+}
+
+.nav__panel-links .mono {
+  font-size: 0.75rem;
+  color: var(--accent-light);
+}
+
+.nav__panel-foot {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.nav__panel-foot a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav__panel-foot .icon {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 1079px) {
+  .nav__links {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: block;
+  }
+
+  .nav__bar {
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1080px) {
+  .nav__panel {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav__cta {
+    display: none;
+  }
+}
+</style>

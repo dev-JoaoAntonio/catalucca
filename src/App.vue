@@ -1,8 +1,11 @@
 <script setup>
 import { onMounted, onBeforeUnmount } from 'vue';
+import { useRoute } from 'vue-router';
 import { useHead } from '@unhead/vue';
 import MainLayout from '@/layouts/MainLayout.vue';
 import { initLenis, destroyLenis } from '@/composables/useLenis';
+
+const route = useRoute();
 
 useHead({
   htmlAttrs: { lang: 'pt-BR' },
@@ -25,7 +28,7 @@ useHead({
         logo: 'https://www.catalucca.com.br/favicon/logo.png',
         image: 'https://www.catalucca.com.br/images/logo-tab.jpg',
         description:
-          'Infraestrutura Científica de Borda. Microscopia digital com tecnologia italiana SMO/IIT (DIPLE™ e BLIPS™), resolução submicrométrica de 0,7 µm.',
+          'Infraestrutura científica de borda. Microscopia digital com tecnologia italiana SMO/IIT (DIPLE™ e BLIPS™) e resolução submicrométrica de 0,7 µm.',
         taxID: '61.810.236/0001-88',
         email: 'suporte@catalucca.com.br',
         telephone: '+55-47-99945-5080',
@@ -64,11 +67,11 @@ useHead({
 
 onMounted(() => {
   // Safety: o navegador pode tentar restaurar uma posição de scroll antiga
-  // antes do scrollRestoration = 'manual' (em main.js) ter efeito. Quando a
-  // landing tem seções altas (300vh do Diple3DSection), essa posição salva
-  // pode cair no meio da seção 3D dando aparência de "auto-scroll". Forçamos
-  // topo apenas em navegação fresca sem hash, sem prejudicar links âncora.
-  if (typeof window !== 'undefined' && !window.location.hash && window.scrollY > 0) {
+  // antes do scrollRestoration = 'manual' (em main.js) ter efeito. As seções
+  // fixadas (Tecnologia, Protocolo) são altas, e essa posição salva pode cair
+  // no meio delas. Forçamos o topo só em navegação sem hash e fora das URLs
+  // de seção (ex.: /governo), que rolam sozinhas até o destino.
+  if (!window.location.hash && !route.meta.section && window.scrollY > 0) {
     window.scrollTo(0, 0);
   }
   initLenis();

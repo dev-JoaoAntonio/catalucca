@@ -1,40 +1,26 @@
+import { PAGE_SEO } from '@/data/seo';
+
+// O site é uma landing de página única, mas as URLs das antigas páginas
+// internas continuam respondendo (e indexadas): todas renderizam a landing,
+// com o próprio título/canonical, e rolam até a seção correspondente.
+const LANDING_SECTIONS = {
+  home: null,
+  educacao: 'educacao',
+  'operacional-privado': 'operacional',
+  governo: 'governo',
+  'quem-somos': 'sobre',
+  contato: 'contato',
+};
+
+const IndexPage = () => import('@/pages/IndexPage.vue');
+
 export const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import('@/pages/IndexPage.vue'),
-    meta: { title: 'CATALUCCA | Infraestrutura Científica de Borda' },
-  },
-  {
-    path: '/educacao',
-    name: 'educacao',
-    component: () => import('@/pages/EducacaoPage.vue'),
-    meta: { title: 'Educação | Protagonismo Digital Investigativo — CATALUCCA' },
-  },
-  {
-    path: '/operacional-privado',
-    name: 'operacional-privado',
-    component: () => import('@/pages/OperacionalPrivadoPage.vue'),
-    meta: { title: 'Operacional Privado | Inteligência Operacional — CATALUCCA' },
-  },
-  {
-    path: '/governo',
-    name: 'governo',
-    component: () => import('@/pages/GovernoPage.vue'),
-    meta: { title: 'Governo | Inteligência Territorial — CATALUCCA' },
-  },
-  {
-    path: '/quem-somos',
-    name: 'quem-somos',
-    component: () => import('@/pages/QuemSomosPage.vue'),
-    meta: { title: 'Quem Somos | CATALUCCA Tecnologias' },
-  },
-  {
-    path: '/contato',
-    name: 'contato',
-    component: () => import('@/pages/ContatoPage.vue'),
-    meta: { title: 'Contato | CATALUCCA' },
-  },
+  ...Object.entries(LANDING_SECTIONS).map(([name, section]) => ({
+    path: PAGE_SEO[name].path,
+    name,
+    component: IndexPage,
+    meta: { title: PAGE_SEO[name].title, landing: true, section },
+  })),
   {
     path: '/sucesso',
     name: 'sucesso',

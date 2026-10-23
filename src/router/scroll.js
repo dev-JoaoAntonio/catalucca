@@ -1,19 +1,22 @@
-import { getLenis } from '@/composables/useLenis';
+import { scrollToTarget } from '@/composables/useLenis';
 
 export function scrollBehavior(to, from, savedPosition) {
   if (typeof window === 'undefined') return;
 
-  const lenis = getLenis();
-  if (to.hash) {
-    const target = document.querySelector(to.hash);
-    if (target && lenis) {
-      const headerHeight = document.getElementById('header')?.offsetHeight || 0;
-      lenis.scrollTo(target, { offset: -headerHeight, duration: 1.5 });
-      return false;
-    }
-    return { el: to.hash, behavior: 'smooth' };
+  // Hash explícito ou a seção da rota (ex.: /governo → #governo).
+  const target = to.hash || (to.meta.section && `#${to.meta.section}`);
+
+  if (target) {
+    const firstLoad = from.matched.length === 0;
+    const samePage = from.path === to.path;
+    // Vindo de outra rota, espera o DOM da landing antes de procurar a âncora.
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        scrollToTarget(target, { immediate: firstLoad });
+        resolve(false);
+      }, samePage && !firstLoad ? 0 : 120);
+    });
   }
   if (savedPosition) return savedPosition;
-  if (lenis) lenis.scrollTo(0, { immediate: true });
   return { top: 0 };
 }
