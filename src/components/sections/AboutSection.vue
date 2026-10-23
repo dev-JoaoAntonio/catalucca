@@ -20,7 +20,16 @@ function splitWords(text) {
   });
 }
 
-const words = splitWords(MANIFESTO);
+// Cada palavra guarda seus caracteres e o índice global do primeiro, que
+// escalona a animação caractere a caractere.
+let charCount = 0;
+const words = splitWords(MANIFESTO).map((word) => {
+  const chars = [...word.text];
+  const start = charCount;
+  charCount += chars.length;
+  return { ...word, chars, start };
+});
+const manifestoText = MANIFESTO.replace(/\*/g, '');
 
 const stats = [
   { value: 0.7, decimals: 1, unit: 'µm', label: 'Resolução óptica real' },
@@ -83,14 +92,13 @@ onBeforeUnmount(() => {
         </header>
 
         <div class="about__body">
-          <p class="about__manifesto" v-progress="'read'" :style="{ '--n': words.length }">
-            <template v-for="(word, i) in words" :key="i">
-              <span
-                class="about__word"
-                :class="{ 'is-strong': word.strong }"
-                :style="{ '--i': i }"
-              >{{ word.text }}</span>{{ ' ' }}
-            </template>
+          <p class="about__manifesto" v-progress="'read'" :style="{ '--n': charCount }">
+            <span class="sr-only">{{ manifestoText }}</span>
+            <span aria-hidden="true">
+              <template v-for="(word, w) in words" :key="w">
+                <span class="about__word" :class="{ 'is-strong': word.strong }"><span v-for="(char, c) in word.chars" :key="c" class="about__char" :style="{ '--i': word.start + c }">{{ char }}</span></span>{{ ' ' }}
+              </template>
+            </span>
           </p>
 
           <div class="about__cols">
@@ -146,10 +154,6 @@ onBeforeUnmount(() => {
   align-self: start;
 }
 
-.about__heading .title {
-
-}
-
 .about__manifesto {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.1vw, 2.625rem);
@@ -159,13 +163,32 @@ onBeforeUnmount(() => {
   color: var(--muted);
 }
 
-/* Cada palavra acende conforme o parágrafo atravessa a tela. */
-.js .about__word {
-  opacity: clamp(0.14, calc(var(--p, 0) * var(--n) * 1.25 - var(--i)), 1);
+/* Palavras inteiras não quebram; os caracteres são blocos para poderem se mover. */
+.about__word {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .about__word.is-strong {
   color: var(--ink);
+}
+
+.about__char {
+  display: inline-block;
+}
+
+/* Revelação caractere a caractere guiada pela rolagem: cada um entra
+   deslizando de baixo, inclinado, numa onda de ~18 caracteres. --t vai de 0
+   (escondido) a 1 (no lugar); o fator 1.15 termina a onda antes do fim do
+   progresso --p, para o texto ficar legível sem exigir rolagem extra. */
+.js .about__char {
+  --t: clamp(0, calc((var(--p, 0) * 1.15 * (var(--n) + 18) - var(--i)) / 18), 1);
+  opacity: var(--t);
+  transform:
+    translate3d(0, calc((1 - var(--t)) * 0.55em), 0)
+    skewY(calc((1 - var(--t)) * 14deg))
+    skewX(calc((1 - var(--t)) * -12deg));
+  transform-origin: left bottom;
 }
 
 .about__cols {
@@ -268,8 +291,9 @@ onBeforeUnmount(() => {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js .about__word {
+  .js .about__char {
     opacity: 1;
+    transform: none;
   }
 }
 </style>
