@@ -29,7 +29,7 @@ const columns = [
 </script>
 
 <template>
-  <footer class="footer" v-progress="'enter'">
+  <footer class="footer">
     <div class="container">
       <div class="footer__top">
         <div class="footer__brand">
@@ -72,17 +72,11 @@ const columns = [
         <p>Distribuição exclusiva SMO e IIT na América do Sul · Lei nº 9.610/1998 · CUP (Paris)</p>
       </div>
     </div>
-
-    <p class="footer__wordmark" aria-hidden="true">
-      <span v-for="(letter, i) in 'CATALUCCA'" :key="i" :style="{ '--i': i }">{{ letter }}</span>
-    </p>
   </footer>
 </template>
 
 <style scoped>
 .footer {
-  position: relative;
-  overflow: hidden;
   background: var(--bg);
   color: var(--text);
   font-size: 0.9375rem;
@@ -153,32 +147,6 @@ const columns = [
   padding-block: 1.75rem;
   font-size: 0.8125rem;
   color: var(--muted);
-}
-
-/* As letras sobem em sequência na reta final da página: --q mapeia o trecho
-   final do progresso do rodapé (--p, modo enter) para 0 → 1. */
-.footer__wordmark {
-  --q: clamp(0, calc((var(--p, 1) - 0.35) / 0.6), 1);
-  margin-bottom: -0.2em;
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 17vw, 16rem);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.065em;
-  text-align: center;
-  white-space: nowrap;
-  color: var(--line);
-  user-select: none;
-}
-
-.footer__wordmark span {
-  --t: clamp(0, calc((var(--q) * 12 - var(--i)) / 3), 1);
-  display: inline-block;
-  opacity: var(--t);
-  transform:
-    translate3d(0, calc((1 - var(--t)) * 55%), 0)
-    skewY(calc((1 - var(--t)) * 10deg));
-  transform-origin: left bottom;
 }
 
 @media (max-width: 900px) {
