@@ -1,18 +1,17 @@
 <script setup>
 import { ref, computed, nextTick, onMounted, onBeforeUnmount } from 'vue';
 import SectionIntro from '@/components/ui/SectionIntro.vue';
-import AppIcon from '@/components/ui/AppIcon.vue';
 import { refreshProgress } from '@/directives/progress';
 
 const steps = [
-  { icon: 'camera', t: 'Capturar com estabilidade', d: 'Pipeline CameraX/Camera2 com foco, exposição e balanço de branco travados por código.' },
-  { icon: 'lock', t: 'Travar parâmetros', d: 'Quando o hardware não suporta a trava automática, um ícone de cadeado libera o disparo manual.' },
-  { icon: 'focus', t: 'Validar nitidez', d: 'Uma métrica computacional (variância, contraste e borda) decide quando a captura está pronta.' },
-  { icon: 'hash', t: 'Registrar localmente', d: 'Hash criptográfico e timestamp gerados no próprio dispositivo, mesmo offline.' },
-  { icon: 'layers', t: 'Empilhar frames', d: 'Burst curto sob parâmetros travados. O stacking reduz o ruído e aumenta a nitidez efetiva.' },
-  { icon: 'image', t: 'Gerar derivado', d: 'A imagem final preserva os metadados e os hashes dos frames de origem em uma corrente matemática.' },
-  { icon: 'archive', t: 'Preservar originais', d: 'Os frames originais nunca são apagados: permanecem como base da custódia técnica.' },
-  { icon: 'sync', t: 'Sincronizar depois', d: 'O Hub ATLAS recebe os registros quando há conexão, sem quebrar a cadeia de custódia.' },
+  { t: 'Capturar com estabilidade', d: 'Pipeline CameraX/Camera2 com foco, exposição e balanço de branco travados por código.' },
+  { t: 'Travar parâmetros', d: 'Quando o hardware não suporta a trava automática, um ícone de cadeado libera o disparo manual.' },
+  { t: 'Validar nitidez', d: 'Uma métrica computacional (variância, contraste e borda) decide quando a captura está pronta.' },
+  { t: 'Registrar localmente', d: 'Hash criptográfico e timestamp gerados no próprio dispositivo, mesmo offline.' },
+  { t: 'Empilhar frames', d: 'Burst curto sob parâmetros travados. O stacking reduz o ruído e aumenta a nitidez efetiva.' },
+  { t: 'Gerar derivado', d: 'A imagem final preserva os metadados e os hashes dos frames de origem em uma corrente matemática.' },
+  { t: 'Preservar originais', d: 'Os frames originais nunca são apagados: permanecem como base da custódia técnica.' },
+  { t: 'Sincronizar depois', d: 'O Hub ATLAS recebe os registros quando há conexão, sem quebrar a cadeia de custódia.' },
 ];
 
 const fields = [
@@ -85,7 +84,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
     <div class="protocol__sticky">
       <div class="container protocol__head">
         <SectionIntro index="04" label="Protocolo técnico LABMOB">
-          <template #title>Cadeia de custódia <span class="accent">matemática</span>.</template>
+          <template #title>Cadeia de custódia <em>matemática</em>.</template>
           Cada evidência é vinculada matematicamente aos seus frames originais. O stacking não
           destrutivo é o núcleo do processo; o stitching é apenas uma função secundária de
           visualização.
@@ -105,10 +104,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
             :class="{ 'is-current': horizontal && current === i, 'is-done': horizontal && current > i }"
             v-reveal="{ delay: Math.min(i, 3) * 90 }"
           >
-            <div class="protocol__step-top">
-              <span class="protocol__num mono">{{ pad(i + 1) }}</span>
-              <AppIcon :name="step.icon" />
-            </div>
+            <span class="protocol__num">{{ pad(i + 1) }}</span>
             <h3>{{ step.t }}</h3>
             <p>{{ step.d }}</p>
           </li>
@@ -195,8 +191,9 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 }
 
 .protocol__counter span {
-  font-size: 2.5rem;
-  font-weight: 500;
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  font-weight: 300;
   letter-spacing: -0.02em;
   color: var(--ink);
 }
@@ -216,7 +213,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   flex-direction: column;
   padding: 1.75rem;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   background: var(--bg);
   transition:
     border-color 0.5s var(--ease),
@@ -225,22 +222,15 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
     transform 1s var(--ease);
 }
 
-.protocol__step-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 2.5rem;
-  color: var(--primary);
-}
-
-.protocol__step-top .icon {
-  width: 24px;
-  height: 24px;
-}
-
 .protocol__num {
-  font-size: 0.8125rem;
-  color: var(--muted);
+  margin-bottom: 2.5rem;
+  font-family: var(--font-serif);
+  font-size: 2.75rem;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--line-strong);
+  transition: color 0.5s var(--ease);
 }
 
 .protocol__step h3 {
@@ -293,13 +283,13 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   }
 
   .protocol__step.is-current {
-    border-color: var(--accent);
+    border-color: var(--ink);
     box-shadow: var(--shadow);
   }
 
   .protocol__step.is-current .protocol__num,
   .protocol__step.is-done .protocol__num {
-    color: var(--accent);
+    color: var(--ink);
   }
 
   .is-horizontal .protocol__bar {
@@ -313,7 +303,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   .protocol__bar span {
     position: absolute;
     inset: 0;
-    background: var(--accent);
+    background: var(--ink);
     transform: scaleX(var(--p, 0));
     transform-origin: left;
   }
@@ -329,7 +319,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 .custody__card {
   padding: clamp(1.75rem, 3.5vw, 2.75rem);
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
 }
 
 .custody__card--soft {
@@ -339,7 +329,10 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 
 .custody__card h3 {
   margin-bottom: 1rem;
-  font-size: 1.375rem;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
 }
 
 .custody__card p + p {
@@ -363,7 +356,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 .custody__fields .mono {
   font-size: 0.75rem;
   line-height: 1.9;
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .morfo {
@@ -372,20 +365,16 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   gap: clamp(2rem, 5vw, 5rem);
   margin-top: 1.5rem;
   padding: clamp(2rem, 5vw, 4rem);
-  border-radius: var(--radius-lg);
-  background: var(--navy-deep);
-  color: rgb(255 255 255 / 0.68);
-}
-
-.morfo .eyebrow {
-  color: var(--accent-light);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
 }
 
 .morfo__title {
   margin: 1rem 0 1.25rem;
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  letter-spacing: -0.035em;
-  color: #fff;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.4vw, 2.875rem);
+  font-weight: 400;
+  letter-spacing: -0.022em;
 }
 
 .morfo__steps {
@@ -398,7 +387,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   grid-template-columns: 3rem 1fr;
   gap: 1rem;
   padding: 1.25rem 0;
-  border-top: 1px solid rgb(255 255 255 / 0.12);
+  border-top: 1px solid var(--line);
 }
 
 /* Cada linha acende em sequência conforme a lista atravessa a tela. */
@@ -409,25 +398,27 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   left: 0;
   width: 100%;
   height: 1px;
-  background: var(--accent-light);
+  background: var(--ink);
   transform: scaleX(clamp(0, calc(var(--p, 1) * 4.5 - var(--k)), 1));
   transform-origin: left;
 }
 
 .morfo__num {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--accent-light);
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.2;
+  color: var(--ink);
 }
 
 .morfo__steps h4 {
   margin-bottom: 0.35rem;
   font-size: 1.0625rem;
-  color: #fff;
 }
 
 .morfo__steps p {
   font-size: 0.9375rem;
+  color: var(--muted);
 }
 
 @media (max-width: 900px) {

@@ -41,12 +41,14 @@ onBeforeUnmount(() => {
   z-index: 120;
   height: 2px;
   pointer-events: none;
+  /* Branco em modo diferença: aparece tanto sobre o vídeo quanto sobre o branco. */
+  mix-blend-mode: difference;
 }
 
 .scroll-progress span {
   display: block;
   height: 100%;
-  background: var(--accent);
+  background: #fff;
   transform: scaleX(0);
   transform-origin: left;
 }

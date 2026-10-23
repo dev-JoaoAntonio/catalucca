@@ -21,15 +21,8 @@ const onboardingLink = whatsappLink(
   <section class="section sucesso">
     <div class="container">
       <div class="sucesso__card" v-reveal:scale>
-        <div class="sucesso__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <path d="m9 12 2 2 4-4" />
-          </svg>
-        </div>
-
         <p class="eyebrow">Contratação confirmada</p>
-        <h1 class="title sucesso__title">Recebemos o seu pedido.</h1>
+        <h1 class="title sucesso__title">Recebemos o seu <em>pedido</em>.</h1>
 
         <p class="lead sucesso__body">
           A equipe Catalucca foi notificada e, em até <strong>um dia útil</strong>, entraremos em
@@ -42,8 +35,8 @@ const onboardingLink = whatsappLink(
         </p>
 
         <div class="sucesso__actions">
-          <router-link to="/" class="btn btn--primary">Voltar para a página inicial</router-link>
-          <a :href="onboardingLink" target="_blank" rel="noopener" class="btn btn--ghost">
+          <router-link to="/" class="btn btn--primary btn--arrow">Voltar para a página inicial</router-link>
+          <a :href="onboardingLink" target="_blank" rel="noopener" class="link-cta">
             Adiantar o onboarding pelo WhatsApp
           </a>
         </div>
@@ -58,33 +51,16 @@ const onboardingLink = whatsappLink(
   align-items: center;
   min-height: 100svh;
   padding-top: calc(var(--header-h) + var(--section-y));
-  background: var(--bg-soft);
 }
 
 .sucesso__card {
   max-width: 680px;
   margin-inline: auto;
   padding: clamp(2rem, 6vw, 4rem);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
   background: var(--bg);
-  box-shadow: var(--shadow);
   text-align: center;
-}
-
-.sucesso__icon {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 1.5rem;
-  border-radius: 50%;
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.sucesso__icon svg {
-  width: 32px;
-  height: 32px;
 }
 
 .sucesso__title {
@@ -105,8 +81,9 @@ const onboardingLink = whatsappLink(
 .sucesso__actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: 1rem 1.75rem;
   margin-top: 2rem;
 }
 </style>

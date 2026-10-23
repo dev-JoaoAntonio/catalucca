@@ -45,7 +45,6 @@ onBeforeUnmount(() => observer?.disconnect());
   <VerticalBlock
     id="governo"
     index="05.3"
-    icon="landmark"
     title="Governo"
     tagline="Inteligência territorial e vigilância sentinela para a administração pública."
     :cta-href="cta"
@@ -128,9 +127,8 @@ onBeforeUnmount(() => observer?.disconnect());
 <style scoped>
 .gov-counter {
   margin-top: 2rem;
-  padding: 1.5rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
 }
 
 .gov-counter__num {
@@ -140,10 +138,10 @@ onBeforeUnmount(() => observer?.disconnect());
 }
 
 .gov-counter__num span {
-  font-family: var(--font-sans);
-  font-size: 3rem;
-  font-weight: 600;
-  letter-spacing: -0.04em;
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 300;
+  letter-spacing: -0.03em;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
@@ -162,7 +160,7 @@ onBeforeUnmount(() => observer?.disconnect());
 .gov-counter__bar span {
   display: block;
   height: 100%;
-  background: var(--accent);
+  background: var(--ink);
   transform-origin: left;
   transition: transform 0.6s var(--ease);
 }
@@ -187,7 +185,7 @@ onBeforeUnmount(() => observer?.disconnect());
   bottom: -1px;
   left: 0;
   width: 2px;
-  background: var(--accent);
+  background: var(--ink);
   transform: scaleY(0);
   transition: transform 0.5s var(--ease);
 }
@@ -205,7 +203,7 @@ onBeforeUnmount(() => observer?.disconnect());
 
 .program.is-active .program__code,
 .program.is-past .program__code {
-  color: var(--accent);
+  color: var(--ink);
 }
 
 .program__head {
@@ -221,9 +219,9 @@ onBeforeUnmount(() => observer?.disconnect());
 }
 
 .program__cat {
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
-  background: var(--bg-soft);
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--text);

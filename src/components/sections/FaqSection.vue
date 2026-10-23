@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import SectionIntro from '@/components/ui/SectionIntro.vue';
-import AppIcon from '@/components/ui/AppIcon.vue';
 import { FAQ } from '@/data/faq';
 import { whatsappLink } from '@/data/contact';
+import { useSectionLink } from '@/composables/useSectionLink';
+
+const go = useSectionLink();
 
 const openIdx = ref(0);
 const waLink = whatsappLink('Olá! Tenho uma dúvida sobre a Catalucca.');
@@ -18,13 +20,15 @@ function toggle(i) {
     <div class="container faq__grid">
       <div class="faq__aside">
         <SectionIntro index="09" label="FAQ">
-          <template #title>Perguntas frequentes.</template>
+          <template #title>Perguntas <em>frequentes</em>.</template>
           Não encontrou o que procurava? Nossa equipe técnica responde em até um dia útil.
         </SectionIntro>
-        <a :href="waLink" target="_blank" rel="noopener" class="btn btn--ghost faq__cta" v-reveal="{ delay: 240 }">
-          Tirar dúvidas no WhatsApp
-          <AppIcon name="arrow-right" />
-        </a>
+        <div class="cta-row faq__cta" v-reveal="{ delay: 240 }">
+          <a :href="waLink" target="_blank" rel="noopener" class="btn btn--ghost btn--arrow">
+            Tirar dúvidas no WhatsApp
+          </a>
+          <a href="/#contato" class="link-cta" @click.prevent="go('#contato')">Enviar pelo formulário</a>
+        </div>
       </div>
 
       <div class="faq__list">
@@ -95,29 +99,25 @@ function toggle(i) {
   gap: 1.5rem;
   width: 100%;
   padding: 1.5rem 0;
-  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 1.9vw, 1.625rem);
+  font-weight: 400;
+  letter-spacing: -0.012em;
   text-align: left;
   color: var(--ink);
   transition: color 0.3s var(--ease);
 }
 
 .faq__question:hover {
-  color: var(--accent);
+  color: var(--muted);
 }
 
 /* Sinal de + que vira − ao abrir. */
 .faq__icon {
   position: relative;
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-  transition:
-    background-color 0.4s var(--ease),
-    border-color 0.4s var(--ease);
+  width: 20px;
+  height: 20px;
 }
 
 .faq__icon::before,
@@ -126,21 +126,15 @@ function toggle(i) {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 12px;
-  height: 1.5px;
-  margin: -0.75px 0 0 -6px;
+  width: 16px;
+  height: 1px;
+  margin: -0.5px 0 0 -8px;
   background: currentColor;
   transition: transform 0.4s var(--ease);
 }
 
 .faq__icon::after {
   transform: rotate(90deg);
-}
-
-.is-open .faq__icon {
-  border-color: var(--primary);
-  background: var(--primary);
-  color: #fff;
 }
 
 .is-open .faq__icon::after {

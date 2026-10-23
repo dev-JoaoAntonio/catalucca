@@ -1,5 +1,10 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useSectionLink } from '@/composables/useSectionLink';
+import { whatsappLink } from '@/data/contact';
+
+const go = useSectionLink();
+const demoLink = whatsappLink('Olá! Gostaria de solicitar uma demonstração técnica da Catalucca.');
 
 // Trechos entre asteriscos ganham destaque.
 const MANIFESTO =
@@ -100,6 +105,15 @@ onBeforeUnmount(() => {
               para onde a decisão precisa ser tomada.”
             </blockquote>
           </div>
+
+          <div class="cta-row about__cta" v-reveal>
+            <a :href="demoLink" target="_blank" rel="noopener" class="btn btn--primary btn--arrow">
+              Solicitar demonstração
+            </a>
+            <a href="/#solucoes" class="link-cta" @click.prevent="go('#solucoes')">
+              Conhecer as soluções
+            </a>
+          </div>
         </div>
       </div>
 
@@ -139,10 +153,11 @@ onBeforeUnmount(() => {
 }
 
 .about__manifesto {
-  font-size: clamp(1.5rem, 2.8vw, 2.375rem);
-  font-weight: 500;
-  line-height: 1.28;
-  letter-spacing: -0.025em;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  font-weight: 300;
+  line-height: 1.22;
+  letter-spacing: -0.018em;
   color: var(--ink);
 }
 
@@ -152,7 +167,7 @@ onBeforeUnmount(() => {
 }
 
 .about__word.is-strong {
-  color: var(--accent);
+  font-style: italic;
 }
 
 .about__cols {
@@ -166,11 +181,17 @@ onBeforeUnmount(() => {
 
 .about__quote {
   padding-left: 1.5rem;
-  border-left: 2px solid var(--accent);
-  font-size: 1.125rem;
-  font-weight: 500;
-  line-height: 1.55;
+  border-left: 1px solid var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.4;
   color: var(--ink);
+}
+
+.about__cta {
+  margin-top: 2.5rem;
 }
 
 .stats {
@@ -197,7 +218,7 @@ onBeforeUnmount(() => {
   left: 0;
   width: 100%;
   height: 2px;
-  background: var(--accent);
+  background: var(--ink);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 1.4s var(--ease) var(--reveal-delay, 0ms);
@@ -208,20 +229,21 @@ onBeforeUnmount(() => {
 }
 
 .stat__value {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6vw, 4.75rem);
+  font-weight: 300;
   line-height: 1;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.03em;
   color: var(--ink);
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 .stat__unit {
-  margin-left: 0.12em;
-  font-size: 0.45em;
-  font-weight: 500;
+  margin-left: 0.1em;
+  font-size: 0.42em;
+  font-style: italic;
   letter-spacing: 0;
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .stat__label {

@@ -16,6 +16,7 @@ import EcosystemSection from '@/components/sections/EcosystemSection.vue';
 import PricingSection from '@/components/sections/PricingSection.vue';
 import FaqSection from '@/components/sections/FaqSection.vue';
 import ContactSection from '@/components/sections/ContactSection.vue';
+import CtaBand from '@/components/ui/CtaBand.vue';
 
 // A mesma landing atende a todas as URLs indexadas; cada uma mantém o seu
 // título, descrição e canonical.
@@ -59,8 +60,18 @@ useHead({
   <TechnologySection />
   <MethodSection />
   <ProtocolSection />
+  <CtaBand message="Olá! Gostaria de agendar uma demonstração técnica da cadeia de custódia da Catalucca.">
+    <template #title>Veja a cadeia de custódia <em>funcionando</em>.</template>
+    Agende uma demonstração técnica e acompanhe, etapa por etapa, da captura travada à evidência
+    sincronizada no Hub ATLAS.
+  </CtaBand>
   <SolutionsSection />
   <ImpactSection />
+  <CtaBand>
+    <template #title>Leve a precisão do laboratório <em>para o território</em>.</template>
+    Converse com a equipe técnica e veja como a triagem na borda se aplica à sua operação.
+    Resposta em até um dia útil.
+  </CtaBand>
   <EcosystemSection />
   <PricingSection />
   <FaqSection />

@@ -4,7 +4,6 @@ import { useRoute } from 'vue-router';
 import { getLenis } from '@/composables/useLenis';
 import { useSectionLink } from '@/composables/useSectionLink';
 import { EMAIL, PHONE_DISPLAY, whatsappLink } from '@/data/contact';
-import AppIcon from '@/components/ui/AppIcon.vue';
 
 const items = [
   { key: 'sobre', label: 'Sobre' },
@@ -139,7 +138,7 @@ onBeforeUnmount(() => {
         ></span>
       </nav>
 
-      <a href="/#contato" class="btn nav__cta" @click.prevent="navigate('contato')">
+      <a href="/#contato" class="btn btn--arrow nav__cta" @click.prevent="navigate('contato')">
         Fale conosco
       </a>
 
@@ -170,8 +169,8 @@ onBeforeUnmount(() => {
         </a>
       </nav>
       <div class="container nav__panel-foot">
-        <a :href="`mailto:${EMAIL}`"><AppIcon name="mail" />{{ EMAIL }}</a>
-        <a :href="whatsappLink()" target="_blank" rel="noopener"><AppIcon name="whatsapp" />{{ PHONE_DISPLAY }}</a>
+        <a :href="`mailto:${EMAIL}`">{{ EMAIL }}</a>
+        <a :href="whatsappLink()" target="_blank" rel="noopener">{{ PHONE_DISPLAY }}</a>
       </div>
     </div>
   </header>
@@ -211,7 +210,7 @@ onBeforeUnmount(() => {
 }
 
 .nav.is-open {
-  color: #fff;
+  color: var(--ink);
 }
 
 .nav.is-open::before {
@@ -265,9 +264,8 @@ onBeforeUnmount(() => {
   position: absolute;
   bottom: -2px;
   left: 0;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--accent);
+  height: 1px;
+  background: currentColor;
   opacity: 0;
   transition:
     transform 0.5s var(--ease),
@@ -281,9 +279,9 @@ onBeforeUnmount(() => {
 
 .nav__cta {
   min-height: 42px;
-  padding-inline: 1.2rem;
+  padding-inline: 1.1rem;
   background: #fff;
-  color: var(--primary);
+  color: var(--ink);
 }
 
 .nav.is-solid .nav__cta {
@@ -293,7 +291,7 @@ onBeforeUnmount(() => {
 
 .nav__cta:hover,
 .nav.is-solid .nav__cta:hover {
-  background: var(--accent);
+  background: var(--ink);
   color: #fff;
 }
 
@@ -343,7 +341,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
   justify-content: space-between;
   padding: calc(var(--header-h) + 2rem) 0 2rem;
-  background: var(--navy-deep);
+  background: var(--bg);
   clip-path: inset(0 0 100% 0);
   transition: clip-path 0.7s var(--ease);
 }
@@ -361,9 +359,10 @@ onBeforeUnmount(() => {
   align-items: baseline;
   gap: 1.25rem;
   padding: 0.85rem 0;
-  border-bottom: 1px solid rgb(255 255 255 / 0.1);
-  font-size: clamp(1.5rem, 6vw, 2.25rem);
-  font-weight: 500;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 7vw, 2.5rem);
+  font-weight: 400;
   letter-spacing: -0.02em;
   opacity: 0;
   transform: translate3d(0, 16px, 0);
@@ -379,26 +378,16 @@ onBeforeUnmount(() => {
 }
 
 .nav__panel-links .mono {
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--accent-light);
+  color: var(--muted);
 }
 
 .nav__panel-foot {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.5rem;
   font-size: 0.9375rem;
-  color: rgb(255 255 255 / 0.7);
-}
-
-.nav__panel-foot a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.nav__panel-foot .icon {
-  width: 18px;
-  height: 18px;
+  color: var(--muted);
 }
 
 @media (max-width: 1079px) {

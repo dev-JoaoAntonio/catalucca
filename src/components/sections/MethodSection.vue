@@ -1,23 +1,22 @@
 <script setup>
 import SectionIntro from '@/components/ui/SectionIntro.vue';
-import AppIcon from '@/components/ui/AppIcon.vue';
+import { whatsappLink } from '@/data/contact';
+
+const expertLink = whatsappLink('Olá! Gostaria de entender a arquitetura da Catalucca com um especialista.');
 
 const nodes = [
   {
     tag: 'Borda',
-    icon: 'smartphone',
     title: 'Dispositivo BYOD',
     text: 'O smartphone do operador vira um microscópio óptico calibrado em campo.',
   },
   {
     tag: 'Campo',
-    icon: 'lock',
     title: 'Captura blindada',
     text: 'Parâmetros travados, hash gerado localmente e operação 100% offline.',
   },
   {
     tag: 'NOC',
-    icon: 'server',
     title: 'Hub ATLAS',
     text: 'Sincronização, governança, Atlas de Microscopia de Borda e custódia perene.',
   },
@@ -38,7 +37,7 @@ const nodes = [
             <span class="method__glyph">Ø</span>
             <span class="method__link">
               <span class="method__line"></span>
-              <AppIcon name="arrow-right" />
+              <span class="method__arrow">→</span>
             </span>
           </div>
           <h3>Ponto zero</h3>
@@ -69,6 +68,9 @@ const nodes = [
             transformam em <strong>laboratórios submicrométricos de 0,7&nbsp;µm</strong>, sob a
             doutrina global da Ciência de Borda Conectada (<em>Connected Edge Science</em>).
           </p>
+          <a :href="expertLink" target="_blank" rel="noopener" class="link-cta arch__cta" v-reveal="{ delay: 220 }">
+            Falar com um especialista técnico
+          </a>
         </div>
 
         <ol class="arch__flow" v-progress="'read'">
@@ -80,7 +82,7 @@ const nodes = [
             v-reveal="{ delay: i * 120 }"
           >
             <div class="arch__marker">
-              <span class="arch__icon"><AppIcon :name="node.icon" /></span>
+              <span class="arch__num mono">0{{ i + 1 }}</span>
               <span v-if="i < nodes.length - 1" class="arch__connector" aria-hidden="true"></span>
             </div>
             <span class="arch__tag mono">{{ node.tag }}</span>
@@ -110,15 +112,17 @@ const nodes = [
 }
 
 .method__glyph {
-  font-size: clamp(6rem, 13vw, 11rem);
+  font-family: var(--font-serif);
+  font-size: clamp(6.5rem, 14vw, 12rem);
   font-weight: 300;
   line-height: 0.85;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.04em;
   color: var(--line-strong);
 }
 
 .method__point--one .method__glyph {
-  color: var(--primary);
+  font-style: italic;
+  color: var(--ink);
 }
 
 .method__point h3 {
@@ -136,21 +140,21 @@ const nodes = [
   display: flex;
   flex: 1;
   align-items: center;
-  color: var(--accent);
+  color: var(--ink);
 }
 
 .method__line {
   flex: 1;
   height: 1px;
-  background: var(--accent);
+  background: var(--ink);
   transform: scaleX(var(--p, 1));
   transform-origin: left;
 }
 
-.method__link .icon {
-  width: 22px;
-  height: 22px;
-  margin-left: -6px;
+.method__arrow {
+  margin-left: -0.35rem;
+  font-size: 1.25rem;
+  line-height: 1;
   opacity: clamp(0, calc(var(--p, 1) * 4 - 3), 1);
 }
 
@@ -166,12 +170,19 @@ const nodes = [
 
 .arch__title {
   margin: 1rem 0 1.25rem;
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
-  letter-spacing: -0.03em;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 2.8vw, 2.375rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
-.arch__intro p:last-child {
+.arch__intro p {
   color: var(--text);
+}
+
+.arch__cta {
+  margin-top: 1.75rem;
 }
 
 .arch__flow {
@@ -187,26 +198,22 @@ const nodes = [
   margin-bottom: 1.5rem;
 }
 
-.arch__icon {
+.arch__num {
   position: relative;
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
   background: var(--bg);
-  color: var(--primary);
-  transition:
-    border-color 0.5s var(--ease),
-    background-color 0.5s var(--ease),
-    color 0.5s var(--ease);
+  font-size: 0.8125rem;
+  color: var(--ink);
 }
 
-.arch__node:last-child .arch__icon {
-  border-color: var(--primary);
-  background: var(--primary);
+.arch__node:last-child .arch__num {
+  background: var(--ink);
   color: #fff;
 }
 
@@ -214,8 +221,8 @@ const nodes = [
 .arch__connector {
   position: absolute;
   top: 50%;
-  left: 56px;
-  width: calc(100% - 56px + 1.5rem);
+  left: 48px;
+  width: calc(100% - 48px + 1.5rem);
   height: 1px;
   background: var(--line-strong);
   overflow: hidden;
@@ -225,7 +232,7 @@ const nodes = [
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--accent);
+  background: var(--ink);
   transform: scaleX(clamp(0, calc(var(--p, 1) * 2.4 - var(--k) * 1.1), 1));
   transform-origin: left;
 }
@@ -233,7 +240,7 @@ const nodes = [
 .arch__tag {
   font-size: 0.6875rem;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .arch__node h4 {
@@ -268,7 +275,7 @@ const nodes = [
 
   .arch__node {
     display: grid;
-    grid-template-columns: 56px 1fr;
+    grid-template-columns: 48px 1fr;
     column-gap: 1.25rem;
   }
 
@@ -279,10 +286,10 @@ const nodes = [
   }
 
   .arch__connector {
-    top: 56px;
-    left: 28px;
+    top: 48px;
+    left: 24px;
     width: 1px;
-    height: calc(100% + 2rem - 56px);
+    height: calc(100% + 2rem - 48px);
   }
 
   .arch__connector::after {

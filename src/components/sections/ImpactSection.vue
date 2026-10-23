@@ -30,10 +30,10 @@ const columns = [
 </script>
 
 <template>
-  <section id="impacto" class="section section--soft impact" data-spy="solucoes">
+  <section id="impacto" class="section impact" data-spy="solucoes">
     <div class="container">
       <SectionIntro index="06" label="Resultados">
-        <template #title>Impacto estrutural.</template>
+        <template #title>Impacto <em>estrutural</em>.</template>
         Mais do que tecnologia: transformação operacional, econômica e social.
       </SectionIntro>
 
@@ -46,7 +46,7 @@ const columns = [
         >
           <h3 class="impact__title">
             <span class="mono">0{{ i + 1 }}</span>
-            Impacto {{ col.title.toLowerCase() }}
+            <span>Impacto <em>{{ col.title.toLowerCase() }}</em></span>
           </h3>
           <dl>
             <div v-for="item in col.items" :key="item.k" class="impact__item">
@@ -61,18 +61,24 @@ const columns = [
 </template>
 
 <style scoped>
+.impact {
+  border-top: 1px solid var(--line);
+}
+
 .impact__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.25rem;
   margin-top: clamp(3rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--ink);
 }
 
 .impact__col {
-  padding: clamp(1.5rem, 3vw, 2.25rem);
-  border-radius: var(--radius-lg);
-  background: var(--bg);
-  box-shadow: var(--shadow-sm);
+  padding: 2rem 2rem 0 0;
+}
+
+.impact__col + .impact__col {
+  padding-left: 2rem;
+  border-left: 1px solid var(--line);
 }
 
 .impact__title {
@@ -80,12 +86,20 @@ const columns = [
   align-items: baseline;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
-  font-size: 1.25rem;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.impact__title em {
+  font-weight: 300;
 }
 
 .impact__title .mono {
-  font-size: 0.75rem;
-  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
 }
 
 .impact__item {
@@ -107,6 +121,12 @@ const columns = [
 @media (max-width: 900px) {
   .impact__grid {
     grid-template-columns: 1fr;
+  }
+
+  .impact__col,
+  .impact__col + .impact__col {
+    padding: 2rem 0 0;
+    border-left: 0;
   }
 }
 </style>

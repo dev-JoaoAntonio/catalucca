@@ -1,7 +1,6 @@
 <script setup>
 import VerticalBlock from './VerticalBlock.vue';
 import LazyVideo from '@/components/ui/LazyVideo.vue';
-import AppIcon from '@/components/ui/AppIcon.vue';
 import { whatsappLink } from '@/data/contact';
 
 const cta = whatsappLink('Olá! Gostaria de agendar uma demonstração técnica da Catalucca para a minha empresa.');
@@ -53,7 +52,6 @@ const roi = [
   <VerticalBlock
     id="operacional"
     index="05.2"
-    icon="sprout"
     title="Operacional privado"
     tagline="Engenharia de precisão e blindagem de processos: da visão de campo à evidência jurídica e financeira."
     :cta-href="cta"
@@ -109,12 +107,9 @@ const roi = [
       </div>
 
       <p class="note" v-reveal>
-        <AppIcon name="shield" />
-        <span>
-          <strong>Certificação técnica:</strong> equipamento de alta precisão para controle de
-          processos, triagem fitossanitária e auditoria de qualidade, otimizado para a tomada de
-          decisão imediata em ambiente operacional.
-        </span>
+        <strong>Certificação técnica:</strong> equipamento de alta precisão para controle de
+        processos, triagem fitossanitária e auditoria de qualidade, otimizado para a tomada de
+        decisão imediata em ambiente operacional.
       </p>
     </div>
   </VerticalBlock>
@@ -124,7 +119,7 @@ const roi = [
 .ops__claim {
   margin-top: 1.25rem;
   padding-left: 1.25rem;
-  border-left: 2px solid var(--accent);
+  border-left: 1px solid var(--ink);
   font-weight: 500;
   color: var(--ink);
 }
@@ -133,27 +128,27 @@ const roi = [
   display: block;
   margin-bottom: 0.5rem;
   font-size: 0.75rem;
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .roi {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .roi__item {
-  padding: 1.25rem;
-  border-radius: var(--radius);
-  background: var(--bg-soft);
+  padding-top: 1rem;
+  border-top: 1px solid var(--ink);
 }
 
 .roi__item dt {
   margin-bottom: 0.5rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--primary);
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--ink);
 }
 
 .roi__item dd {

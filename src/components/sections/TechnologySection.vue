@@ -1,6 +1,11 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { createModelViewer } from '@/composables/useModelViewer';
+import { useSectionLink } from '@/composables/useSectionLink';
+import { whatsappLink } from '@/data/contact';
+
+const go = useSectionLink();
+const demoLink = whatsappLink('Olá! Gostaria de ver o DIPLE em ação em uma demonstração técnica.');
 
 const chapters = [
   {
@@ -188,6 +193,13 @@ onBeforeUnmount(() => {
               {{ chapter.label }}
             </li>
           </ol>
+
+          <div class="cta-row tech__cta">
+            <a :href="demoLink" target="_blank" rel="noopener" class="btn btn--primary btn--arrow">
+              Ver o DIPLE em ação
+            </a>
+            <a href="/#haas" class="link-cta" @click.prevent="go('#haas')">Ver planos HaaS</a>
+          </div>
         </div>
 
         <div class="tech__visual" v-reveal:scale>
@@ -255,9 +267,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .tech {
   position: relative;
-  background:
-    radial-gradient(55% 60% at 75% 50%, #E6F1F8 0%, transparent 70%),
-    var(--bg-soft);
+  border-top: 1px solid var(--line);
 }
 
 .tech__sticky {
@@ -272,7 +282,7 @@ onBeforeUnmount(() => {
 }
 
 .tech__chapters {
-  margin-top: 2rem;
+  margin-top: 1.75rem;
 }
 
 .tech__kicker {
@@ -287,7 +297,7 @@ onBeforeUnmount(() => {
 
 .tech__kicker .mono {
   font-size: 0.75rem;
-  color: var(--accent);
+  color: var(--ink);
 }
 
 .tech__body {
@@ -331,6 +341,7 @@ onBeforeUnmount(() => {
 
 .tech__modes li {
   display: grid;
+  align-content: start;
   gap: 0.25rem;
   font-size: 0.9375rem;
 }
@@ -341,6 +352,10 @@ onBeforeUnmount(() => {
 
 .tech__rail {
   display: none;
+}
+
+.tech__cta {
+  margin-top: 2rem;
 }
 
 /* Visual */
@@ -358,9 +373,9 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 100%;
   fill: none;
-  stroke: var(--primary);
+  stroke: var(--ink);
   stroke-width: 1;
-  opacity: 0.22;
+  opacity: 0.16;
   transform: rotate(calc(var(--p, 0) * 90deg));
 }
 
@@ -377,11 +392,11 @@ onBeforeUnmount(() => {
   position: absolute;
   padding: 0.3rem 0.6rem;
   border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  background: rgb(255 255 255 / 0.8);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
   font-size: 0.6875rem;
   white-space: nowrap;
-  color: var(--primary);
+  color: var(--ink);
 }
 
 .tech__tag--top {
@@ -486,7 +501,7 @@ onBeforeUnmount(() => {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.75rem;
     max-width: 420px;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
   }
 
   .tech__rail li {
@@ -515,7 +530,7 @@ onBeforeUnmount(() => {
 
   /* Cada trecho do trilho enche com o progresso do capítulo. */
   .tech__rail li::after {
-    background: var(--accent);
+    background: var(--ink);
     transform: scaleX(clamp(0, calc(var(--p, 0) * 3 - var(--i)), 1));
     transform-origin: left;
   }

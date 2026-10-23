@@ -1,7 +1,6 @@
 <script setup>
 import { useSectionLink } from '@/composables/useSectionLink';
 import { whatsappLink } from '@/data/contact';
-import AppIcon from '@/components/ui/AppIcon.vue';
 
 const go = useSectionLink();
 const demoLink = whatsappLink('Olá! Gostaria de solicitar uma demonstração técnica da Catalucca.');
@@ -23,7 +22,6 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
         <source src="/videos/hero.mp4" type="video/mp4">
       </video>
       <div class="hero__shade"></div>
-      <div class="hero__grid"></div>
     </div>
 
     <div class="container hero__content">
@@ -34,7 +32,7 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
           v-for="(line, i) in lines"
           :key="line"
           class="hero__line"
-          :class="{ 'hero__line--accent': i === 1 }"
+          :class="{ 'hero__line--em': i === 1 }"
         >
           <span :style="{ '--i': i }">{{ line }}</span>
         </span>
@@ -47,9 +45,8 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
           de risco.
         </p>
         <div class="hero__actions">
-          <a :href="demoLink" target="_blank" rel="noopener" class="btn btn--light">
+          <a :href="demoLink" target="_blank" rel="noopener" class="btn btn--light btn--arrow">
             Solicitar demonstração
-            <AppIcon name="arrow-right" />
           </a>
           <a href="/#tecnologia" class="btn btn--outline-light" @click.prevent="go('#tecnologia')">
             Conhecer a tecnologia
@@ -76,14 +73,14 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
   color: #fff;
 }
 
-/* Ao rolar, o vídeo recua para dentro de um cartão arredondado. */
+/* Ao rolar, o vídeo recua para dentro de um quadro. */
 .hero__media {
   position: absolute;
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  background: var(--navy-deep);
-  clip-path: inset(calc(var(--p, 0) * 3%) round calc(var(--p, 0) * 32px));
+  background: var(--ink);
+  clip-path: inset(calc(var(--p, 0) * 3%) round calc(var(--p, 0) * 4px));
 }
 
 .hero__video {
@@ -97,18 +94,8 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgb(6 27 48 / 0.9) 0%, rgb(6 27 48 / 0.62) 50%, rgb(6 27 48 / 0.3) 100%),
-    linear-gradient(0deg, rgb(6 27 48 / 0.75) 0%, transparent 55%);
-}
-
-.hero__grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px);
-  background-size: 88px 88px;
-  mask-image: linear-gradient(90deg, #000 0%, transparent 75%);
+    linear-gradient(90deg, rgb(10 12 15 / 0.86) 0%, rgb(10 12 15 / 0.55) 50%, rgb(10 12 15 / 0.2) 100%),
+    linear-gradient(0deg, rgb(10 12 15 / 0.7) 0%, transparent 55%);
 }
 
 .hero__content {
@@ -118,24 +105,25 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
 
 .hero__eyebrow {
   margin-bottom: 1.75rem;
-  color: var(--accent-light);
+  color: rgb(255 255 255 / 0.7);
   animation: hero-fade 1s var(--ease) backwards;
 }
 
 .hero__title {
   margin-bottom: clamp(2.5rem, 6vh, 4rem);
-  font-size: clamp(2.5rem, 5.4vw, 5rem);
-  font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.045em;
+  font-family: var(--font-serif);
+  font-size: clamp(2.75rem, 6vw, 5.75rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.025em;
   color: #fff;
 }
 
 .hero__line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
 }
 
 .hero__line > span {
@@ -144,8 +132,8 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
   animation-delay: calc(150ms + var(--i) * 120ms);
 }
 
-.hero__line--accent {
-  color: var(--accent-light);
+.hero__line--em {
+  font-style: italic;
 }
 
 .hero__bottom {
@@ -155,7 +143,7 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
   justify-content: space-between;
   gap: 2rem 3rem;
   padding-top: 2rem;
-  border-top: 1px solid rgb(255 255 255 / 0.16);
+  border-top: 1px solid rgb(255 255 255 / 0.2);
   animation: hero-fade 1.1s var(--ease) 0.65s backwards;
 }
 

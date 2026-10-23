@@ -57,7 +57,6 @@ const testimonials = [
   <VerticalBlock
     id="educacao"
     index="05.1"
-    icon="graduation"
     title="Educação"
     tagline="Protagonismo digital investigativo. A ciência onde o aluno está."
     :cta-href="cta"
@@ -155,7 +154,7 @@ const testimonials = [
 <style scoped>
 .research {
   padding: clamp(1.5rem, 3vw, 2.25rem);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
   background: var(--bg-soft);
 }
 
@@ -176,7 +175,7 @@ const testimonials = [
 .research__list .mono {
   font-size: 0.75rem;
   line-height: 1.9;
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .research__list h5 {
@@ -192,7 +191,7 @@ const testimonials = [
 .quotes {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .quote {
@@ -200,14 +199,16 @@ const testimonials = [
   flex-direction: column;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1.5rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ink);
 }
 
 .quote blockquote {
-  font-size: 0.9375rem;
-  line-height: 1.6;
+  font-family: var(--font-serif);
+  font-size: 1.1875rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.45;
   color: var(--ink);
 }
 

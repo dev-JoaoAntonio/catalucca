@@ -1,6 +1,5 @@
 <script setup>
 import SectionIntro from '@/components/ui/SectionIntro.vue';
-import AppIcon from '@/components/ui/AppIcon.vue';
 import EducationBlock from './solutions/EducationBlock.vue';
 import OperationsBlock from './solutions/OperationsBlock.vue';
 import GovernmentBlock from './solutions/GovernmentBlock.vue';
@@ -11,19 +10,16 @@ const go = useSectionLink();
 const fronts = [
   {
     hash: '#educacao',
-    icon: 'graduation',
     title: 'Educação',
     text: 'Sistema Ø—1™ para escolas e universidades, em conformidade com a Lei nº 15.100/2025 e a BNCC.',
   },
   {
     hash: '#operacional',
-    icon: 'sprout',
     title: 'Operacional privado',
     text: 'Inspeção móvel, perícia técnica e laudos com cadeia de custódia digital.',
   },
   {
     hash: '#governo',
-    icon: 'landmark',
     title: 'Governo',
     text: 'Dez programas federais em um sistema, com contratação por inexigibilidade.',
   },
@@ -34,24 +30,21 @@ const fronts = [
   <section id="solucoes" class="section solutions" data-spy="solucoes">
     <div class="container">
       <SectionIntro index="05" label="Soluções">
-        <template #title>Uma infraestrutura, três frentes de atuação.</template>
+        <template #title>Uma infraestrutura, <em>três frentes</em> de atuação.</template>
         A mesma base técnica, com posturas distintas, adaptadas ao contexto e à pressão de decisão
         de cada operação.
       </SectionIntro>
 
-      <ul class="fronts">
+      <ol class="fronts">
         <li v-for="(front, i) in fronts" :key="front.hash" v-reveal="{ delay: i * 100 }">
           <a :href="`/${front.hash}`" class="front" @click.prevent="go(front.hash)">
-            <span class="front__icon"><AppIcon :name="front.icon" /></span>
+            <span class="front__num">0{{ i + 1 }}</span>
             <h3>{{ front.title }}</h3>
             <p>{{ front.text }}</p>
-            <span class="front__more">
-              Ver detalhes
-              <AppIcon name="arrow-right" />
-            </span>
+            <span class="front__more">Ver detalhes</span>
           </a>
         </li>
-      </ul>
+      </ol>
 
       <EducationBlock />
       <OperationsBlock />
@@ -68,43 +61,44 @@ const fronts = [
 .fronts {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
   margin: clamp(3rem, 6vw, 4.5rem) 0 clamp(4rem, 8vw, 6rem);
+  border-top: 1px solid var(--ink);
+}
+
+.fronts li + li {
+  border-left: 1px solid var(--line);
 }
 
 .front {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1.75rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  transition:
-    border-color 0.4s var(--ease),
-    box-shadow 0.4s var(--ease),
-    transform 0.5s var(--ease);
+  padding: 2rem 2rem 2rem 0;
+  transition: background-color 0.4s var(--ease);
 }
 
-.front:hover {
-  border-color: var(--accent);
-  box-shadow: var(--shadow);
-  transform: translate3d(0, -4px, 0);
+.fronts li + li .front {
+  padding-left: 2rem;
 }
 
-.front__icon {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 2rem;
-  border-radius: var(--radius);
-  background: var(--accent-soft);
-  color: var(--primary);
+.front__num {
+  margin-bottom: 2.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .front h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.625rem, 2.4vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  transition: font-style 0.3s;
+}
+
+.front:hover h3 {
+  font-style: italic;
 }
 
 .front p {
@@ -113,29 +107,47 @@ const fronts = [
   color: var(--muted);
 }
 
+/* Mesmo visual do .link-cta, acionado pelo hover do cartão inteiro. */
 .front__more {
+  align-self: flex-start;
   display: inline-flex;
-  align-items: center;
   gap: 0.5rem;
-  margin-top: 1.5rem;
-  font-size: 0.875rem;
+  margin-top: 1.75rem;
+  padding-bottom: 3px;
+  font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--primary);
+  color: var(--ink);
+  background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+  transition: background-size 0.45s var(--ease);
 }
 
-.front__more .icon {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.4s var(--ease);
+.front__more::after {
+  content: '→';
+  transition: transform 0.35s var(--ease);
 }
 
-.front:hover .front__more .icon {
+.front:hover .front__more {
+  background-size: 0 1px;
+  background-position: right bottom;
+}
+
+.front:hover .front__more::after {
   transform: translateX(4px);
 }
 
 @media (max-width: 900px) {
   .fronts {
     grid-template-columns: 1fr;
+  }
+
+  .fronts li + li {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .front,
+  .fronts li + li .front {
+    padding: 1.75rem 0;
   }
 }
 </style>

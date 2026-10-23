@@ -81,8 +81,8 @@ const columns = [
 .footer {
   position: relative;
   overflow: hidden;
-  background: var(--navy-deep);
-  color: rgb(255 255 255 / 0.62);
+  background: var(--bg);
+  color: var(--text);
   font-size: 0.9375rem;
 }
 
@@ -91,7 +91,8 @@ const columns = [
   grid-template-columns: 1.6fr repeat(3, 1fr);
   gap: clamp(2rem, 5vw, 4rem);
   padding-block: clamp(3rem, 6vw, 4.5rem);
-  border-block: 1px solid rgb(255 255 255 / 0.1);
+  border-block: 1px solid var(--line);
+  border-top-color: var(--ink);
 }
 
 .footer__logo {
@@ -101,7 +102,7 @@ const columns = [
   margin-bottom: 1.25rem;
   font-weight: 600;
   letter-spacing: 0.16em;
-  color: #fff;
+  color: var(--ink);
 }
 
 .footer__brand p {
@@ -115,7 +116,7 @@ const columns = [
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent-light);
+  color: var(--muted);
 }
 
 .footer__col ul {
@@ -128,7 +129,7 @@ const columns = [
 }
 
 .footer__col a:hover {
-  color: #fff;
+  color: var(--muted);
 }
 
 .footer__addresses {
@@ -141,7 +142,7 @@ const columns = [
 
 .footer__addresses span {
   display: block;
-  color: #fff;
+  color: var(--ink);
 }
 
 .footer__bottom {
@@ -151,19 +152,19 @@ const columns = [
   gap: 0.75rem 2rem;
   padding-block: 1.75rem;
   font-size: 0.8125rem;
-  color: rgb(255 255 255 / 0.45);
+  color: var(--muted);
 }
 
 .footer__wordmark {
-  margin-bottom: -0.18em;
-  font-size: clamp(3rem, 14.5vw, 14rem);
-  font-weight: 600;
+  margin-bottom: -0.2em;
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 15.5vw, 15rem);
+  font-weight: 300;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   text-align: center;
   white-space: nowrap;
-  color: transparent;
-  -webkit-text-stroke: 1px rgb(255 255 255 / 0.12);
+  color: var(--line);
   transform: translate3d(0, calc((1 - var(--p, 1)) * 35%), 0);
   user-select: none;
 }

@@ -1,6 +1,5 @@
 <script setup>
 import { ref, reactive } from 'vue';
-import AppIcon from '@/components/ui/AppIcon.vue';
 import { ADDRESSES, EMAIL, PHONE_DISPLAY, whatsappLink } from '@/data/contact';
 
 const segments = [
@@ -33,12 +32,12 @@ function onSubmit() {
 </script>
 
 <template>
-  <section id="contato" class="section section--dark contact" data-spy="contato">
+  <section id="contato" class="section contact" data-spy="contato">
     <div class="container contact__grid">
       <div class="contact__intro">
         <p class="eyebrow" v-reveal><span class="eyebrow__index">10</span>Contato</p>
         <h2 class="title contact__title" v-reveal="{ delay: 80 }">
-          Pronto para implantar a Catalucca na sua operação?
+          Pronto para implantar a Catalucca <em>na sua operação</em>?
         </h2>
         <p class="lead contact__lead" v-reveal="{ delay: 160 }">
           Demonstrações técnicas, propostas HaaS e suporte para projetos de educação, operação
@@ -47,7 +46,6 @@ function onSubmit() {
 
         <ul class="channels">
           <li v-reveal="{ delay: 200 }">
-            <span class="channels__icon"><AppIcon name="mail" /></span>
             <div>
               <h3>E-mail técnico</h3>
               <a :href="`mailto:${EMAIL}`">{{ EMAIL }}</a>
@@ -55,7 +53,6 @@ function onSubmit() {
             </div>
           </li>
           <li v-reveal="{ delay: 280 }">
-            <span class="channels__icon"><AppIcon name="whatsapp" /></span>
             <div>
               <h3>WhatsApp</h3>
               <a :href="whatsappLink()" target="_blank" rel="noopener">{{ PHONE_DISPLAY }}</a>
@@ -63,7 +60,6 @@ function onSubmit() {
             </div>
           </li>
           <li v-reveal="{ delay: 360 }">
-            <span class="channels__icon"><AppIcon name="pin" /></span>
             <div>
               <h3>Endereços</h3>
               <p v-for="loc in ADDRESSES" :key="loc.city">
@@ -116,13 +112,8 @@ function onSubmit() {
         </label>
 
         <div class="contact__actions">
-          <button type="submit" class="btn btn--primary">
-            Enviar mensagem
-            <AppIcon name="arrow-right" />
-          </button>
-          <a :href="waLink" target="_blank" rel="noopener" class="btn btn--ghost">
-            Continuar no WhatsApp
-          </a>
+          <button type="submit" class="btn btn--primary btn--arrow">Enviar mensagem</button>
+          <a :href="waLink" target="_blank" rel="noopener" class="link-cta">Continuar no WhatsApp</a>
         </div>
 
         <p v-if="sent" class="contact__sent" role="status">
@@ -136,9 +127,7 @@ function onSubmit() {
 
 <style scoped>
 .contact {
-  background:
-    radial-gradient(70% 60% at 0% 0%, rgb(0 140 186 / 0.22) 0%, transparent 60%),
-    var(--navy-deep);
+  border-top: 1px solid var(--line);
 }
 
 .contact__grid {
@@ -148,71 +137,51 @@ function onSubmit() {
   align-items: start;
 }
 
-.contact .eyebrow {
-  color: var(--accent-light);
-}
-
-.contact .eyebrow__index {
-  color: rgb(255 255 255 / 0.5);
-}
-
 .contact__title {
   margin-top: 1.25rem;
-  color: #fff;
 }
 
 .contact__lead {
   margin-top: 1.25rem;
-  color: rgb(255 255 255 / 0.72);
 }
 
 .channels {
   display: grid;
-  gap: 1.5rem;
   margin-top: 3rem;
+  border-top: 1px solid var(--ink);
 }
 
 .channels li {
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 1rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgb(255 255 255 / 0.12);
-}
-
-.channels__icon {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgb(255 255 255 / 0.08);
-  color: var(--accent-light);
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .channels h3 {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgb(255 255 255 / 0.55);
+  color: var(--muted);
 }
 
 .channels a {
-  font-size: 1.0625rem;
-  font-weight: 500;
-  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
   transition: color 0.3s var(--ease);
 }
 
 .channels a:hover {
-  color: var(--accent-light);
+  color: var(--muted);
 }
 
 .channels p {
   font-size: 0.9375rem;
+  color: var(--muted);
 }
 
 /* Formulário */
@@ -220,15 +189,16 @@ function onSubmit() {
   display: grid;
   gap: 1.1rem;
   padding: clamp(1.75rem, 4vw, 2.75rem);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
   background: var(--bg);
-  color: var(--text);
 }
 
 .contact__form h3 {
-  font-size: 1.5rem;
-  letter-spacing: -0.03em;
-  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 .contact__form-hint {
@@ -284,28 +254,29 @@ function onSubmit() {
 .field select:focus,
 .field textarea:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgb(0 140 186 / 0.15);
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgb(17 20 24 / 0.08);
 }
 
 .contact__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 1rem 1.75rem;
   margin-top: 0.5rem;
 }
 
 .contact__sent {
   padding: 0.85rem 1rem;
-  border-radius: var(--radius-sm);
-  background: var(--accent-soft);
+  border-left: 1px solid var(--ink);
+  background: var(--bg-soft);
   font-size: 0.875rem;
   color: var(--ink);
 }
 
 .contact__sent a {
   font-weight: 500;
-  color: var(--primary);
+  color: var(--ink);
   text-decoration: underline;
 }
 

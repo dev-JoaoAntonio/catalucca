@@ -88,14 +88,15 @@ const press = [
   animation-play-state: paused;
 }
 
+/* Nomes dos veículos em serifa, como em um cabeçalho de jornal. */
 .press__item {
   padding-right: clamp(2.5rem, 5vw, 4.5rem);
-  font-size: clamp(1rem, 1.6vw, 1.375rem);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
   white-space: nowrap;
-  color: #A3B0BF;
+  color: #A2A5AB;
   transition: color 0.3s var(--ease);
 }
 
