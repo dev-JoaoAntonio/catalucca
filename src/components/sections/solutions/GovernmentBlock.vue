@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import VerticalBlock from './VerticalBlock.vue';
+import SolutionPanel from './SolutionPanel.vue';
 import { whatsappLink } from '@/data/contact';
 
 const cta = whatsappLink('Olá! Gostaria de solicitar uma demonstração técnica do Sistema Ø—1™ para a minha instituição.');
@@ -42,17 +42,19 @@ onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <template>
-  <VerticalBlock
-    id="governo"
+  <SolutionPanel
     title="Governo"
     tagline="Inteligência territorial e vigilância sentinela para a administração pública."
     :cta-href="cta"
   >
-    <template #aside>
-      <div class="gov-counter" aria-hidden="true">
-        <p class="gov-counter__num">
-          <span>{{ pad(reached) }}</span>/{{ programs.length }}
-        </p>
+    <template #lead>
+      <p class="p-lead anim" style="--k: 2">
+        Eficiência fiscal por meio da <strong>triagem técnica de borda</strong>: até 85% menos
+        custos logísticos na análise centralizada. Um contrato, uma infraestrutura e dez programas
+        federais convergidos no Hub ATLAS.
+      </p>
+      <div class="gov-counter anim" style="--k: 3" aria-hidden="true">
+        <p class="gov-counter__num"><span>{{ pad(reached) }}</span>/{{ programs.length }}</p>
         <p class="gov-counter__label">programas federais em um só sistema</p>
         <div class="gov-counter__bar">
           <span :style="{ transform: `scaleX(${reached / programs.length})` }"></span>
@@ -60,76 +62,49 @@ onBeforeUnmount(() => observer?.disconnect());
       </div>
     </template>
 
-    <div class="v-stack">
-      <p class="v-lead" v-reveal>
-        Eficiência fiscal por meio da <strong>triagem técnica de borda</strong>: redução de até 85%
-        nos custos logísticos da análise centralizada. Um único investimento atende a dez programas
-        federais.
-      </p>
+    <template #side>
+      <ol ref="listEl" class="programs">
+        <li
+          v-for="(program, i) in programs"
+          :key="program.name"
+          class="program"
+          :class="{ 'is-active': activeIdx === i, 'is-past': activeIdx > i }"
+          :data-index="i"
+        >
+          <span class="program__code mono">{{ pad(i + 1) }}</span>
+          <div class="program__main">
+            <h5>{{ program.name }} <span class="program__cat">{{ program.cat }}</span></h5>
+            <p>
+              {{ program.detail }}
+              <span v-if="program.law" class="program__law">({{ program.law }})</span>
+            </p>
+          </div>
+        </li>
+      </ol>
+    </template>
 
-      <div>
-        <div v-reveal>
-          <h4 class="v-block__title">Decálogo da soberania</h4>
-          <p class="v-block__text">
-            Um único contrato, uma única infraestrutura de borda e dez programas federais
-            convergidos no <strong>Hub ATLAS</strong>: auditáveis, georreferenciados e soberanos.
-          </p>
-        </div>
-
-        <ol ref="listEl" class="programs">
-          <li
-            v-for="(program, i) in programs"
-            :key="program.name"
-            class="program"
-            :class="{ 'is-active': activeIdx === i, 'is-past': activeIdx > i }"
-            :data-index="i"
-            v-reveal
-          >
-            <span class="program__code mono">{{ pad(i + 1) }}</span>
-            <div class="program__main">
-              <div class="program__head">
-                <h5>{{ program.name }}</h5>
-                <span class="program__cat">{{ program.cat }}</span>
-              </div>
-              <p>
-                {{ program.detail }}
-                <span v-if="program.law" class="program__law">({{ program.law }})</span>
-              </p>
-            </div>
-          </li>
-        </ol>
+    <div class="p-cols rail-mobile anim" style="--cols: 2; --k: 5">
+      <div class="p-col">
+        <h4>Segurança jurídica</h4>
+        <p>
+          Implementação pelo rito da inexigibilidade de licitação (art. 74, inciso I, da Lei
+          nº 14.133/2021), fundamentado na singularidade técnica da tecnologia IIT e na
+          exclusividade de distribuição da Catalucca na América do Sul.
+        </p>
       </div>
-
-      <div class="v-grid gov-legal" v-reveal>
-        <div class="v-item">
-          <h5>Segurança jurídica</h5>
-          <p>
-            A implementação segue o rito da inexigibilidade de licitação (art. 74, inciso I, da Lei
-            nº 14.133/2021), fundamentado na singularidade técnica da tecnologia IIT e na
-            exclusividade de distribuição da Catalucca na América do Sul.
-          </p>
-        </div>
-        <div class="v-item">
-          <h5>Relatório de impacto</h5>
-          <p>Ao final de cada ciclo, são geradas evidências para os sistemas federais (SIOPS/SIOPE):</p>
-          <ul class="check-list">
-            <li>Banco de imagens georreferenciadas (evidências de borda).</li>
-            <li>Índice de cumprimento dos dez programas federais.</li>
-            <li>Auditoria de eficiência fiscal.</li>
-          </ul>
-        </div>
+      <div class="p-col">
+        <h4>Relatório de impacto</h4>
+        <p>
+          Ao fim de cada ciclo, evidências para os sistemas federais (SIOPS/SIOPE): banco de
+          imagens georreferenciadas, índice de cumprimento dos dez programas e auditoria de
+          eficiência fiscal.
+        </p>
       </div>
     </div>
-  </VerticalBlock>
+  </SolutionPanel>
 </template>
 
 <style scoped>
-.gov-counter {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-
 .gov-counter__num {
   font-family: var(--font-mono);
   font-size: 1rem;
@@ -138,7 +113,7 @@ onBeforeUnmount(() => observer?.disconnect());
 
 .gov-counter__num span {
   font-family: var(--font-display);
-  font-size: 3.5rem;
+  font-size: 3.25rem;
   font-weight: 300;
   letter-spacing: -0.06em;
   color: var(--ink);
@@ -146,7 +121,7 @@ onBeforeUnmount(() => observer?.disconnect());
 }
 
 .gov-counter__label {
-  margin: 0.25rem 0 1rem;
+  margin: 0.25rem 0 0.85rem;
   font-size: 0.875rem;
   color: var(--muted);
 }
@@ -165,15 +140,15 @@ onBeforeUnmount(() => observer?.disconnect());
 }
 
 .programs {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--ink);
 }
 
 .program {
   position: relative;
   display: grid;
-  grid-template-columns: 3rem 1fr;
-  gap: 1rem;
-  padding: 1.25rem 0 1.25rem 1rem;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 0.75rem;
+  padding: 0.85rem 0 0.85rem 0.85rem;
   border-bottom: 1px solid var(--line);
 }
 
@@ -195,7 +170,7 @@ onBeforeUnmount(() => observer?.disconnect());
 
 .program__code {
   font-size: 0.8125rem;
-  line-height: 1.8;
+  line-height: 1.7;
   color: var(--muted);
   transition: color 0.4s var(--ease);
 }
@@ -205,44 +180,28 @@ onBeforeUnmount(() => observer?.disconnect());
   color: var(--ink);
 }
 
-.program__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 0.75rem;
-  margin-bottom: 0.35rem;
-}
-
-.program__head h5 {
-  font-size: 1.0625rem;
+.program h5 {
+  margin-bottom: 0.15rem;
+  font-size: 0.9375rem;
 }
 
 .program__cat {
-  padding: 0.15rem 0.5rem;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.4rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 500;
+  vertical-align: 2px;
   color: var(--text);
 }
 
 .program p {
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   color: var(--muted);
 }
 
 .program__law {
-  font-size: 0.8125rem;
   white-space: nowrap;
-}
-
-.gov-legal {
-  margin-top: 0;
-}
-
-@media (max-width: 900px) {
-  .gov-counter {
-    display: none;
-  }
 }
 </style>

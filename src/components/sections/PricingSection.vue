@@ -51,7 +51,7 @@ const proposalLink = whatsappLink('Olá! Gostaria de uma proposta HaaS personali
         </div>
       </div>
 
-      <div class="pricing__grid">
+      <div class="pricing__grid rail-mobile">
         <article
           v-for="(plan, i) in plans"
           :key="plan.key"

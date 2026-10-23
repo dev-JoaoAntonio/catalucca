@@ -152,14 +152,14 @@ onBeforeUnmount(() => {
         <div class="tech__copy">
           <h2 class="sr-only">Tecnologia DIPLE™</h2>
 
-          <div class="tech__chapters">
+          <div class="tech__chapters rail-mobile">
             <article
               v-for="(chapter, i) in chapters"
               :key="chapter.key"
               class="tech__chapter"
               :class="{ 'is-active': active === i, 'is-next': i > active }"
             >
-              <h3 class="title tech__title">{{ chapter.title }}</h3>
+              <h3 class="title tech__title" v-split="'manual'">{{ chapter.title }}</h3>
               <p class="lead tech__body">{{ chapter.body }}</p>
 
               <dl v-if="chapter.specs" class="tech__specs">
@@ -428,7 +428,7 @@ onBeforeUnmount(() => {
 /* Desktop: palco fixo enquanto os capítulos se alternam com a rolagem. */
 @media (min-width: 900px) {
   .tech {
-    height: 300vh;
+    height: 200vh;
   }
 
   .tech__sticky {
@@ -472,6 +472,22 @@ onBeforeUnmount(() => {
 
   .js .tech__chapter.is-active {
     transition-delay: 0.12s;
+  }
+
+  /* O título do capítulo se remonta caractere a caractere a cada troca. */
+  .js .tech__title :deep(.split-char) {
+    opacity: 0;
+    transform: translate3d(0, 0.5em, 0) skewY(12deg) skewX(-10deg);
+    transition:
+      opacity 0.35s var(--ease),
+      transform 0.5s var(--ease);
+  }
+
+  .js .tech__chapter.is-active .tech__title :deep(.split-char) {
+    opacity: 1;
+    transform: none;
+    transition-duration: 0.7s, 0.9s;
+    transition-delay: calc(120ms + var(--i) * 16ms);
   }
 
   .js .tech__rail {
@@ -529,13 +545,18 @@ onBeforeUnmount(() => {
   }
 
   .tech__chapters {
-    display: grid;
-    gap: 3rem;
+    grid-auto-columns: minmax(86%, 1fr) !important;
   }
 
-  .tech__chapter + .tech__chapter {
-    padding-top: 3rem;
-    border-top: 1px solid var(--line);
+  .tech__chapter {
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-top-color: var(--ink);
+    border-radius: var(--radius-sm);
+  }
+
+  .tech__chapter .title {
+    font-size: 1.75rem;
   }
 }
 

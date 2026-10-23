@@ -129,7 +129,10 @@ onBeforeUnmount(() => {
           :class="{ 'is-active': active === item.key }"
           :aria-current="active === item.key ? 'true' : undefined"
           @click.prevent="navigate(item.key)"
-        >{{ item.label }}</a>
+        >
+          <span class="roll" aria-hidden="true"><span v-for="(char, c) in item.label" :key="c" :style="{ '--i': c }">{{ char }}</span></span>
+          <span class="sr-only">{{ item.label }}</span>
+        </a>
         <span
           class="nav__indicator"
           :class="{ 'is-visible': indicator.visible }"
@@ -258,6 +261,26 @@ onBeforeUnmount(() => {
 .nav__link:hover,
 .nav__link.is-active {
   opacity: 1;
+}
+
+/* No hover, cada letra sobe e a cópia (sombra) entra por baixo, em onda. */
+.roll {
+  display: inline-flex;
+  height: 1.3em;
+  overflow: hidden;
+  line-height: 1.3;
+  vertical-align: top;
+}
+
+.roll span {
+  display: inline-block;
+  text-shadow: 0 1.3em currentColor;
+  transition: transform 0.5s var(--ease);
+  transition-delay: calc(var(--i) * 18ms);
+}
+
+.nav__link:hover .roll span {
+  transform: translate3d(0, -1.3em, 0);
 }
 
 .nav__indicator {

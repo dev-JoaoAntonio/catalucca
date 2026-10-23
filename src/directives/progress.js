@@ -2,7 +2,9 @@
 // derive transformações a partir dele. Um único listener de scroll atende a
 // todos os elementos registrados.
 //
-// Uso: v-progress="'pin'" ou v-progress="{ mode: 'pin', onProgress }"
+// Uso: v-progress="'pin'" ou v-progress="{ mode: 'pin', onProgress }".
+// mode também aceita uma função (rect, vh, el) => progresso, para medições
+// próprias (ex.: quanto um cartão está coberto pelo seguinte).
 
 const MODES = {
   // Do topo entrando pela base da viewport até a base saindo pelo topo.
@@ -29,7 +31,8 @@ function measure() {
   // Lê todas as posições antes de escrever, para não forçar layout a cada item.
   const changed = [];
   entries.forEach((entry, el) => {
-    const p = clamp01(MODES[entry.mode](el.getBoundingClientRect(), vh));
+    const measureFn = typeof entry.mode === 'function' ? entry.mode : MODES[entry.mode];
+    const p = clamp01(measureFn(el.getBoundingClientRect(), vh, el));
     if (Math.abs(p - entry.p) > 0.0005) changed.push([el, entry, p]);
   });
 

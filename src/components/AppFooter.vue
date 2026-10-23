@@ -73,7 +73,9 @@ const columns = [
       </div>
     </div>
 
-    <p class="footer__wordmark" aria-hidden="true">CATALUCCA</p>
+    <p class="footer__wordmark" aria-hidden="true">
+      <span v-for="(letter, i) in 'CATALUCCA'" :key="i" :style="{ '--i': i }">{{ letter }}</span>
+    </p>
   </footer>
 </template>
 
@@ -153,7 +155,10 @@ const columns = [
   color: var(--muted);
 }
 
+/* As letras sobem em sequência na reta final da página: --q mapeia o trecho
+   final do progresso do rodapé (--p, modo enter) para 0 → 1. */
 .footer__wordmark {
+  --q: clamp(0, calc((var(--p, 1) - 0.35) / 0.6), 1);
   margin-bottom: -0.2em;
   font-family: var(--font-display);
   font-size: clamp(3rem, 17vw, 16rem);
@@ -163,8 +168,17 @@ const columns = [
   text-align: center;
   white-space: nowrap;
   color: var(--line);
-  transform: translate3d(0, calc((1 - var(--p, 1)) * 35%), 0);
   user-select: none;
+}
+
+.footer__wordmark span {
+  --t: clamp(0, calc((var(--q) * 12 - var(--i)) / 3), 1);
+  display: inline-block;
+  opacity: var(--t);
+  transform:
+    translate3d(0, calc((1 - var(--t)) * 55%), 0)
+    skewY(calc((1 - var(--t)) * 10deg));
+  transform-origin: left bottom;
 }
 
 @media (max-width: 900px) {

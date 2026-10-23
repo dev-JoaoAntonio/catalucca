@@ -28,7 +28,7 @@
   --container: 1240px;
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --header-h: 72px;
-  --section-y: clamp(5rem, 10vw, 8.5rem);
+  --section-y: clamp(3.75rem, 7vw, 6rem);
 
   --radius-sm: 2px;
   --radius: 3px;
@@ -404,86 +404,184 @@ strong {
 }
 
 /* --------------------------------------------------------------------------
+   Trilhos horizontais no mobile
+   Listas de cartões viram faixas com deslize lateral em telas estreitas,
+   para a página não crescer na vertical. É um utilitário de sobrescrita,
+   por isso usa !important nas propriedades de grade.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .rail-mobile {
+    display: grid !important;
+    grid-template-columns: none !important;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(78%, 1fr);
+    gap: 0.75rem !important;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    padding-bottom: 0.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .rail-mobile::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rail-mobile > * {
+    scroll-snap-align: start;
+  }
+}
+
+/* --------------------------------------------------------------------------
    Conteúdo das frentes de atuação (Soluções)
    -------------------------------------------------------------------------- */
 
-.v-stack {
-  display: grid;
-  gap: clamp(2.75rem, 5vw, 4rem);
-}
-
-.v-lead {
+.p-lead {
   font-family: var(--font-display);
-  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  font-size: clamp(1.125rem, 1.5vw, 1.3125rem);
   font-weight: 400;
-  line-height: 1.35;
-  letter-spacing: -0.03em;
+  line-height: 1.45;
+  letter-spacing: -0.02em;
   color: var(--muted);
 }
 
-.v-lead strong {
+.p-lead strong {
   font-weight: 400;
   color: var(--ink);
 }
 
-.v-block__title {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  font-size: 1.125rem;
-}
-
-.v-block__text {
-  margin-bottom: 1.25rem;
-  color: var(--text);
-}
-
-.v-grid {
+/* Linha de colunas separadas por réguas finas. */
+.p-cols {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  border-top: 1px solid var(--line);
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
 }
 
-.v-grid > * {
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--line);
+.p-col {
+  padding: 1.5rem 1.5rem 0 0;
 }
 
-.v-grid > :nth-child(odd) {
-  padding-right: 2rem;
-  border-right: 1px solid var(--line);
+.p-col + .p-col {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--line);
 }
 
-.v-grid > :nth-child(even) {
-  padding-left: 2rem;
-}
-
-.v-item h5 {
-  margin-bottom: 0.4rem;
+.p-col h4 {
+  margin-bottom: 0.85rem;
   font-size: 1rem;
 }
 
-.v-item p,
-.v-item li {
+.p-col dl,
+.p-col ul {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.p-col dt {
   font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.p-col dd,
+.p-col li,
+.p-col p {
+  font-size: 0.875rem;
   color: var(--muted);
 }
 
-.v-item .check-list {
-  gap: 0.45rem;
-  margin-top: 0.75rem;
+.p-col li {
+  color: var(--text);
 }
 
-@media (max-width: 640px) {
-  .v-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 900px) {
+  .p-cols {
+    border-top: 0;
   }
 
-  .v-grid > :nth-child(n) {
-    padding: 1.25rem 0;
-    border-right: 0;
+  .p-col,
+  .p-col + .p-col {
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-top-color: var(--ink);
   }
+}
+
+/* Entrada do conteúdo da aba: na primeira aparição e a cada troca (o
+   display: none → block reinicia as animações CSS). */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+}
+
+.panels[data-revealed] .anim {
+  animation: rise-in 0.8s var(--ease) backwards;
+  animation-delay: calc(var(--k, 0) * 80ms);
+}
+
+/* --------------------------------------------------------------------------
+   Texto dividido em caracteres (diretiva v-split)
+   -------------------------------------------------------------------------- */
+
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.split-char {
+  display: inline-block;
+  transform-origin: left bottom;
+}
+
+/* Estado "fora": meia linha abaixo, inclinado e transparente. */
+@keyframes char-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.5em, 0) skewY(12deg) skewX(-10deg);
+  }
+}
+
+.js [data-split='reveal'] .split-char {
+  opacity: 0;
+  transform: translate3d(0, 0.5em, 0) skewY(12deg) skewX(-10deg);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.9s var(--ease);
+  transition-delay: min(calc(var(--i) * 14ms), 0.7s);
+}
+
+.js [data-split='reveal'][data-split-shown] .split-char {
+  opacity: 1;
+  transform: none;
+}
+
+/* Guiado pela rolagem: --t vai de 0 a 1 numa onda de ~18 caracteres; o fator
+   1.15 termina a onda antes do fim do progresso --p. */
+.js [data-split='scroll'] .split-char {
+  --t: clamp(0, calc((var(--p, 0) * 1.15 * (var(--n) + 18) - var(--i)) / 18), 1);
+  opacity: var(--t);
+  transform:
+    translate3d(0, calc((1 - var(--t)) * 0.55em), 0)
+    skewY(calc((1 - var(--t)) * 14deg))
+    skewX(calc((1 - var(--t)) * -12deg));
+}
+
+/* Títulos das abas de Soluções (v-split="'manual'") */
+.panels[data-revealed] .panel__title .split-char {
+  animation: char-in 0.9s var(--ease) backwards;
+  animation-delay: calc(var(--i) * 18ms);
+}
+
+/* Vídeos e imagens: zoom-out acompanhando a rolagem (v-progress no cartão). */
+.media-card video,
+.media-card img {
+  transform: scale(max(1, calc(1.18 - var(--p, 1) * 0.36)));
 }
 
 /* --------------------------------------------------------------------------
@@ -546,5 +644,13 @@ strong {
     opacity: 1;
     transform: none;
     clip-path: none;
+  }
+
+  .js [data-split] .split-char,
+  .media-card video,
+  .media-card img {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 }

@@ -4,7 +4,14 @@ import { whatsappLink } from '@/data/contact';
 
 const go = useSectionLink();
 const demoLink = whatsappLink('Olá! Gostaria de solicitar uma demonstração técnica da Catalucca.');
-const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no território.'];
+const LINES = ['A precisão do laboratório.', 'A soberania da decisão', 'no território.'];
+const title = LINES.join(' ');
+
+// Linhas → palavras → caracteres, com índice global para escalonar a entrada.
+let index = 0;
+const lines = LINES.map((line) =>
+  line.split(' ').map((word) => [...word].map((char) => ({ char, i: index++ })))
+);
 </script>
 
 <template>
@@ -25,14 +32,17 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
     </div>
 
     <div class="container hero__content">
-      <h1 class="hero__title">
+      <h1 class="hero__title" :aria-label="title">
         <span
-          v-for="(line, i) in lines"
-          :key="line"
+          v-for="(line, l) in lines"
+          :key="l"
           class="hero__line"
-          :class="{ 'hero__line--em': i === 1 }"
+          :class="{ 'hero__line--em': l === 1 }"
+          aria-hidden="true"
         >
-          <span :style="{ '--i': i }">{{ line }}</span>
+          <template v-for="(word, w) in line" :key="w">
+            <span class="hero__word"><span v-for="c in word" :key="c.i" class="hero__char" :style="{ '--i': c.i }">{{ c.char }}</span></span>{{ w < line.length - 1 ? ' ' : '' }}
+          </template>
         </span>
       </h1>
 
@@ -118,10 +128,17 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
   margin-bottom: -0.1em;
 }
 
-.hero__line > span {
+.hero__word {
   display: inline-block;
-  animation: hero-rise 1.3s var(--ease) backwards;
-  animation-delay: calc(150ms + var(--i) * 120ms);
+  white-space: nowrap;
+}
+
+/* Cada caractere sobe de baixo da linha, inclinado, em onda. */
+.hero__char {
+  display: inline-block;
+  transform-origin: left bottom;
+  animation: hero-char 1.2s var(--ease) backwards;
+  animation-delay: calc(150ms + var(--i) * 18ms);
 }
 
 .hero__line--em {
@@ -189,9 +206,10 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
   animation: hero-cue 2.4s var(--ease) infinite;
 }
 
-@keyframes hero-rise {
+@keyframes hero-char {
   from {
-    transform: translate3d(0, 110%, 0);
+    opacity: 0;
+    transform: translate3d(0, 105%, 0) skewY(12deg) skewX(-10deg);
   }
 }
 

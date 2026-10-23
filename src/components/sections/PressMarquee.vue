@@ -1,4 +1,7 @@
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { onLenisScroll } from '@/composables/useLenis';
+
 const press = [
   {
     name: 'Forbes',
@@ -21,6 +24,59 @@ const press = [
     href: 'https://roma.repubblica.it/dossier-adv/eccellenze-lazio/2022/02/03/news/smo_-_smart_micro_optics_mira_a_espandere_la_presenza_sul_mercato-336072652/',
   },
 ];
+
+// A faixa corre sozinha e acelera com a velocidade da rolagem, invertendo o
+// sentido quando a página sobe.
+const BASE_SPEED = 40; // px/s
+const trackEl = ref(null);
+let x = 0;
+let direction = 1;
+let boost = 0;
+let paused = false;
+let visible = false;
+let last = 0;
+let frame = 0;
+let observer = null;
+let offScroll = null;
+
+function tick(now) {
+  frame = visible ? requestAnimationFrame(tick) : 0;
+  const dt = Math.min(0.05, (now - (last || now)) / 1000);
+  last = now;
+  boost *= 0.92;
+  if (paused) return;
+  const half = trackEl.value.scrollWidth / 2;
+  x -= direction * (BASE_SPEED + boost) * dt;
+  if (x <= -half) x += half;
+  if (x > 0) x -= half;
+  trackEl.value.style.transform = `translate3d(${x.toFixed(2)}px, 0, 0)`;
+}
+
+function setPaused(value) {
+  paused = value;
+}
+
+function onScroll({ velocity, direction: dir }) {
+  if (dir) direction = dir;
+  boost = Math.min(600, Math.abs(velocity) * 40);
+}
+
+onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  observer = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    last = 0;
+    if (visible && !frame) frame = requestAnimationFrame(tick);
+  });
+  observer.observe(trackEl.value.parentElement);
+  offScroll = onLenisScroll(onScroll);
+});
+
+onBeforeUnmount(() => {
+  observer?.disconnect();
+  offScroll?.();
+  cancelAnimationFrame(frame);
+});
 </script>
 
 <template>
@@ -29,8 +85,8 @@ const press = [
       <p id="press-label" class="press__label">
         Tecnologia reconhecida<br> internacionalmente
       </p>
-      <div class="press__marquee">
-        <div class="press__track">
+      <div class="press__marquee" @mouseenter="setPaused(true)" @mouseleave="setPaused(false)">
+        <div ref="trackEl" class="press__track">
           <!-- A segunda cópia só existe para o loop contínuo. -->
           <template v-for="copy in 2" :key="copy">
             <a
@@ -78,12 +134,7 @@ const press = [
 .press__track {
   display: flex;
   width: max-content;
-  animation: marquee 38s linear infinite;
-}
-
-.press__marquee:hover .press__track,
-.press__marquee:focus-within .press__track {
-  animation-play-state: paused;
+  will-change: transform;
 }
 
 .press__item {
@@ -99,12 +150,6 @@ const press = [
 
 .press__item:hover {
   color: var(--ink);
-}
-
-@keyframes marquee {
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
 }
 
 @media (max-width: 720px) {

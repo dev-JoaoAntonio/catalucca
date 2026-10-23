@@ -2,6 +2,7 @@ import Lenis from 'lenis';
 
 let lenisInstance = null;
 let rafId = null;
+const scrollListeners = new Set();
 
 const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -17,6 +18,7 @@ export function initLenis() {
     infinite: false,
     smoothWheel: true,
   });
+  lenisInstance.on('scroll', (lenis) => scrollListeners.forEach((cb) => cb(lenis)));
 
   const raf = (time) => {
     lenisInstance?.raf(time);
@@ -25,6 +27,13 @@ export function initLenis() {
   rafId = requestAnimationFrame(raf);
 
   return lenisInstance;
+}
+
+// Assina os eventos de rolagem do Lenis (velocidade, direção). Pode ser
+// chamado antes do initLenis; devolve a função para cancelar a assinatura.
+export function onLenisScroll(callback) {
+  scrollListeners.add(callback);
+  return () => scrollListeners.delete(callback);
 }
 
 export function getLenis() {
@@ -43,10 +52,14 @@ export function scrollToTarget(target, { immediate = false } = {}) {
   const el = typeof target === 'string' ? document.querySelector(target) : target;
   if (!el) return false;
 
+  // Destino calculado pela posição real da janela: se a altura da página
+  // acabou de mudar (ex.: troca de aba), a posição interna do Lenis pode
+  // estar desatualizada.
+  const top = el.getBoundingClientRect().top + window.scrollY;
   if (lenisInstance) {
-    lenisInstance.scrollTo(el, { duration: 1.4, immediate });
+    lenisInstance.resize();
+    lenisInstance.scrollTo(top, { duration: 1.4, immediate });
   } else {
-    const top = el.getBoundingClientRect().top + window.scrollY;
     const smooth = !immediate && !prefersReducedMotion();
     window.scrollTo({ top, behavior: smooth ? 'smooth' : 'auto' });
   }

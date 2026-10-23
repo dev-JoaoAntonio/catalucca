@@ -33,22 +33,19 @@ const waLink = whatsappLink('Olá! Gostaria de saber mais sobre a Catalucca.');
 
 <template>
   <section id="ecossistema" class="section ecosystem" data-spy="solucoes">
-    <div class="container ecosystem__grid">
-      <div class="ecosystem__aside">
-        <SectionIntro>
-          <template #title>Quatro fábricas, <em>um sistema</em>.</template>
-          A sustentação e a escala dessa infraestrutura acontecem pela simbiose espiral de quatro
-          grandes verticais.
-        </SectionIntro>
-      </div>
+    <div class="container">
+      <SectionIntro>
+        <template #title>Quatro fábricas, <em>um sistema</em>.</template>
+        A sustentação e a escala dessa infraestrutura acontecem pela simbiose espiral de quatro
+        grandes verticais.
+      </SectionIntro>
 
-      <ol class="factories">
+      <ol class="factories rail-mobile">
         <li
           v-for="(factory, i) in factories"
           :key="factory.name"
           class="factory"
-          :style="{ '--i': i }"
-          v-reveal
+          v-reveal="{ delay: i * 110 }"
         >
           <span class="factory__num">0{{ i + 1 }}</span>
           <h3>{{ factory.name }}</h3>
@@ -56,25 +53,24 @@ const waLink = whatsappLink('Olá! Gostaria de saber mais sobre a Catalucca.');
           <p class="factory__text">{{ factory.text }}</p>
         </li>
       </ol>
-    </div>
 
-    <div class="container">
-      <div class="delivery" v-reveal:scale>
-        <h3 class="delivery__title">
-          Ciência como Serviço.<br>
-          <em>Infraestrutura como Serviço.</em>
+      <div class="delivery" v-progress="'read'">
+        <h3 class="delivery__title" v-split="'scroll'">
+          Ciência como Serviço. <em>Infraestrutura como Serviço.</em>
         </h3>
-        <p class="delivery__text">
-          Com fornecimento estritamente sob os modelos <strong>CaaS</strong> (Ciência como Serviço)
-          e <strong>IaaS</strong> (Infraestrutura como Serviço), por assinatura, a Catalucca assume
-          a responsabilidade contínua pela custódia, pela criptografia e pela governança dos dados,
-          unindo o invisível à segurança do Estado.
-        </p>
-        <div class="cta-row delivery__actions">
-          <a href="/#contato" class="btn btn--primary btn--arrow" @click.prevent="go('#contato')">
-            Conversar com a equipe
-          </a>
-          <a :href="waLink" target="_blank" rel="noopener" class="link-cta">Falar no WhatsApp</a>
+        <div class="delivery__side" v-reveal="{ delay: 150 }">
+          <p class="delivery__text">
+            Com fornecimento estritamente sob os modelos <strong>CaaS</strong> (Ciência como
+            Serviço) e <strong>IaaS</strong> (Infraestrutura como Serviço), por assinatura, a
+            Catalucca assume a responsabilidade contínua pela custódia, pela criptografia e pela
+            governança dos dados, unindo o invisível à segurança do Estado.
+          </p>
+          <div class="cta-row">
+            <a href="/#contato" class="btn btn--primary btn--arrow" @click.prevent="go('#contato')">
+              Conversar com a equipe
+            </a>
+            <a :href="waLink" target="_blank" rel="noopener" class="link-cta">Falar no WhatsApp</a>
+          </div>
         </div>
       </div>
     </div>
@@ -82,112 +78,94 @@ const waLink = whatsappLink('Olá! Gostaria de saber mais sobre a Catalucca.');
 </template>
 
 <style scoped>
-.ecosystem__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: clamp(2rem, 6vw, 6rem);
+.ecosystem {
+  border-top: 1px solid var(--line);
 }
 
-.ecosystem__aside {
-  position: sticky;
-  top: calc(var(--header-h) + 2rem);
-  align-self: start;
-}
-
-/* Cartões que grudam no topo e se empilham conforme a rolagem avança. */
 .factories {
   display: grid;
-  gap: 1.5rem;
-  padding-bottom: 2rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
 }
 
+/* O número cresce e a régua escurece no hover. */
 .factory {
-  position: sticky;
-  top: calc(var(--header-h) + 2rem + var(--i) * 1.25rem);
-  display: grid;
-  align-content: start;
-  min-height: 300px;
-  padding: clamp(1.75rem, 3vw, 2.5rem);
-  border: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-top-color: var(--ink);
   border-radius: var(--radius-sm);
-  background: var(--bg);
+  transition:
+    border-color 0.4s var(--ease),
+    box-shadow 0.4s var(--ease),
+    opacity 0.9s var(--ease),
+    transform 1s var(--ease);
+}
+
+.factory:hover {
+  border-color: var(--ink);
   box-shadow: var(--shadow);
 }
 
-.factory:last-child {
-  border-color: var(--ink);
-}
-
 .factory__num {
+  margin-bottom: 2rem;
   font-family: var(--font-display);
   font-size: 2.75rem;
   font-weight: 200;
   line-height: 1;
   letter-spacing: -0.05em;
-  color: var(--ink);
-  margin-bottom: 3rem;
+  color: var(--line-strong);
+  transition: color 0.4s var(--ease);
 }
 
-.factory__domain {
-  font-size: 0.9375rem;
-  letter-spacing: 0;
-  color: var(--muted);
-  margin-bottom: 1rem;
-  font-weight: 500;
+.factory:hover .factory__num {
+  color: var(--ink);
 }
 
 .factory h3 {
   margin-bottom: 0.25rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  font-size: 1.25rem;
+  letter-spacing: -0.035em;
+}
+
+.factory__domain {
+  margin-bottom: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: -0.04em;
+  color: var(--muted);
 }
 
 .factory__text {
-  max-width: 52ch;
+  font-size: 0.9375rem;
 }
 
-/* Modelo de entrega */
+/* Modelo de entrega: o título se monta com a rolagem; texto ao lado. */
 .delivery {
-  margin-top: clamp(4rem, 8vw, 6rem);
-  padding: clamp(2.5rem, 6vw, 5rem) 0 0;
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  align-items: end;
+  gap: 1.5rem clamp(2rem, 6vw, 5rem);
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
   border-top: 1px solid var(--ink);
 }
 
 .delivery__title {
-  margin: 0 0 1.5rem;
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
   font-weight: 500;
   line-height: 1.02;
   letter-spacing: -0.05em;
 }
 
-.delivery__title em {
-  font-style: normal;
-  color: var(--muted);
-}
-
 .delivery__text {
-  max-width: 62ch;
-}
-
-.delivery__actions {
-  margin-top: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 @media (max-width: 900px) {
-  .ecosystem__grid {
+  .delivery {
     grid-template-columns: 1fr;
-  }
-
-  .ecosystem__aside {
-    position: static;
-  }
-
-  .factory {
-    min-height: 0;
   }
 }
 </style>

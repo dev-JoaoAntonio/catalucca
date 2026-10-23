@@ -1,29 +1,78 @@
 <script setup>
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { useRoute } from 'vue-router';
 import SectionIntro from '@/components/ui/SectionIntro.vue';
 import EducationBlock from './solutions/EducationBlock.vue';
 import OperationsBlock from './solutions/OperationsBlock.vue';
 import GovernmentBlock from './solutions/GovernmentBlock.vue';
-import { useSectionLink } from '@/composables/useSectionLink';
-
-const go = useSectionLink();
+import { SECTION_EVENT } from '@/composables/useSectionLink';
 
 const fronts = [
   {
-    hash: '#educacao',
+    key: 'educacao',
     title: 'Educação',
-    text: 'Sistema Ø—1™ para escolas e universidades, em conformidade com a Lei nº 15.100/2025 e a BNCC.',
+    text: 'Sistema Ø—1™ para escolas e universidades.',
+    component: EducationBlock,
   },
   {
-    hash: '#operacional',
+    key: 'operacional',
     title: 'Operacional privado',
-    text: 'Inspeção móvel, perícia técnica e laudos com cadeia de custódia digital.',
+    text: 'Inspeção móvel, perícia técnica e laudos.',
+    component: OperationsBlock,
   },
   {
-    hash: '#governo',
+    key: 'governo',
     title: 'Governo',
-    text: 'Dez programas federais em um sistema, com contratação por inexigibilidade.',
+    text: 'Dez programas federais em um sistema.',
+    component: GovernmentBlock,
   },
 ];
+const keys = fronts.map((f) => f.key);
+
+// A aba vem da URL: /governo (rota de seção) ou #governo (âncora).
+const route = useRoute();
+function keyFromRoute() {
+  const hash = route.hash.slice(1);
+  if (keys.includes(hash)) return hash;
+  return keys.includes(route.meta.section) ? route.meta.section : null;
+}
+
+const active = ref(keyFromRoute() || keys[0]);
+const tabEls = [];
+
+// Só âncoras das próprias abas ou a troca de página mudam a aba; um #haas
+// em /educacao não deve reabrir Educação.
+watch(
+  () => route.hash,
+  (hash) => {
+    if (keys.includes(hash.slice(1))) active.value = hash.slice(1);
+  }
+);
+watch(
+  () => route.path,
+  () => {
+    if (keys.includes(route.meta.section)) active.value = route.meta.section;
+  }
+);
+
+// Links do menu e do rodapé que apontam para uma frente já aberta na URL
+// não mudam a rota; o evento garante que a aba certa abra mesmo assim.
+function onSectionEvent(event) {
+  const key = event.detail?.slice(1);
+  if (keys.includes(key)) active.value = key;
+}
+
+function onTabKeydown(event, i) {
+  const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+  if (!step) return;
+  event.preventDefault();
+  const next = (i + step + keys.length) % keys.length;
+  active.value = keys[next];
+  tabEls[next]?.focus();
+}
+
+onMounted(() => window.addEventListener(SECTION_EVENT, onSectionEvent));
+onBeforeUnmount(() => window.removeEventListener(SECTION_EVENT, onSectionEvent));
 </script>
 
 <template>
@@ -35,119 +84,133 @@ const fronts = [
         de cada operação.
       </SectionIntro>
 
-      <ol class="fronts">
-        <li v-for="(front, i) in fronts" :key="front.hash" v-reveal="{ delay: i * 100 }">
-          <a :href="`/${front.hash}`" class="front" @click.prevent="go(front.hash)">
-            <span class="front__num">0{{ i + 1 }}</span>
-            <h3>{{ front.title }}</h3>
-            <p>{{ front.text }}</p>
-            <span class="front__more">Ver detalhes</span>
-          </a>
-        </li>
-      </ol>
+      <div class="tabs rail-mobile" role="tablist" aria-label="Frentes de atuação" v-reveal:fade>
+        <button
+          v-for="(front, i) in fronts"
+          :id="front.key"
+          :key="front.key"
+          :ref="(el) => (tabEls[i] = el)"
+          type="button"
+          role="tab"
+          class="tab"
+          :class="{ 'is-active': active === front.key }"
+          :aria-selected="active === front.key ? 'true' : 'false'"
+          :aria-controls="`painel-${front.key}`"
+          :tabindex="active === front.key ? 0 : -1"
+          @click="active = front.key"
+          @keydown="onTabKeydown($event, i)"
+        >
+          <span class="tab__num mono">0{{ i + 1 }}</span>
+          <span class="tab__title">{{ front.title }}</span>
+          <span class="tab__text">{{ front.text }}</span>
+        </button>
+      </div>
 
-      <EducationBlock />
-      <OperationsBlock />
-      <GovernmentBlock />
+      <div class="panels" v-reveal:fade>
+        <div
+          v-for="front in fronts"
+          v-show="active === front.key"
+          :id="`painel-${front.key}`"
+          :key="front.key"
+          role="tabpanel"
+          :aria-labelledby="front.key"
+          tabindex="0"
+        >
+          <component :is="front.component" />
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped>
-.solutions {
-  padding-bottom: 0;
-}
-
-.fronts {
+.tabs {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: clamp(3rem, 6vw, 4.5rem) 0 clamp(4rem, 8vw, 6rem);
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--line);
+  margin-block: clamp(2.5rem, 5vw, 3.5rem);
 }
 
-.fronts li + li {
+.tab {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.5rem 1.5rem 1.5rem 0;
+  text-align: left;
+  color: var(--muted);
+  transition: color 0.35s var(--ease);
+}
+
+.tab + .tab {
+  padding-left: 1.5rem;
   border-left: 1px solid var(--line);
 }
 
-.front {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 2rem 2rem 2rem 0;
-  transition: background-color 0.4s var(--ease);
+/* Régua superior que se estende na aba ativa. */
+.tab::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
 }
 
-.fronts li + li .front {
-  padding-left: 2rem;
+.tab:hover,
+.tab.is-active {
+  color: var(--ink);
 }
 
-.front__num {
-  margin-bottom: 2.5rem;
-  font-family: var(--font-mono);
+.tab.is-active::before {
+  transform: scaleX(1);
+}
+
+.tab__num {
   font-size: 0.75rem;
-  color: var(--muted);
 }
 
-.front h3 {
-  margin-bottom: 0.6rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.625rem, 2.4vw, 2rem);
+.tab__title {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
   font-weight: 500;
   letter-spacing: -0.035em;
-  transition: color 0.3s var(--ease);
 }
 
-.front:hover h3 {
-  color: var(--muted);
+.tab__text {
+  font-size: 0.875rem;
 }
 
-.front p {
-  flex: 1;
-  font-size: 0.9375rem;
-  color: var(--muted);
-}
-
-/* Mesmo visual do .link-cta, acionado pelo hover do cartão inteiro. */
-.front__more {
-  align-self: flex-start;
-  display: inline-flex;
-  gap: 0.5rem;
-  margin-top: 1.75rem;
-  padding-bottom: 3px;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  color: var(--ink);
-  background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
-  transition: background-size 0.45s var(--ease);
-}
-
-.front__more::after {
-  content: '→';
-  transition: transform 0.35s var(--ease);
-}
-
-.front:hover .front__more {
-  background-size: 0 1px;
-  background-position: right bottom;
-}
-
-.front:hover .front__more::after {
-  transform: translateX(4px);
+.panels:focus-visible,
+[role='tabpanel']:focus-visible {
+  outline-offset: 8px;
 }
 
 @media (max-width: 900px) {
-  .fronts {
-    grid-template-columns: 1fr;
+  .tabs {
+    grid-auto-columns: max-content !important;
+    border-top: 0;
   }
 
-  .fronts li + li {
-    border-top: 1px solid var(--line);
-    border-left: 0;
+  .tab,
+  .tab + .tab {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--line);
   }
 
-  .front,
-  .fronts li + li .front {
-    padding: 1.75rem 0;
+  .tab::before {
+    top: auto;
+    bottom: -1px;
+  }
+
+  .tab__text {
+    display: none;
+  }
+
+  .tab__title {
+    font-size: 1.125rem;
   }
 }
 </style>

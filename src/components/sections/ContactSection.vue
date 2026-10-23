@@ -35,7 +35,7 @@ function onSubmit() {
   <section id="contato" class="section contact" data-spy="contato">
     <div class="container contact__grid">
       <div class="contact__intro">
-        <h2 class="title" v-reveal>
+        <h2 class="title" v-split>
           Pronto para implantar a Catalucca <em>na sua operação</em>?
         </h2>
         <p class="lead contact__lead" v-reveal="{ delay: 100 }">

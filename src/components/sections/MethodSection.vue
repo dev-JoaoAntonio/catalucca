@@ -99,19 +99,19 @@ const nodes = [
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2.5rem clamp(2rem, 5vw, 4rem);
-  margin-top: clamp(3rem, 6vw, 5rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
 }
 
 .method__glyph-row {
   display: flex;
   align-items: center;
   gap: clamp(1.5rem, 3vw, 2.5rem);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .method__glyph {
   font-family: var(--font-display);
-  font-size: clamp(6.5rem, 14vw, 12rem);
+  font-size: clamp(4.5rem, 9vw, 8rem);
   font-weight: 200;
   line-height: 0.85;
   letter-spacing: -0.06em;
@@ -160,8 +160,8 @@ const nodes = [
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   gap: clamp(2.5rem, 6vw, 6rem);
-  margin-top: clamp(5rem, 10vw, 8rem);
-  padding-top: clamp(3rem, 6vw, 5rem);
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding-top: clamp(2.5rem, 4vw, 3.5rem);
   border-top: 1px solid var(--line);
 }
 

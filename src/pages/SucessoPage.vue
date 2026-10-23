@@ -21,7 +21,7 @@ const onboardingLink = whatsappLink(
   <section class="section sucesso">
     <div class="container">
       <div class="sucesso__card" v-reveal:scale>
-        <h1 class="title sucesso__title">Recebemos o seu <em>pedido</em>.</h1>
+        <h1 class="title sucesso__title" v-split>Recebemos o seu <em>pedido</em>.</h1>
 
         <p class="lead sucesso__body">
           A equipe Catalucca foi notificada e, em até <strong>um dia útil</strong>, entraremos em

@@ -16,7 +16,7 @@ const go = useSectionLink();
   <section class="cta-band">
     <div class="container">
       <div class="cta-band__inner" v-progress="'read'">
-        <h2 class="cta-band__title" v-reveal>
+        <h2 class="cta-band__title" v-split>
           <slot name="title" />
         </h2>
         <div class="cta-band__side" v-reveal="{ delay: 120 }">
@@ -35,7 +35,7 @@ const go = useSectionLink();
 
 <style scoped>
 .cta-band {
-  padding-block: clamp(3rem, 6vw, 5rem);
+  padding-block: clamp(2rem, 4vw, 3rem);
 }
 
 .cta-band__inner {
@@ -44,7 +44,7 @@ const go = useSectionLink();
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   align-items: end;
   gap: 1.5rem clamp(2rem, 6vw, 6rem);
-  padding-block: clamp(2.5rem, 5vw, 4rem);
+  padding-block: clamp(2rem, 4vw, 3rem);
   border-block: 1px solid var(--line);
 }
 

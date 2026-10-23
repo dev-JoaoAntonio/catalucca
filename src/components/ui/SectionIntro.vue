@@ -6,7 +6,7 @@ defineProps({
 
 <template>
   <header class="intro" :class="`intro--${align}`">
-    <h2 class="title" v-reveal>
+    <h2 class="title" v-split>
       <slot name="title" />
     </h2>
     <p v-if="$slots.default" class="lead intro__lead" v-reveal="{ delay: 100 }">

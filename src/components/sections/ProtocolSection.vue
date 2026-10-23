@@ -2,6 +2,7 @@
 import { ref, computed, nextTick, onMounted, onBeforeUnmount } from 'vue';
 import SectionIntro from '@/components/ui/SectionIntro.vue';
 import { refreshProgress } from '@/directives/progress';
+import { onLenisScroll } from '@/composables/useLenis';
 
 const steps = [
   { t: 'Capturar com estabilidade', d: 'Pipeline CameraX/Camera2 com foco, exposição e balanço de branco travados por código.' },
@@ -25,13 +26,17 @@ const fields = [
 ];
 
 const morfo = [
-  { n: 'I', t: 'Captura na borda', d: 'Foco, exposição e balanço de branco travados por código no momento da coleta.' },
-  { n: 'II', t: 'Duplo hash SHA-256', d: 'Os hashes dos frames originais e da imagem derivada são encadeados matematicamente.' },
-  { n: 'III', t: 'Timestamp oficial', d: 'Carimbo cronológico que ancora a evidência com fé pública técnica.' },
-  { n: 'IV', t: 'Exevidência digital', d: 'O dado nasce blindado contra adulteração e com validade jurídica imediata.' },
+  { n: 'I', t: 'Captura na borda', d: 'Parâmetros travados por código no momento da coleta.' },
+  { n: 'II', t: 'Duplo hash SHA-256', d: 'Hashes dos originais e da derivada encadeados.' },
+  { n: 'III', t: 'Timestamp oficial', d: 'Ancora a evidência com fé pública técnica.' },
+  { n: 'IV', t: 'Exevidência digital', d: 'Nasce blindada e com validade jurídica imediata.' },
 ];
 
 const pad = (n) => String(n).padStart(2, '0');
+
+// A trilha anda SPEED px na horizontal a cada px rolado: a seção fica mais
+// curta sem acelerar demais a leitura dos cartões.
+const SPEED = 1.6;
 
 const viewportEl = ref(null);
 const trackEl = ref(null);
@@ -39,11 +44,9 @@ const horizontal = ref(false);
 const distance = ref(0);
 const current = ref(0);
 
-// A altura da seção é a distância horizontal a percorrer + uma viewport,
-// para que cada pixel rolado desloque a trilha um pixel.
 const sectionStyle = computed(() =>
   horizontal.value
-    ? { height: `calc(100vh + ${distance.value}px)`, '--dist': distance.value }
+    ? { height: `calc(100vh + ${Math.round(distance.value / SPEED)}px)`, '--dist': distance.value }
     : undefined
 );
 
@@ -61,15 +64,39 @@ function onProgress(p) {
   current.value = Math.round(p * (steps.length - 1));
 }
 
+// A trilha se inclina conforme a velocidade da rolagem e volta suavemente.
+let skew = 0;
+let skewTarget = 0;
+let skewFrame = 0;
+
+function tickSkew() {
+  skew += (skewTarget - skew) * 0.14;
+  skewTarget *= 0.88;
+  trackEl.value?.style.setProperty('--skew', `${skew.toFixed(3)}deg`);
+  skewFrame = Math.abs(skew) > 0.01 || Math.abs(skewTarget) > 0.01 ? requestAnimationFrame(tickSkew) : 0;
+}
+
+function onScrollVelocity({ velocity }) {
+  if (!horizontal.value) return;
+  skewTarget = Math.max(-7, Math.min(7, velocity * -0.35));
+  if (!skewFrame) skewFrame = requestAnimationFrame(tickSkew);
+}
+
 let resizeObserver = null;
+let offScroll = null;
 
 onMounted(() => {
   measure();
   resizeObserver = new ResizeObserver(measure);
   resizeObserver.observe(viewportEl.value);
+  offScroll = onLenisScroll(onScrollVelocity);
 });
 
-onBeforeUnmount(() => resizeObserver?.disconnect());
+onBeforeUnmount(() => {
+  resizeObserver?.disconnect();
+  offScroll?.();
+  cancelAnimationFrame(skewFrame);
+});
 </script>
 
 <template>
@@ -96,7 +123,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
       </div>
 
       <div ref="viewportEl" class="protocol__viewport">
-        <ol ref="trackEl" class="protocol__track">
+        <ol ref="trackEl" class="protocol__track rail-mobile">
           <li
             v-for="(step, i) in steps"
             :key="step.t"
@@ -119,10 +146,10 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 
   <section class="section custody" data-spy="metodo">
     <div class="container">
-      <div class="custody__grid">
-        <article class="custody__card" v-reveal:left>
+      <div class="custody__grid rail-mobile">
+        <article class="custody__card" v-reveal>
           <h3>Registro de cada captura</h3>
-          <p>Cada evento é assinado localmente com os seguintes campos auditáveis:</p>
+          <p>Cada evento é assinado localmente com estes campos auditáveis:</p>
           <ol class="custody__fields">
             <li v-for="(field, i) in fields" :key="field">
               <span class="mono">{{ pad(i + 1) }}</span>{{ field }}
@@ -130,7 +157,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
           </ol>
         </article>
 
-        <article class="custody__card custody__card--soft" v-reveal:right="{ delay: 120 }">
+        <article class="custody__card custody__card--soft" v-reveal="{ delay: 100 }">
           <h3>Princípio da não destruição</h3>
           <p>
             A imagem derivada serve como produto analítico, mas os <strong>frames originais
@@ -143,27 +170,23 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
             proposta pericial.
           </p>
         </article>
-      </div>
 
-      <div class="morfo" v-reveal:wipe>
-        <div class="morfo__intro">
-          <h3 class="morfo__title">Morfofixação <em>digital</em>.</h3>
+        <article class="custody__card custody__card--ink" v-reveal="{ delay: 200 }">
+          <h3 class="morfo__title" v-split>Morfofixação <em>digital</em>.</h3>
           <p>
-            No exato instante da captura, a estrutura morfológica do analito é digitalmente fixada
-            e blindada por duplo hash (SHA-256) e timestamp oficial. O protocolo impede qualquer
-            vetor de adulteração e garante que o dado nasça como Exevidência Digital, com fé
-            pública técnica e validade jurídica imediata.
+            No instante da captura, a estrutura morfológica do analito é fixada e blindada por
+            duplo hash (SHA-256) e timestamp oficial: o dado já nasce como Exevidência Digital.
           </p>
-        </div>
-        <ol class="morfo__steps" v-progress="'read'">
-          <li v-for="(step, i) in morfo" :key="step.n" :style="{ '--k': i }">
-            <span class="morfo__num">{{ step.n }}</span>
-            <div>
-              <h4>{{ step.t }}</h4>
-              <p>{{ step.d }}</p>
-            </div>
-          </li>
-        </ol>
+          <ol class="morfo__steps" v-progress="'read'">
+            <li v-for="(step, i) in morfo" :key="step.n" :style="{ '--k': i }">
+              <span class="morfo__num">{{ step.n }}</span>
+              <div>
+                <h4>{{ step.t }}</h4>
+                <p>{{ step.d }}</p>
+              </div>
+            </li>
+          </ol>
+        </article>
       </div>
     </div>
   </section>
@@ -198,13 +221,14 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 }
 
 .protocol__viewport {
-  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
 }
 
 .protocol__track {
   display: grid;
   gap: 1rem;
   padding-inline: var(--gutter);
+  margin-inline: 0;
 }
 
 .protocol__step {
@@ -222,7 +246,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 }
 
 .protocol__num {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   font-family: var(--font-display);
   font-size: 2.75rem;
   font-weight: 200;
@@ -272,13 +296,13 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
     width: max-content;
     gap: 1.25rem;
     padding-inline: max(var(--gutter), calc((100% - var(--container)) / 2));
-    transform: translate3d(calc(var(--p, 0) * var(--dist, 0) * -1px), 0, 0);
+    transform: translate3d(calc(var(--p, 0) * var(--dist, 0) * -1px), 0, 0) skewX(var(--skew, 0deg));
     will-change: transform;
   }
 
   .is-horizontal .protocol__step {
-    width: clamp(290px, 26vw, 350px);
-    min-height: 300px;
+    width: clamp(270px, 24vw, 330px);
+    min-height: 280px;
   }
 
   .protocol__step.is-current {
@@ -295,7 +319,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
     display: block;
     position: relative;
     height: 2px;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     background: var(--line);
   }
 
@@ -308,17 +332,18 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   }
 }
 
-/* Detalhes da custódia */
+/* Detalhes da custódia: três colunas lado a lado */
 .custody__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
 }
 
 .custody__card {
-  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  padding: clamp(1.5rem, 2.5vw, 2rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
 }
 
 .custody__card--soft {
@@ -326,29 +351,33 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   background: var(--bg-soft);
 }
 
+.custody__card--ink {
+  border-color: var(--ink);
+}
+
 .custody__card h3 {
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: -0.035em;
 }
 
 .custody__card p + p {
-  margin-top: 1rem;
+  margin-top: 0.85rem;
 }
 
 .custody__fields {
   display: grid;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .custody__fields li {
   display: flex;
-  gap: 1rem;
-  padding: 0.75rem 0;
+  gap: 0.85rem;
+  padding: 0.5rem 0;
   border-top: 1px solid var(--line);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: var(--ink);
 }
 
@@ -358,34 +387,17 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   color: var(--muted);
 }
 
-.morfo {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  margin-top: 1.5rem;
-  padding: clamp(2rem, 5vw, 4rem);
-  border: 1px solid var(--ink);
-  border-radius: var(--radius-sm);
-}
-
-.morfo__title {
-  margin: 0 0 1.25rem;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 3.4vw, 2.875rem);
-  font-weight: 500;
-  letter-spacing: -0.045em;
-}
-
 .morfo__steps {
   display: grid;
+  margin-top: 1rem;
 }
 
 .morfo__steps li {
   position: relative;
   display: grid;
-  grid-template-columns: 3rem 1fr;
-  gap: 1rem;
-  padding: 1.25rem 0;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
   border-top: 1px solid var(--line);
 }
 
@@ -404,25 +416,23 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 
 .morfo__num {
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   line-height: 1.9;
   color: var(--muted);
 }
 
 .morfo__steps h4 {
-  margin-bottom: 0.35rem;
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
 }
 
 .morfo__steps p {
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   color: var(--muted);
 }
 
 @media (max-width: 900px) {
-  .custody__grid,
-  .morfo {
-    grid-template-columns: 1fr;
+  .custody__grid {
+    grid-auto-columns: minmax(86%, 1fr) !important;
   }
 }
 </style>

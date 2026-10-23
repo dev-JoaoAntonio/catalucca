@@ -37,7 +37,7 @@ const columns = [
         Mais do que tecnologia: transformação operacional, econômica e social.
       </SectionIntro>
 
-      <div class="impact__grid">
+      <div class="impact__grid rail-mobile">
         <article
           v-for="(col, i) in columns"
           :key="col.title"
@@ -121,13 +121,14 @@ const columns = [
 
 @media (max-width: 900px) {
   .impact__grid {
-    grid-template-columns: 1fr;
+    border-top: 0;
   }
 
   .impact__col,
   .impact__col + .impact__col {
-    padding: 2rem 0 0;
-    border-left: 0;
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-top-color: var(--ink);
   }
 }
 </style>

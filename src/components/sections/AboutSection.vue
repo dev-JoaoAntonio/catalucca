@@ -6,31 +6,6 @@ import { whatsappLink } from '@/data/contact';
 const go = useSectionLink();
 const demoLink = whatsappLink('Olá! Gostaria de solicitar uma demonstração técnica da Catalucca.');
 
-// Trechos entre asteriscos ganham destaque.
-const MANIFESTO =
-  'A CATALUCCA Tecnologias™ é uma integradora nacional de infraestrutura científica aplicada. Nascemos de um princípio fundamental: *a ciência perde valor quando está distante do problema.*';
-
-function splitWords(text) {
-  let strong = false;
-  return text.split(' ').map((raw) => {
-    if (raw.startsWith('*')) strong = true;
-    const word = { text: raw.replace(/\*/g, ''), strong };
-    if (raw.endsWith('*')) strong = false;
-    return word;
-  });
-}
-
-// Cada palavra guarda seus caracteres e o índice global do primeiro, que
-// escalona a animação caractere a caractere.
-let charCount = 0;
-const words = splitWords(MANIFESTO).map((word) => {
-  const chars = [...word.text];
-  const start = charCount;
-  charCount += chars.length;
-  return { ...word, chars, start };
-});
-const manifestoText = MANIFESTO.replace(/\*/g, '');
-
 const stats = [
   { value: 0.7, decimals: 1, unit: 'µm', label: 'Resolução óptica real' },
   { value: 1500, decimals: 0, unit: '×', label: 'Ampliação nativa' },
@@ -88,17 +63,14 @@ onBeforeUnmount(() => {
     <div class="container">
       <div class="about__grid">
         <header class="about__heading">
-          <h2 class="title" v-reveal>A borda é <em>o nosso território</em>.</h2>
+          <h2 class="title" v-split>A borda é <em>o nosso território</em>.</h2>
         </header>
 
         <div class="about__body">
-          <p class="about__manifesto" v-progress="'read'" :style="{ '--n': charCount }">
-            <span class="sr-only">{{ manifestoText }}</span>
-            <span aria-hidden="true">
-              <template v-for="(word, w) in words" :key="w">
-                <span class="about__word" :class="{ 'is-strong': word.strong }"><span v-for="(char, c) in word.chars" :key="c" class="about__char" :style="{ '--i': word.start + c }">{{ char }}</span></span>{{ ' ' }}
-              </template>
-            </span>
+          <p class="about__manifesto" v-progress="'read'" v-split="'scroll'">
+            A CATALUCCA Tecnologias™ é uma integradora nacional de infraestrutura científica
+            aplicada. Nascemos de um princípio fundamental: <em>a ciência perde valor quando está
+            distante do problema.</em>
           </p>
 
           <div class="about__cols">
@@ -163,40 +135,18 @@ onBeforeUnmount(() => {
   color: var(--muted);
 }
 
-/* Palavras inteiras não quebram; os caracteres são blocos para poderem se mover. */
-.about__word {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-.about__word.is-strong {
+/* A revelação caractere a caractere vem da diretiva v-split (modo rolagem). */
+.about__manifesto em {
+  font-style: normal;
   color: var(--ink);
-}
-
-.about__char {
-  display: inline-block;
-}
-
-/* Revelação caractere a caractere guiada pela rolagem: cada um entra
-   deslizando de baixo, inclinado, numa onda de ~18 caracteres. --t vai de 0
-   (escondido) a 1 (no lugar); o fator 1.15 termina a onda antes do fim do
-   progresso --p, para o texto ficar legível sem exigir rolagem extra. */
-.js .about__char {
-  --t: clamp(0, calc((var(--p, 0) * 1.15 * (var(--n) + 18) - var(--i)) / 18), 1);
-  opacity: var(--t);
-  transform:
-    translate3d(0, calc((1 - var(--t)) * 0.55em), 0)
-    skewY(calc((1 - var(--t)) * 14deg))
-    skewX(calc((1 - var(--t)) * -12deg));
-  transform-origin: left bottom;
 }
 
 .about__cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2.5rem;
-  margin-top: clamp(2.5rem, 5vw, 4rem);
-  padding-top: 2.5rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 2rem;
   border-top: 1px solid var(--line);
 }
 
@@ -218,7 +168,7 @@ onBeforeUnmount(() => {
 .stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-top: clamp(4rem, 8vw, 6.5rem);
+  margin-top: clamp(3rem, 6vw, 4.5rem);
 }
 
 .stat {
@@ -287,13 +237,6 @@ onBeforeUnmount(() => {
   .stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: 2.5rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .js .about__char {
-    opacity: 1;
-    transform: none;
   }
 }
 </style>

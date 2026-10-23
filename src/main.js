@@ -5,6 +5,7 @@ import { routes } from './router/routes';
 import { scrollBehavior } from './router/scroll';
 import { reveal } from '@/directives/reveal';
 import { progress } from '@/directives/progress';
+import { split } from '@/directives/split';
 
 import './css/app.css';
 
@@ -14,6 +15,7 @@ export const createApp = ViteSSG(
   ({ app, router, isClient }) => {
     app.directive('reveal', reveal);
     app.directive('progress', progress);
+    app.directive('split', split);
 
     if (isClient) {
       // Sinaliza ao script inline do index.html que o app subiu.
