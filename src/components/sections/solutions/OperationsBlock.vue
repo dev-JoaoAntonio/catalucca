@@ -51,7 +51,6 @@ const roi = [
 <template>
   <VerticalBlock
     id="operacional"
-    index="05.2"
     title="Operacional privado"
     tagline="Engenharia de precisão e blindagem de processos: da visão de campo à evidência jurídica e financeira."
     :cta-href="cta"
@@ -144,10 +143,10 @@ const roi = [
 
 .roi__item dt {
   margin-bottom: 0.5rem;
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 400;
-  letter-spacing: -0.015em;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.035em;
   color: var(--ink);
 }
 

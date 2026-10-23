@@ -32,7 +32,7 @@ const columns = [
 <template>
   <section id="impacto" class="section impact" data-spy="solucoes">
     <div class="container">
-      <SectionIntro index="06" label="Resultados">
+      <SectionIntro>
         <template #title>Impacto <em>estrutural</em>.</template>
         Mais do que tecnologia: transformação operacional, econômica e social.
       </SectionIntro>
@@ -86,14 +86,15 @@ const columns = [
   align-items: baseline;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
-  font-family: var(--font-serif);
-  font-size: 1.75rem;
-  font-weight: 400;
-  letter-spacing: -0.015em;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.035em;
 }
 
 .impact__title em {
-  font-weight: 300;
+  font-style: normal;
+  color: var(--muted);
 }
 
 .impact__title .mono {

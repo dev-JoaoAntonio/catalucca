@@ -35,11 +35,10 @@ function onSubmit() {
   <section id="contato" class="section contact" data-spy="contato">
     <div class="container contact__grid">
       <div class="contact__intro">
-        <p class="eyebrow" v-reveal><span class="eyebrow__index">10</span>Contato</p>
-        <h2 class="title contact__title" v-reveal="{ delay: 80 }">
+        <h2 class="title" v-reveal>
           Pronto para implantar a Catalucca <em>na sua operação</em>?
         </h2>
-        <p class="lead contact__lead" v-reveal="{ delay: 160 }">
+        <p class="lead contact__lead" v-reveal="{ delay: 100 }">
           Demonstrações técnicas, propostas HaaS e suporte para projetos de educação, operação
           privada e governo. <strong>Resposta em até um dia útil.</strong>
         </p>
@@ -137,10 +136,6 @@ function onSubmit() {
   align-items: start;
 }
 
-.contact__title {
-  margin-top: 1.25rem;
-}
-
 .contact__lead {
   margin-top: 1.25rem;
 }
@@ -158,19 +153,17 @@ function onSubmit() {
 
 .channels h3 {
   margin-bottom: 0.35rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
   color: var(--muted);
 }
 
 .channels a {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
   color: var(--ink);
   transition: color 0.3s var(--ease);
 }
@@ -195,10 +188,10 @@ function onSubmit() {
 }
 
 .contact__form h3 {
-  font-family: var(--font-serif);
-  font-size: 2rem;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
 }
 
 .contact__form-hint {

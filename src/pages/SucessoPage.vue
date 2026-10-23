@@ -21,7 +21,6 @@ const onboardingLink = whatsappLink(
   <section class="section sucesso">
     <div class="container">
       <div class="sucesso__card" v-reveal:scale>
-        <p class="eyebrow">Contratação confirmada</p>
         <h1 class="title sucesso__title">Recebemos o seu <em>pedido</em>.</h1>
 
         <p class="lead sucesso__body">

@@ -3,7 +3,6 @@ import { useSectionLink } from '@/composables/useSectionLink';
 
 defineProps({
   id: { type: String, required: true },
-  index: { type: String, required: true },
   title: { type: String, required: true },
   tagline: { type: String, required: true },
   ctaHref: { type: String, required: true },
@@ -16,7 +15,6 @@ const go = useSectionLink();
   <article :id="id" class="vertical" :aria-labelledby="`${id}-title`">
     <aside class="vertical__aside">
       <div class="vertical__sticky" v-reveal:left>
-        <p class="mono vertical__index">{{ index }}</p>
         <h3 :id="`${id}-title`" class="vertical__title">{{ title }}</h3>
         <p class="vertical__tagline">{{ tagline }}</p>
         <slot name="aside" />
@@ -49,18 +47,12 @@ const go = useSectionLink();
   top: calc(var(--header-h) + 2rem);
 }
 
-.vertical__index {
-  margin-bottom: 1.5rem;
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-
 .vertical__title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(2.25rem, 3.6vw, 3.25rem);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.04;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.045em;
 }
 
 .vertical__tagline {

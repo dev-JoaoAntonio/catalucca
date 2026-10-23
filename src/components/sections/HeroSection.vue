@@ -25,8 +25,6 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
     </div>
 
     <div class="container hero__content">
-      <p class="eyebrow hero__eyebrow">Infraestrutura científica de borda</p>
-
       <h1 class="hero__title">
         <span
           v-for="(line, i) in lines"
@@ -103,19 +101,13 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
   transform: translate3d(0, calc(var(--p, 0) * -90px), 0);
 }
 
-.hero__eyebrow {
-  margin-bottom: 1.75rem;
-  color: rgb(255 255 255 / 0.7);
-  animation: hero-fade 1s var(--ease) backwards;
-}
-
 .hero__title {
   margin-bottom: clamp(2.5rem, 6vh, 4rem);
-  font-family: var(--font-serif);
-  font-size: clamp(2.75rem, 6vw, 5.75rem);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.025em;
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 6.4vw, 6rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.05em;
   color: #fff;
 }
 
@@ -133,7 +125,7 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
 }
 
 .hero__line--em {
-  font-style: italic;
+  color: rgb(255 255 255 / 0.55);
 }
 
 .hero__bottom {
@@ -174,10 +166,8 @@ const lines = ['A precisão do laboratório.', 'A soberania da decisão', 'no te
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0;
   color: rgb(255 255 255 / 0.6);
   opacity: calc(1 - var(--p, 0) * 4);
   animation: hero-fade 1s var(--ease) 1.1s backwards;

@@ -3,7 +3,6 @@ import { useSectionLink } from '@/composables/useSectionLink';
 import { whatsappLink } from '@/data/contact';
 
 defineProps({
-  label: { type: String, default: 'Próximo passo' },
   message: {
     type: String,
     default: 'Olá! Gostaria de solicitar uma demonstração técnica da Catalucca.',
@@ -17,11 +16,10 @@ const go = useSectionLink();
   <section class="cta-band">
     <div class="container">
       <div class="cta-band__inner" v-progress="'read'">
-        <p class="eyebrow cta-band__label" v-reveal>{{ label }}</p>
-        <h2 class="cta-band__title" v-reveal="{ delay: 80 }">
+        <h2 class="cta-band__title" v-reveal>
           <slot name="title" />
         </h2>
-        <div class="cta-band__side" v-reveal="{ delay: 160 }">
+        <div class="cta-band__side" v-reveal="{ delay: 120 }">
           <p v-if="$slots.default" class="cta-band__text"><slot /></p>
           <div class="cta-row">
             <a :href="whatsappLink(message)" target="_blank" rel="noopener" class="btn btn--primary btn--arrow">
@@ -63,21 +61,17 @@ const go = useSectionLink();
   transform-origin: left;
 }
 
-.cta-band__label {
-  grid-column: 1 / -1;
-}
-
 .cta-band__title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3.25rem);
-  font-weight: 400;
-  line-height: 1.06;
-  letter-spacing: -0.022em;
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
 }
 
 .cta-band__title :deep(em) {
-  font-style: italic;
-  font-weight: 300;
+  font-style: normal;
+  color: var(--muted);
 }
 
 .cta-band__text {

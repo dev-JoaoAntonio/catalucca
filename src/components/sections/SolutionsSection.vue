@@ -29,7 +29,7 @@ const fronts = [
 <template>
   <section id="solucoes" class="section solutions" data-spy="solucoes">
     <div class="container">
-      <SectionIntro index="05" label="Soluções">
+      <SectionIntro>
         <template #title>Uma infraestrutura, <em>três frentes</em> de atuação.</template>
         A mesma base técnica, com posturas distintas, adaptadas ao contexto e à pressão de decisão
         de cada operação.
@@ -90,15 +90,15 @@ const fronts = [
 
 .front h3 {
   margin-bottom: 0.6rem;
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(1.625rem, 2.4vw, 2rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  transition: font-style 0.3s;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  transition: color 0.3s var(--ease);
 }
 
 .front:hover h3 {
-  font-style: italic;
+  color: var(--muted);
 }
 
 .front p {

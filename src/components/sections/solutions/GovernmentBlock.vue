@@ -44,7 +44,6 @@ onBeforeUnmount(() => observer?.disconnect());
 <template>
   <VerticalBlock
     id="governo"
-    index="05.3"
     title="Governo"
     tagline="Inteligência territorial e vigilância sentinela para a administração pública."
     :cta-href="cta"
@@ -70,7 +69,7 @@ onBeforeUnmount(() => observer?.disconnect());
 
       <div>
         <div v-reveal>
-          <h4 class="v-block__title"><span class="mono">10 em 1</span>Decálogo da soberania</h4>
+          <h4 class="v-block__title">Decálogo da soberania</h4>
           <p class="v-block__text">
             Um único contrato, uma única infraestrutura de borda e dez programas federais
             convergidos no <strong>Hub ATLAS</strong>: auditáveis, georreferenciados e soberanos.
@@ -138,10 +137,10 @@ onBeforeUnmount(() => observer?.disconnect());
 }
 
 .gov-counter__num span {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 3.5rem;
   font-weight: 300;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.06em;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }

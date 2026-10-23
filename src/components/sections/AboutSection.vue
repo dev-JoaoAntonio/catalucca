@@ -79,8 +79,7 @@ onBeforeUnmount(() => {
     <div class="container">
       <div class="about__grid">
         <header class="about__heading">
-          <p class="eyebrow" v-reveal><span class="eyebrow__index">01</span>Quem somos</p>
-          <h2 class="title" v-reveal="{ delay: 80 }">A borda é o nosso território.</h2>
+          <h2 class="title" v-reveal>A borda é <em>o nosso território</em>.</h2>
         </header>
 
         <div class="about__body">
@@ -148,17 +147,16 @@ onBeforeUnmount(() => {
 }
 
 .about__heading .title {
-  max-width: 11ch;
-  margin-top: 1.25rem;
+
 }
 
 .about__manifesto {
-  font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
-  font-weight: 300;
-  line-height: 1.22;
-  letter-spacing: -0.018em;
-  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.1vw, 2.625rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.04em;
+  color: var(--muted);
 }
 
 /* Cada palavra acende conforme o parágrafo atravessa a tela. */
@@ -167,7 +165,7 @@ onBeforeUnmount(() => {
 }
 
 .about__word.is-strong {
-  font-style: italic;
+  color: var(--ink);
 }
 
 .about__cols {
@@ -182,12 +180,12 @@ onBeforeUnmount(() => {
 .about__quote {
   padding-left: 1.5rem;
   border-left: 1px solid var(--ink);
-  font-family: var(--font-serif);
-  font-size: 1.375rem;
-  font-style: italic;
-  font-weight: 300;
-  line-height: 1.4;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.45;
   color: var(--ink);
+  letter-spacing: -0.02em;
 }
 
 .about__cta {
@@ -229,20 +227,19 @@ onBeforeUnmount(() => {
 }
 
 .stat__value {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(3rem, 6vw, 4.75rem);
   font-weight: 300;
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.06em;
   color: var(--ink);
   font-variant-numeric: lining-nums tabular-nums;
 }
 
 .stat__unit {
   margin-left: 0.1em;
-  font-size: 0.42em;
-  font-style: italic;
-  letter-spacing: 0;
+  font-size: 0.4em;
+  letter-spacing: -0.02em;
   color: var(--muted);
 }
 

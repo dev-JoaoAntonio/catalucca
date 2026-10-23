@@ -56,7 +56,6 @@ const testimonials = [
 <template>
   <VerticalBlock
     id="educacao"
-    index="05.1"
     title="Educação"
     tagline="Protagonismo digital investigativo. A ciência onde o aluno está."
     :cta-href="cta"
@@ -83,7 +82,7 @@ const testimonials = [
       </figure>
 
       <div v-reveal>
-        <h4 class="v-block__title"><span class="mono">BNCC</span>Lei nº 15.100/2025 e BNCC</h4>
+        <h4 class="v-block__title">Lei nº 15.100/2025 e BNCC</h4>
         <p class="v-block__text">
           O Sistema Ø—1™ estabelece o uso dirigido, supervisionado e finalístico do smartphone no
           ambiente escolar, alinhado às competências gerais da BNCC.
@@ -116,7 +115,7 @@ const testimonials = [
       </div>
 
       <div class="research" v-reveal>
-        <h4 class="v-block__title"><span class="mono">RUO</span>Ensino superior e pesquisa</h4>
+        <h4 class="v-block__title">Ensino superior e pesquisa (RUO)</h4>
         <p class="v-block__text">
           Equipamento classificado como <strong>Research Use Only</strong>: infraestrutura dedicada
           à investigação científica avançada, com cadeia de custódia matemática, dados auditáveis
@@ -204,12 +203,12 @@ const testimonials = [
 }
 
 .quote blockquote {
-  font-family: var(--font-serif);
-  font-size: 1.1875rem;
-  font-style: italic;
-  font-weight: 300;
-  line-height: 1.45;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.55;
   color: var(--ink);
+  letter-spacing: -0.015em;
 }
 
 .quote figcaption {

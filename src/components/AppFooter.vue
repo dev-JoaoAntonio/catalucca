@@ -111,12 +111,10 @@ const columns = [
 
 .footer__heading {
   margin-bottom: 1.1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
+  letter-spacing: 0;
+  color: var(--ink);
 }
 
 .footer__col ul {
@@ -157,11 +155,11 @@ const columns = [
 
 .footer__wordmark {
   margin-bottom: -0.2em;
-  font-family: var(--font-serif);
-  font-size: clamp(3rem, 15.5vw, 15rem);
-  font-weight: 300;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 17vw, 16rem);
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.065em;
   text-align: center;
   white-space: nowrap;
   color: var(--line);

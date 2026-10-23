@@ -64,11 +64,9 @@ const press = [
 }
 
 .press__label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  font-size: 0.875rem;
+  letter-spacing: 0;
   line-height: 1.5;
-  text-transform: uppercase;
   color: var(--muted);
 }
 
@@ -88,13 +86,12 @@ const press = [
   animation-play-state: paused;
 }
 
-/* Nomes dos veículos em serifa, como em um cabeçalho de jornal. */
 .press__item {
   padding-right: clamp(2.5rem, 5vw, 4.5rem);
-  font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
   white-space: nowrap;
   color: #A2A5AB;
   transition: color 0.3s var(--ease);

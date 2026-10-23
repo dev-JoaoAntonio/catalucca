@@ -360,10 +360,10 @@ onBeforeUnmount(() => {
   gap: 1.25rem;
   padding: 0.85rem 0;
   border-bottom: 1px solid var(--line);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(1.75rem, 7vw, 2.5rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-weight: 500;
+  letter-spacing: -0.04em;
   opacity: 0;
   transform: translate3d(0, 16px, 0);
   transition:

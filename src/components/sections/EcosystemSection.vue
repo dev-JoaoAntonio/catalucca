@@ -35,7 +35,7 @@ const waLink = whatsappLink('Olá! Gostaria de saber mais sobre a Catalucca.');
   <section id="ecossistema" class="section ecosystem" data-spy="solucoes">
     <div class="container ecosystem__grid">
       <div class="ecosystem__aside">
-        <SectionIntro index="07" label="Ecossistema">
+        <SectionIntro>
           <template #title>Quatro fábricas, <em>um sistema</em>.</template>
           A sustentação e a escala dessa infraestrutura acontecem pela simbiose espiral de quatro
           grandes verticais.
@@ -50,11 +50,9 @@ const waLink = whatsappLink('Olá! Gostaria de saber mais sobre a Catalucca.');
           :style="{ '--i': i }"
           v-reveal
         >
-          <div class="factory__head">
-            <span class="factory__num">0{{ i + 1 }}</span>
-            <span class="factory__domain">{{ factory.domain }}</span>
-          </div>
+          <span class="factory__num">0{{ i + 1 }}</span>
           <h3>{{ factory.name }}</h3>
+          <p class="factory__domain">{{ factory.domain }}</p>
           <p class="factory__text">{{ factory.text }}</p>
         </li>
       </ol>
@@ -62,7 +60,6 @@ const waLink = whatsappLink('Olá! Gostaria de saber mais sobre a Catalucca.');
 
     <div class="container">
       <div class="delivery" v-reveal:scale>
-        <p class="eyebrow">Modelo de entrega</p>
         <h3 class="delivery__title">
           Ciência como Serviço.<br>
           <em>Infraestrutura como Serviço.</em>
@@ -121,37 +118,30 @@ const waLink = whatsappLink('Olá! Gostaria de saber mais sobre a Catalucca.');
   border-color: var(--ink);
 }
 
-.factory__head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
+.factory__num {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--ink);
   margin-bottom: 3rem;
 }
 
-.factory__num {
-  font-family: var(--font-serif);
-  font-size: 2.75rem;
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-
 .factory__domain {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
   color: var(--muted);
+  margin-bottom: 1rem;
+  font-weight: 500;
 }
 
 .factory h3 {
-  margin-bottom: 0.85rem;
-  font-family: var(--font-serif);
+  margin-bottom: 0.25rem;
+  font-family: var(--font-display);
   font-size: clamp(1.75rem, 2.6vw, 2.25rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-weight: 500;
+  letter-spacing: -0.04em;
 }
 
 .factory__text {
@@ -166,16 +156,17 @@ const waLink = whatsappLink('Olá! Gostaria de saber mais sobre a Catalucca.');
 }
 
 .delivery__title {
-  margin: 1.25rem 0 1.5rem;
-  font-family: var(--font-serif);
+  margin: 0 0 1.5rem;
+  font-family: var(--font-display);
   font-size: clamp(2.25rem, 5vw, 4.25rem);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.02;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.05em;
 }
 
 .delivery__title em {
-  font-weight: 300;
+  font-style: normal;
+  color: var(--muted);
 }
 
 .delivery__text {

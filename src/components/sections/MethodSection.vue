@@ -26,8 +26,8 @@ const nodes = [
 <template>
   <section id="metodo" class="section method" data-spy="metodo">
     <div class="container">
-      <SectionIntro index="03" label="O Método Ø—1™">
-        <template #title>Dinâmica de resposta imediata.</template>
+      <SectionIntro>
+        <template #title>Dinâmica de <em>resposta imediata</em>.</template>
         A transição do vazio de informação para a evidência científica.
       </SectionIntro>
 
@@ -58,8 +58,7 @@ const nodes = [
 
       <div class="arch">
         <div class="arch__intro">
-          <p class="eyebrow" v-reveal>Arquitetura</p>
-          <h3 class="arch__title" v-reveal="{ delay: 80 }">
+          <h3 class="arch__title" v-reveal>
             BYOD + NOC: ciência de borda conectada.
           </h3>
           <p v-reveal="{ delay: 160 }">
@@ -85,8 +84,7 @@ const nodes = [
               <span class="arch__num mono">0{{ i + 1 }}</span>
               <span v-if="i < nodes.length - 1" class="arch__connector" aria-hidden="true"></span>
             </div>
-            <span class="arch__tag mono">{{ node.tag }}</span>
-            <h4>{{ node.title }}</h4>
+            <h4>{{ node.title }} <span class="arch__tag">· {{ node.tag }}</span></h4>
             <p>{{ node.text }}</p>
           </li>
         </ol>
@@ -112,16 +110,15 @@ const nodes = [
 }
 
 .method__glyph {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(6.5rem, 14vw, 12rem);
-  font-weight: 300;
+  font-weight: 200;
   line-height: 0.85;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.06em;
   color: var(--line-strong);
 }
 
 .method__point--one .method__glyph {
-  font-style: italic;
   color: var(--ink);
 }
 
@@ -169,12 +166,12 @@ const nodes = [
 }
 
 .arch__title {
-  margin: 1rem 0 1.25rem;
-  font-family: var(--font-serif);
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
   font-size: clamp(1.75rem, 2.8vw, 2.375rem);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
 }
 
 .arch__intro p {
@@ -238,13 +235,13 @@ const nodes = [
 }
 
 .arch__tag {
-  font-size: 0.6875rem;
-  text-transform: uppercase;
+  font-size: 0.9375rem;
   color: var(--muted);
+  font-weight: 400;
 }
 
 .arch__node h4 {
-  margin: 0.4rem 0 0.5rem;
+  margin: 0 0 0.5rem;
   font-size: 1.0625rem;
 }
 

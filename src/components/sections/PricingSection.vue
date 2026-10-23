@@ -37,7 +37,7 @@ const proposalLink = whatsappLink('Olá! Gostaria de uma proposta HaaS personali
   <section id="haas" class="section section--soft pricing" data-spy="haas">
     <div class="container">
       <div class="pricing__head">
-        <SectionIntro index="08" label="Modelo HaaS">
+        <SectionIntro>
           <template #title>Hardware <em>as a Service</em>.</template>
           Sem compra de equipamento e com implantação imediata. Valores ajustados conforme a escala
           e o segmento.
@@ -108,10 +108,8 @@ const proposalLink = whatsappLink('Olá! Gostaria de uma proposta HaaS personali
 
 .pricing__included-label {
   margin-bottom: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0;
   color: var(--muted);
 }
 
@@ -122,11 +120,11 @@ const proposalLink = whatsappLink('Olá! Gostaria de uma proposta HaaS personali
 }
 
 .pricing__included li {
-  font-family: var(--font-serif);
-  font-size: 1.375rem;
-  font-style: italic;
-  font-weight: 300;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
   color: var(--ink);
+  letter-spacing: -0.025em;
 }
 
 .pricing__grid {
@@ -164,10 +162,10 @@ const proposalLink = whatsappLink('Olá! Gostaria de uma proposta HaaS personali
 
 .plan h3 {
   margin-bottom: 0.5rem;
-  font-family: var(--font-serif);
-  font-size: 2rem;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
 }
 
 .plan__desc {

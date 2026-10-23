@@ -19,7 +19,7 @@ function toggle(i) {
   <section id="faq" class="section faq" data-spy="faq">
     <div class="container faq__grid">
       <div class="faq__aside">
-        <SectionIntro index="09" label="FAQ">
+        <SectionIntro>
           <template #title>Perguntas <em>frequentes</em>.</template>
           Não encontrou o que procurava? Nossa equipe técnica responde em até um dia útil.
         </SectionIntro>
@@ -99,10 +99,10 @@ function toggle(i) {
   gap: 1.5rem;
   width: 100%;
   padding: 1.5rem 0;
-  font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 1.9vw, 1.625rem);
-  font-weight: 400;
-  letter-spacing: -0.012em;
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
   text-align: left;
   color: var(--ink);
   transition: color 0.3s var(--ease);

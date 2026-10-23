@@ -150,7 +150,6 @@ onBeforeUnmount(() => {
     <div class="tech__sticky">
       <div class="container tech__stage">
         <div class="tech__copy">
-          <p class="eyebrow" v-reveal><span class="eyebrow__index">02</span>Tecnologia</p>
           <h2 class="sr-only">Tecnologia DIPLE™</h2>
 
           <div class="tech__chapters">
@@ -160,10 +159,6 @@ onBeforeUnmount(() => {
               class="tech__chapter"
               :class="{ 'is-active': active === i, 'is-next': i > active }"
             >
-              <p class="tech__kicker">
-                <span class="mono">{{ String(i + 1).padStart(2, '0') }}</span>
-                {{ chapter.label }}
-              </p>
               <h3 class="title tech__title">{{ chapter.title }}</h3>
               <p class="lead tech__body">{{ chapter.body }}</p>
 
@@ -282,22 +277,7 @@ onBeforeUnmount(() => {
 }
 
 .tech__chapters {
-  margin-top: 1.75rem;
-}
 
-.tech__kicker {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--muted);
-}
-
-.tech__kicker .mono {
-  font-size: 0.75rem;
-  color: var(--ink);
 }
 
 .tech__body {
@@ -317,10 +297,8 @@ onBeforeUnmount(() => {
 
 .tech__specs dt {
   margin-bottom: 0.3rem;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.8125rem;
+  letter-spacing: 0;
   color: var(--muted);
 }
 
@@ -543,10 +521,6 @@ onBeforeUnmount(() => {
 
   .tech__copy {
     display: contents;
-  }
-
-  .tech__copy > .eyebrow {
-    order: -2;
   }
 
   .tech__visual {

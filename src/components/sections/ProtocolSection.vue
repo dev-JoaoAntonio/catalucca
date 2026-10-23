@@ -83,7 +83,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
   >
     <div class="protocol__sticky">
       <div class="container protocol__head">
-        <SectionIntro index="04" label="Protocolo técnico LABMOB">
+        <SectionIntro>
           <template #title>Cadeia de custódia <em>matemática</em>.</template>
           Cada evidência é vinculada matematicamente aos seus frames originais. O stacking não
           destrutivo é o núcleo do processo; o stitching é apenas uma função secundária de
@@ -147,8 +147,7 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 
       <div class="morfo" v-reveal:wipe>
         <div class="morfo__intro">
-          <p class="eyebrow">Diferencial técnico</p>
-          <h3 class="morfo__title">Morfofixação digital.</h3>
+          <h3 class="morfo__title">Morfofixação <em>digital</em>.</h3>
           <p>
             No exato instante da captura, a estrutura morfológica do analito é digitalmente fixada
             e blindada por duplo hash (SHA-256) e timestamp oficial. O protocolo impede qualquer
@@ -191,10 +190,10 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 }
 
 .protocol__counter span {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 3rem;
   font-weight: 300;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.05em;
   color: var(--ink);
 }
 
@@ -224,11 +223,11 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 
 .protocol__num {
   margin-bottom: 2.5rem;
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 2.75rem;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.05em;
   color: var(--line-strong);
   transition: color 0.5s var(--ease);
 }
@@ -329,10 +328,10 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 
 .custody__card h3 {
   margin-bottom: 1rem;
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1.75rem;
-  font-weight: 400;
-  letter-spacing: -0.015em;
+  font-weight: 500;
+  letter-spacing: -0.035em;
 }
 
 .custody__card p + p {
@@ -370,11 +369,11 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 }
 
 .morfo__title {
-  margin: 1rem 0 1.25rem;
-  font-family: var(--font-serif);
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
   font-size: clamp(2rem, 3.4vw, 2.875rem);
-  font-weight: 400;
-  letter-spacing: -0.022em;
+  font-weight: 500;
+  letter-spacing: -0.045em;
 }
 
 .morfo__steps {
@@ -404,11 +403,10 @@ onBeforeUnmount(() => resizeObserver?.disconnect());
 }
 
 .morfo__num {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-style: italic;
-  line-height: 1.2;
-  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.9;
+  color: var(--muted);
 }
 
 .morfo__steps h4 {
